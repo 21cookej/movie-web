@@ -106,7 +106,7 @@ export function useCaptions() {
   }, [setCaption, setLanguage]);
 
   const selectLastUsedLanguage = useCallback(async () => {
-    const language = lastSelectedLanguage ?? "en";
+    const language = lastSelectedLanguage ?? "zh";
     await selectLanguage(language);
     return true;
   }, [lastSelectedLanguage, selectLanguage]);

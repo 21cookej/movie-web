@@ -188,7 +188,7 @@ export async function multiSearch(
   const data = await get<TMDBSearchResult>("search/multi", {
     query,
     include_adult: false,
-    language: "en-US",
+    language: "zh-CN",
     page: 1,
   });
   // filter out results that aren't movies or shows
