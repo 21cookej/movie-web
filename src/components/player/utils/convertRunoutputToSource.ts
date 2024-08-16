@@ -1,4 +1,4 @@
-import { Stream } from "@movie-web/providers";
+import { Stream } from "@davidmorgan/providers";
 
 import {
   SourceFileStream,

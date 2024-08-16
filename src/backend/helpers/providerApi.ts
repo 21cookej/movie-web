@@ -1,4 +1,4 @@
-import { MetaOutput, NotFoundError, ScrapeMedia } from "@movie-web/providers";
+import { MetaOutput, NotFoundError, ScrapeMedia } from "@davidmorgan/providers";
 import { jwtDecode } from "jwt-decode";
 
 import { mwFetch } from "@/backend/helpers/fetch";
