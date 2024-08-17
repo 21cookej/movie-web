@@ -8,6 +8,7 @@ import { BrandPill } from "@/components/layout/BrandPill";
 import { WideContainer } from "@/components/layout/WideContainer";
 import { shouldHaveDmcaPage } from "@/pages/Dmca";
 import { conf } from "@/setup/config";
+import { AdBanner } from "./AdBananer";
 
 // to and href are mutually exclusive
 type FooterLinkProps = RequireExactlyOne<
@@ -59,8 +60,9 @@ export function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="mt-16 border-t border-type-divider py-16 md:py-8">
-      <WideContainer ultraWide classNames="grid md:grid-cols-2 gap-16 md:gap-8">
+    <footer className="mt-16 border-t border-type-divider py-16 md:py-8 flex items-center justify-center">
+      <AdBanner dataAdFormat="fluid" dataFullWidthResponsive={false} dataAdSlot="1013737103" className="flex-auto"></AdBanner>
+      <WideContainer ultraWide classNames="grid md:grid-cols-2 gap-16 md:gap-8 mx-0">
         <div>
           <div className="inline-block">
             <BrandPill />
@@ -88,6 +90,7 @@ export function Footer() {
           <Dmca />
         </div>
       </WideContainer>
+      <AdBanner dataAdFormat="fluid" dataFullWidthResponsive={false} dataAdSlot="1013737103" className="flex-auto"></AdBanner>
     </footer>
   );
 }
