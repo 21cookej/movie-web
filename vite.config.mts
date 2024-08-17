@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => {
       createHtmlPlugin({
         inject: {
           data: {
-            adsScriptSrc: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${env.VITE_GOOGLE_ADS_ID}`,
+            adsScriptSrc: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${env.VITE_GOOGLE_ADS_ID}`,
           },
         },
       }),
