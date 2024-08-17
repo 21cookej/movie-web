@@ -159,7 +159,7 @@ function EpisodesView({
   return (
     <Menu.CardWithScrollable>
       <Menu.BackLink onClick={goBack} rightSide={<span>{loadingState?.value?.season.title || t("player.menus.episodes.loadingTitle")}</span>}>
-        {t("player.menus.episodes.seasons")}
+      {t("player.back.short")}
       </Menu.BackLink>
       {content}
     </Menu.CardWithScrollable>
