@@ -14,9 +14,7 @@ export function AuthInputBox(props: {
 }) {
   return (
     <div className={classNames("space-y-3", props.className)}>
-      {props.label ? (
-        <p className="font-bold text-white">{props.label}</p>
-      ) : null}
+      {props.label ? <p className="font-bold text-white">{props.label}</p> : null}
       <TextInputControl
         name={props.name}
         value={props.value}

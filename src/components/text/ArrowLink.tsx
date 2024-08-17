@@ -17,10 +17,7 @@ interface IArrowLinkPropsInternal extends IArrowLinkPropsBase {
   to: string;
 }
 
-export type ArrowLinkProps =
-  | IArrowLinkPropsExternal
-  | IArrowLinkPropsInternal
-  | IArrowLinkPropsBase;
+export type ArrowLinkProps = IArrowLinkPropsExternal | IArrowLinkPropsInternal | IArrowLinkPropsBase;
 
 export function ArrowLink(props: ArrowLinkProps) {
   const direction = props.direction || "right";
@@ -42,15 +39,7 @@ export function ArrowLink(props: ArrowLinkProps) {
     </span>
   );
 
-  if (isExternal)
-    return <a href={(props as IArrowLinkPropsExternal).url}>{content}</a>;
-  if (isInternal)
-    return (
-      <LinkRouter to={(props as IArrowLinkPropsInternal).to}>
-        {content}
-      </LinkRouter>
-    );
-  return (
-    <span onClick={() => props.onClick && props.onClick()}>{content}</span>
-  );
+  if (isExternal) return <a href={(props as IArrowLinkPropsExternal).url}>{content}</a>;
+  if (isInternal) return <LinkRouter to={(props as IArrowLinkPropsInternal).to}>{content}</LinkRouter>;
+  return <span onClick={() => props.onClick && props.onClick()}>{content}</span>;
 }

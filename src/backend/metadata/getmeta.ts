@@ -11,19 +11,9 @@ import {
   getMovieFromExternalId,
   mediaTypeToTMDB,
 } from "./tmdb";
-import {
-  JWDetailedMeta,
-  JWSeasonMetaResult,
-  JW_API_BASE,
-} from "./types/justwatch";
+import { JWDetailedMeta, JWSeasonMetaResult, JW_API_BASE } from "./types/justwatch";
 import { MWMediaMeta, MWMediaType } from "./types/mw";
-import {
-  TMDBContentTypes,
-  TMDBMediaResult,
-  TMDBMovieData,
-  TMDBSeasonMetaResult,
-  TMDBShowData,
-} from "./types/tmdb";
+import { TMDBContentTypes, TMDBMediaResult, TMDBMovieData, TMDBSeasonMetaResult, TMDBShowData } from "./types/tmdb";
 import { makeUrl, proxiedFetch } from "../helpers/fetch";
 
 export interface DetailedMeta {
@@ -32,10 +22,7 @@ export interface DetailedMeta {
   tmdbId?: string;
 }
 
-export function formatTMDBMetaResult(
-  details: TMDBShowData | TMDBMovieData,
-  type: MWMediaType,
-): TMDBMediaResult {
+export function formatTMDBMetaResult(details: TMDBShowData | TMDBMovieData, type: MWMediaType): TMDBMediaResult {
   if (type === MWMediaType.MOVIE) {
     const movie = details as TMDBMovieData;
     return {
@@ -65,11 +52,7 @@ export function formatTMDBMetaResult(
   throw new Error("unsupported type");
 }
 
-export async function getMetaFromId(
-  type: MWMediaType,
-  id: string,
-  seasonId?: string,
-): Promise<DetailedMeta | null> {
+export async function getMetaFromId(type: MWMediaType, id: string, seasonId?: string): Promise<DetailedMeta | null> {
   const details = await getMediaDetails(id, mediaTypeToTMDB(type));
 
   if (!details) return null;
@@ -87,10 +70,7 @@ export async function getMetaFromId(
     }
 
     if (selectedSeason) {
-      const episodes = await getEpisodes(
-        details.id.toString(),
-        selectedSeason.season_number,
-      );
+      const episodes = await getEpisodes(details.id.toString(), selectedSeason.season_number);
 
       seasonData = {
         id: selectedSeason.id.toString(),
@@ -113,11 +93,7 @@ export async function getMetaFromId(
   };
 }
 
-export async function getLegacyMetaFromId(
-  type: MWMediaType,
-  id: string,
-  seasonId?: string,
-): Promise<DetailedMeta | null> {
+export async function getLegacyMetaFromId(type: MWMediaType, id: string, seasonId?: string): Promise<DetailedMeta | null> {
   const queryType = mediaTypeToJW(type);
 
   let data: JWDetailedMeta;
@@ -135,17 +111,11 @@ export async function getLegacyMetaFromId(
     throw err;
   }
 
-  let imdbId = data.external_ids.find(
-    (v) => v.provider === "imdb_latest",
-  )?.external_id;
-  if (!imdbId)
-    imdbId = data.external_ids.find((v) => v.provider === "imdb")?.external_id;
+  let imdbId = data.external_ids.find((v) => v.provider === "imdb_latest")?.external_id;
+  if (!imdbId) imdbId = data.external_ids.find((v) => v.provider === "imdb")?.external_id;
 
-  let tmdbId = data.external_ids.find(
-    (v) => v.provider === "tmdb_latest",
-  )?.external_id;
-  if (!tmdbId)
-    tmdbId = data.external_ids.find((v) => v.provider === "tmdb")?.external_id;
+  let tmdbId = data.external_ids.find((v) => v.provider === "tmdb_latest")?.external_id;
+  if (!tmdbId) tmdbId = data.external_ids.find((v) => v.provider === "tmdb")?.external_id;
 
   let seasonData: JWSeasonMetaResult | undefined;
   if (data.object_type === "show") {
@@ -164,8 +134,7 @@ export async function getLegacyMetaFromId(
 }
 
 export function isLegacyUrl(url: string): boolean {
-  if (url.startsWith("/media/JW") || url.startsWith("/media/tmdb-show"))
-    return true;
+  if (url.startsWith("/media/JW") || url.startsWith("/media/tmdb-show")) return true;
   return false;
 }
 
@@ -174,9 +143,7 @@ export function isLegacyMediaType(url: string): boolean {
   return false;
 }
 
-export async function convertLegacyUrl(
-  url: string,
-): Promise<string | undefined> {
+export async function convertLegacyUrl(url: string): Promise<string | undefined> {
   if (!isLegacyUrl(url)) return undefined;
 
   const urlParts = url.split("/").slice(2);
@@ -188,11 +155,7 @@ export async function convertLegacyUrl(
 
   if (isLegacyMediaType(url)) {
     const details = await getMediaDetails(id, TMDBContentTypes.TV);
-    return `/media/${TMDBIdToUrlId(
-      MWMediaType.SERIES,
-      details.id.toString(),
-      details.name,
-    )}${suffix}`;
+    return `/media/${TMDBIdToUrlId(MWMediaType.SERIES, details.id.toString(), details.name)}${suffix}`;
   }
 
   const mediaType = TMDBMediaToMediaType(type as TMDBContentTypes);

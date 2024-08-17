@@ -120,33 +120,22 @@
       "noResults": "Me ei leidnud midagi!",
       "placeholder": {
         "default": "Mida tahate vaadata?",
-        "extra": [
-          "Mida soovite uurida?",
-          "Mis on teie nimekirjas?",
-          "Milline on teie lemmikfilm?",
-          "Milline on teie lemmiksari?"
-        ]
+        "extra": ["Mida soovite uurida?", "Mis on teie nimekirjas?", "Milline on teie lemmikfilm?", "Milline on teie lemmiksari?"]
       },
       "sectionTitle": "Otsingutulemused"
     },
     "titles": {
       "day": {
         "default": "Mida te soovite täna pärastlõunal vaadata?",
-        "extra": [
-          "Kas tunnete end seiklushimulisena? Jurassic Park võib olla ideaalne valik."
-        ]
+        "extra": ["Kas tunnete end seiklushimulisena? Jurassic Park võib olla ideaalne valik."]
       },
       "morning": {
         "default": "Mida te soovite täna hommikul vaadata?",
-        "extra": [
-          "Ma kuulsin, et Before Sunrise on hea"
-        ]
+        "extra": ["Ma kuulsin, et Before Sunrise on hea"]
       },
       "night": {
         "default": "Mida te soovite täna õhtul vaadata?",
-        "extra": [
-          "Väsinud? Olen kuulnud, et The Exorcist on hea."
-        ]
+        "extra": ["Väsinud? Olen kuulnud, et The Exorcist on hea."]
       }
     }
   },

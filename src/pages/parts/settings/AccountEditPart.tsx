@@ -50,8 +50,7 @@ export function AccountEditPart(props: {
               <button
                 type="button"
                 className="tabbable text-xs flex gap-2 items-center bg-editBadge-bg text-editBadge-text hover:bg-editBadge-bgHover py-1 px-3 rounded-full cursor-pointer"
-                onClick={profileEditModal.show}
-              >
+                onClick={profileEditModal.show}>
                 <Icon icon={Icons.EDIT} />
                 {t("settings.account.accountDetails.editProfile")}
               </button>
@@ -61,14 +60,8 @@ export function AccountEditPart(props: {
         <div>
           <div className="space-y-8 max-w-xs">
             <AuthInputBox
-              label={
-                t("settings.account.accountDetails.deviceNameLabel") ??
-                undefined
-              }
-              placeholder={
-                t("settings.account.accountDetails.deviceNamePlaceholder") ??
-                undefined
-              }
+              label={t("settings.account.accountDetails.deviceNameLabel") ?? undefined}
+              placeholder={t("settings.account.accountDetails.deviceNamePlaceholder") ?? undefined}
               value={props.deviceName}
               onChange={(value) => props.setDeviceName(value)}
             />

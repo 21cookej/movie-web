@@ -5,10 +5,7 @@ import { convertSubtitlesToSrt } from "@/components/player/utils/captions";
 import { CaptionListItem } from "@/stores/player/slices/source";
 import { SimpleCache } from "@/utils/cache";
 
-import {
-  isExtensionActiveCached,
-  sendExtensionRequest,
-} from "../extension/messaging";
+import { isExtensionActiveCached, sendExtensionRequest } from "../extension/messaging";
 
 export const subtitleTypeList = list().map((type) => `.${type}`);
 const downloadCache = new SimpleCache<string, string>();
@@ -18,9 +15,7 @@ const expirySeconds = 24 * 60 * 60;
 /**
  * Always returns SRT
  */
-export async function downloadCaption(
-  caption: CaptionListItem,
-): Promise<string> {
+export async function downloadCaption(caption: CaptionListItem): Promise<string> {
   const cached = downloadCache.get(caption.url);
   if (cached) return cached;
 
@@ -31,10 +26,7 @@ export async function downloadCaption(
         url: caption.url,
         method: "GET",
       });
-      if (
-        !extensionResponse?.success ||
-        typeof extensionResponse.response.body !== "string"
-      ) {
+      if (!extensionResponse?.success || typeof extensionResponse.response.body !== "string") {
         throw new Error("failed to get caption data from extension");
       }
 

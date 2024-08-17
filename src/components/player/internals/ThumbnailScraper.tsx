@@ -92,13 +92,7 @@ class ThumnbnailWorker {
     if (!this.videoEl || !this.canvasEl) return;
     const ctx = this.canvasEl.getContext("2d");
     if (!ctx) return;
-    ctx.drawImage(
-      this.videoEl,
-      0,
-      0,
-      this.canvasEl.width,
-      this.canvasEl.height,
-    );
+    ctx.drawImage(this.videoEl, 0, 0, this.canvasEl.width, this.canvasEl.height);
     const imgUrl = this.canvasEl.toDataURL();
 
     if (this.interrupted) return;

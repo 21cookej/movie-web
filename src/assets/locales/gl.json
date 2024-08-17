@@ -120,33 +120,22 @@
       "noResults": "Non atopamos nada!",
       "placeholder": {
         "default": "Que che gustaría ver?",
-        "extra": [
-          "Qué queres explorar?",
-          "Que está na túa lista se seguimiento?",
-          "Cal é a túa película favorita?",
-          "Cal é a túa serie favorita?"
-        ]
+        "extra": ["Qué queres explorar?", "Que está na túa lista se seguimiento?", "Cal é a túa película favorita?", "Cal é a túa serie favorita?"]
       },
       "sectionTitle": "Resultados da busca"
     },
     "titles": {
       "day": {
         "default": "Que che gustaría ver esta tarde?",
-        "extra": [
-          "Sínteste aventureiro? Jurassic Park podería ser a elección perfecta."
-        ]
+        "extra": ["Sínteste aventureiro? Jurassic Park podería ser a elección perfecta."]
       },
       "morning": {
         "default": "Que che gustaría ver esta mañá?",
-        "extra": [
-          "Escoitei que “Antes del amanecer” é boa"
-        ]
+        "extra": ["Escoitei que “Antes del amanecer” é boa"]
       },
       "night": {
         "default": "Que che gustaría ver esta noite?",
-        "extra": [
-          "Canso? Escoitei que “El Exorcista” é boa."
-        ]
+        "extra": ["Canso? Escoitei que “El Exorcista” é boa."]
       }
     }
   },

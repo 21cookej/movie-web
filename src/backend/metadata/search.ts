@@ -1,11 +1,7 @@
 import { SimpleCache } from "@/utils/cache";
 import { MediaItem } from "@/utils/mediaTypes";
 
-import {
-  formatTMDBMetaToMediaItem,
-  formatTMDBSearchResult,
-  multiSearch,
-} from "./tmdb";
+import { formatTMDBMetaToMediaItem, formatTMDBSearchResult, multiSearch } from "./tmdb";
 import { MWQuery } from "./types/mw";
 
 const cache = new SimpleCache<MWQuery, MediaItem[]>();

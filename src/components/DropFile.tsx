@@ -38,13 +38,7 @@ export function FileDropHandler(props: FileDropHandlerProps) {
   }, [dragging, props]);
 
   return (
-    <div
-      onDragEnter={handleDragEnter}
-      onDragLeave={handleDragLeave}
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
-      className={props.className}
-    >
+    <div onDragEnter={handleDragEnter} onDragLeave={handleDragLeave} onDragOver={handleDragOver} onDrop={handleDrop} className={props.className}>
       {props.children}
     </div>
   );

@@ -6,11 +6,7 @@ import { useAsync } from "react-use";
 import { MetaResponse, getBackendMeta } from "@/backend/accounts/meta";
 import { Button } from "@/components/buttons/Button";
 import { Icon, Icons } from "@/components/Icon";
-import {
-  LargeCard,
-  LargeCardButtons,
-  LargeCardText,
-} from "@/components/layout/LargeCard";
+import { LargeCard, LargeCardButtons, LargeCardText } from "@/components/layout/LargeCard";
 import { Loading } from "@/components/layout/Loading";
 import { MwLink } from "@/components/text/Link";
 import { useBackendUrl } from "@/hooks/auth/useBackendUrl";
@@ -22,10 +18,7 @@ interface TrustBackendPartProps {
 export function TrustBackendPart(props: TrustBackendPartProps) {
   const navigate = useNavigate();
   const backendUrl = useBackendUrl();
-  const hostname = useMemo(
-    () => (backendUrl ? new URL(backendUrl).hostname : undefined),
-    [backendUrl],
-  );
+  const hostname = useMemo(() => (backendUrl ? new URL(backendUrl).hostname : undefined), [backendUrl]);
   const result = useAsync(() => {
     if (!backendUrl) return Promise.resolve(null);
     return getBackendMeta(backendUrl);
@@ -34,9 +27,7 @@ export function TrustBackendPart(props: TrustBackendPartProps) {
 
   let cardContent = (
     <>
-      <h3 className="text-white font-bold text-lg">
-        {t("auth.trust.failed.title")}
-      </h3>
+      <h3 className="text-white font-bold text-lg">{t("auth.trust.failed.title")}</h3>
       <p>{t("auth.trust.failed.text")}</p>
     </>
   );
@@ -45,25 +36,19 @@ export function TrustBackendPart(props: TrustBackendPartProps) {
     cardContent = (
       <>
         <h3 className="text-white font-bold text-lg">{result.value.name}</h3>
-        {result.value.description ? (
-          <p className="text-center">{result.value.description}</p>
-        ) : null}
+        {result.value.description ? <p className="text-center">{result.value.description}</p> : null}
       </>
     );
 
   return (
     <LargeCard>
-      <LargeCardText
-        title={hostname ? t("auth.trust.title") : t("auth.trust.noHostTitle")}
-        icon={<Icon icon={Icons.CIRCLE_EXCLAMATION} />}
-      >
+      <LargeCardText title={hostname ? t("auth.trust.title") : t("auth.trust.noHostTitle")} icon={<Icon icon={Icons.CIRCLE_EXCLAMATION} />}>
         {hostname ? (
           <Trans
             i18nKey="auth.trust.host"
             values={{
               hostname,
-            }}
-          >
+            }}>
             <span className="text-white" />
           </Trans>
         ) : (
@@ -73,17 +58,12 @@ export function TrustBackendPart(props: TrustBackendPartProps) {
 
       {hostname ? (
         <>
-          <div className="border border-authentication-border rounded-xl px-4 py-8 flex flex-col items-center space-y-2 my-8">
-            {cardContent}
-          </div>
+          <div className="border border-authentication-border rounded-xl px-4 py-8 flex flex-col items-center space-y-2 my-8">{cardContent}</div>
           <LargeCardButtons>
             <Button theme="secondary" onClick={() => navigate("/")}>
               {t("auth.trust.no")}
             </Button>
-            <Button
-              theme="purple"
-              onClick={() => result.value && props.onNext?.(result.value)}
-            >
+            <Button theme="purple" onClick={() => result.value && props.onNext?.(result.value)}>
               {t("auth.trust.yes")}
             </Button>
           </LargeCardButtons>

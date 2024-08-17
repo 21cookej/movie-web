@@ -6,17 +6,12 @@ import { Caption } from "@/stores/player/slices/source";
 import { usePlayerStore } from "@/stores/player/store";
 import { useSubtitleStore } from "@/stores/subtitles";
 
-import {
-  filterDuplicateCaptionCues,
-  parseVttSubtitles,
-} from "../utils/captions";
+import { filterDuplicateCaptionCues, parseVttSubtitles } from "../utils/captions";
 
 export function useCaptions() {
   const setLanguage = useSubtitleStore((s) => s.setLanguage);
   const enabled = useSubtitleStore((s) => s.enabled);
-  const resetSubtitleSpecificSettings = useSubtitleStore(
-    (s) => s.resetSubtitleSpecificSettings,
-  );
+  const resetSubtitleSpecificSettings = useSubtitleStore((s) => s.resetSubtitleSpecificSettings);
   const setCaption = usePlayerStore((s) => s.setCaption);
   const lastSelectedLanguage = useSubtitleStore((s) => s.lastSelectedLanguage);
 
@@ -24,15 +19,9 @@ export function useCaptions() {
   const getHlsCaptionList = usePlayerStore((s) => s.display?.getCaptionList);
 
   const getSubtitleTracks = usePlayerStore((s) => s.display?.getSubtitleTracks);
-  const setSubtitlePreference = usePlayerStore(
-    (s) => s.display?.setSubtitlePreference,
-  );
+  const setSubtitlePreference = usePlayerStore((s) => s.display?.setSubtitlePreference);
 
-  const captions = useMemo(
-    () =>
-      captionList.length !== 0 ? captionList : (getHlsCaptionList?.() ?? []),
-    [captionList, getHlsCaptionList],
-  );
+  const captions = useMemo(() => (captionList.length !== 0 ? captionList : (getHlsCaptionList?.() ?? [])), [captionList, getHlsCaptionList]);
 
   const selectCaptionById = useCallback(
     async (captionId: string) => {
@@ -52,15 +41,10 @@ export function useCaptions() {
       } else {
         // request a language change to hls, so it can load the subtitles
         await setSubtitlePreference?.(caption.language);
-        const track = getSubtitleTracks?.().find(
-          (t) => t.id.toString() === caption.id && t.details !== undefined,
-        );
+        const track = getSubtitleTracks?.().find((t) => t.id.toString() === caption.id && t.details !== undefined);
         if (!track) return;
 
-        const fragments =
-          track.details?.fragments?.filter(
-            (frag) => frag !== null && frag.url !== null,
-          ) ?? [];
+        const fragments = track.details?.fragments?.filter((frag) => frag !== null && frag.url !== null) ?? [];
 
         const vttCaptions = (
           await Promise.all(
@@ -81,14 +65,7 @@ export function useCaptions() {
       resetSubtitleSpecificSettings();
       setLanguage(caption.language);
     },
-    [
-      setLanguage,
-      captions,
-      setCaption,
-      resetSubtitleSpecificSettings,
-      getSubtitleTracks,
-      setSubtitlePreference,
-    ],
+    [setLanguage, captions, setCaption, resetSubtitleSpecificSettings, getSubtitleTracks, setSubtitlePreference],
   );
 
   const selectLanguage = useCallback(

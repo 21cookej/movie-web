@@ -1,9 +1,5 @@
 import { getLegacyMetaFromId } from "@/backend/metadata/getmeta";
-import {
-  getEpisodes,
-  getMediaDetails,
-  getMovieFromExternalId,
-} from "@/backend/metadata/tmdb";
+import { getEpisodes, getMediaDetails, getMovieFromExternalId } from "@/backend/metadata/tmdb";
 import { MWMediaType } from "@/backend/metadata/types/mw";
 import { TMDBContentTypes } from "@/backend/metadata/types/tmdb";
 import { BookmarkStoreData } from "@/stores/__old/bookmark/types";
@@ -11,10 +7,7 @@ import { isNotNull } from "@/utils/typeguard";
 
 import { WatchedStoreData } from "../types";
 
-async function migrateId(
-  id: string,
-  type: MWMediaType,
-): Promise<string | undefined> {
+async function migrateId(id: string, type: MWMediaType): Promise<string | undefined> {
   const meta = await getLegacyMetaFromId(type, id);
 
   if (!meta) return undefined;
@@ -43,16 +36,11 @@ export async function migrateV2Bookmarks(old: BookmarkStoreData) {
   };
 }
 
-export async function migrateV3Videos(
-  old: WatchedStoreData,
-): Promise<WatchedStoreData> {
+export async function migrateV3Videos(old: WatchedStoreData): Promise<WatchedStoreData> {
   const updatedItems = await Promise.all(
     old.items.map(async (progress) => {
       try {
-        const migratedId = await migrateId(
-          progress.item.meta.id,
-          progress.item.meta.type,
-        );
+        const migratedId = await migrateId(progress.item.meta.id, progress.item.meta.type);
 
         if (!migratedId) return null;
 
@@ -60,20 +48,13 @@ export async function migrateV3Videos(
         clone.item.meta.id = migratedId;
         if (clone.item.series) {
           const series = clone.item.series;
-          const details = await getMediaDetails(
-            migratedId,
-            TMDBContentTypes.TV,
-          );
+          const details = await getMediaDetails(migratedId, TMDBContentTypes.TV);
 
-          const season = details.seasons.find(
-            (v) => v.season_number === series.season,
-          );
+          const season = details.seasons.find((v) => v.season_number === series.season);
           if (!season) return null;
 
           const episodes = await getEpisodes(migratedId, season.season_number);
-          const episode = episodes.find(
-            (v) => v.episode_number === series.episode,
-          );
+          const episode = episodes.find((v) => v.episode_number === series.episode);
           if (!episode) return null;
 
           clone.item.series.episodeId = episode.id.toString();

@@ -11,12 +11,5 @@ export function Pause(props: { iconSizeClass?: string; className?: string }) {
     else display?.pause();
   };
 
-  return (
-    <VideoPlayerButton
-      className={props.className}
-      iconSizeClass={props.iconSizeClass}
-      onClick={toggle}
-      icon={isPaused ? Icons.PLAY : Icons.PAUSE}
-    />
-  );
+  return <VideoPlayerButton className={props.className} iconSizeClass={props.iconSizeClass} onClick={toggle} icon={isPaused ? Icons.PLAY : Icons.PAUSE} />;
 }

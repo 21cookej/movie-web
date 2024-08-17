@@ -125,9 +125,7 @@
     "titles": {
       "day": {
         "default": "Mitä haluaisit katsoa tänä iltapäivänä?",
-        "extra": [
-          "Onko seikkailunhaluinen olo? Jurassic Park saattaa olla täydellinen valinta."
-        ]
+        "extra": ["Onko seikkailunhaluinen olo? Jurassic Park saattaa olla täydellinen valinta."]
       },
       "morning": {
         "default": "Mitä haluaisit katsoa tänä aamuna?",

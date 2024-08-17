@@ -50,25 +50,11 @@ export function KeyboardEvents() {
       time,
       router,
     };
-  }, [
-    setShowVolume,
-    setVolume,
-    toggleMute,
-    setIsRolling,
-    toggleLastUsed,
-    display,
-    mediaPlaying,
-    mediaProgress,
-    isSeeking,
-    isRolling,
-    time,
-    router,
-  ]);
+  }, [setShowVolume, setVolume, toggleMute, setIsRolling, toggleLastUsed, display, mediaPlaying, mediaProgress, isSeeking, isRolling, time, router]);
 
   useEffect(() => {
     const keyEventHandler = (evt: KeyboardEvent) => {
-      if (evt.target && (evt.target as HTMLInputElement).nodeName === "INPUT")
-        return;
+      if (evt.target && (evt.target as HTMLInputElement).nodeName === "INPUT") return;
 
       const k = evt.key;
       const keyL = evt.key.toLowerCase();
@@ -82,14 +68,8 @@ export function KeyboardEvents() {
           dataRef.current.setShowVolume(false);
         }, 3e3);
       }
-      if (k === "ArrowUp")
-        dataRef.current.setVolume(
-          (dataRef.current.mediaPlaying?.volume || 0) + 0.15,
-        );
-      if (k === "ArrowDown")
-        dataRef.current.setVolume(
-          (dataRef.current.mediaPlaying?.volume || 0) - 0.15,
-        );
+      if (k === "ArrowUp") dataRef.current.setVolume((dataRef.current.mediaPlaying?.volume || 0) + 0.15);
+      if (k === "ArrowDown") dataRef.current.setVolume((dataRef.current.mediaPlaying?.volume || 0) - 0.15);
       if (keyL === "m") dataRef.current.toggleMute();
 
       // Video playback speed
@@ -103,25 +83,16 @@ export function KeyboardEvents() {
       }
 
       // Video progress
-      if (k === "ArrowRight")
-        dataRef.current.display?.setTime(dataRef.current.time + 5);
-      if (k === "ArrowLeft")
-        dataRef.current.display?.setTime(dataRef.current.time - 5);
-      if (keyL === "j")
-        dataRef.current.display?.setTime(dataRef.current.time - 10);
-      if (keyL === "l")
-        dataRef.current.display?.setTime(dataRef.current.time + 10);
-      if (k === "." && dataRef.current.mediaPlaying?.isPaused)
-        dataRef.current.display?.setTime(dataRef.current.time + 1);
-      if (k === "," && dataRef.current.mediaPlaying?.isPaused)
-        dataRef.current.display?.setTime(dataRef.current.time - 1);
+      if (k === "ArrowRight") dataRef.current.display?.setTime(dataRef.current.time + 5);
+      if (k === "ArrowLeft") dataRef.current.display?.setTime(dataRef.current.time - 5);
+      if (keyL === "j") dataRef.current.display?.setTime(dataRef.current.time - 10);
+      if (keyL === "l") dataRef.current.display?.setTime(dataRef.current.time + 10);
+      if (k === "." && dataRef.current.mediaPlaying?.isPaused) dataRef.current.display?.setTime(dataRef.current.time + 1);
+      if (k === "," && dataRef.current.mediaPlaying?.isPaused) dataRef.current.display?.setTime(dataRef.current.time - 1);
 
       // Utils
       if (keyL === "f") dataRef.current.display?.toggleFullscreen();
-      if (k === " " || keyL === "k")
-        dataRef.current.display?.[
-          dataRef.current.mediaPlaying.isPaused ? "play" : "pause"
-        ]();
+      if (k === " " || keyL === "k") dataRef.current.display?.[dataRef.current.mediaPlaying.isPaused ? "play" : "pause"]();
       if (k === "Escape") dataRef.current.router.close();
 
       // captions

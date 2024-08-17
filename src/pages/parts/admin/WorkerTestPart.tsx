@@ -10,22 +10,11 @@ import { Divider } from "@/components/utils/Divider";
 import { Heading2 } from "@/components/utils/Text";
 import { getProxyUrls } from "@/utils/proxyUrls";
 
-export function WorkerItem(props: {
-  name: string;
-  errored?: boolean;
-  success?: boolean;
-  errorText?: string;
-}) {
+export function WorkerItem(props: { name: string; errored?: boolean; success?: boolean; errorText?: string }) {
   return (
     <div className="flex mb-2">
       <Icon
-        icon={
-          props.errored
-            ? Icons.WARNING
-            : props.success
-              ? Icons.CIRCLE_CHECK
-              : Icons.EYE_SLASH
-        }
+        icon={props.errored ? Icons.WARNING : props.success ? Icons.CIRCLE_CHECK : Icons.EYE_SLASH}
         className={classNames({
           "text-xl mr-2 mt-0.5": true,
           "text-video-scraping-error": props.errored,
@@ -48,9 +37,7 @@ export function WorkerTestPart() {
       url: v,
     }));
   }, []);
-  const [workerState, setWorkerState] = useState<
-    { id: string; status: "error" | "success"; error?: Error }[]
-  >([]);
+  const [workerState, setWorkerState] = useState<{ id: string; status: "error" | "success"; error?: Error }[]>([]);
 
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
@@ -73,11 +60,7 @@ export function WorkerTestPart() {
           });
           return;
         }
-        await singularProxiedFetch(
-          worker.url,
-          "https://postman-echo.com/get",
-          {},
-        );
+        await singularProxiedFetch(worker.url, "https://postman-echo.com/get", {});
         updateWorker(worker.id, {
           id: worker.id,
           status: "success",
@@ -106,27 +89,13 @@ export function WorkerTestPart() {
           const s = workerState.find((segment) => segment.id === v.id);
           const name = `Worker ${i + 1}`;
           if (!s) return <WorkerItem name={name} key={v.id} />;
-          if (s.status === "error")
-            return (
-              <WorkerItem
-                name={name}
-                errored
-                key={v.id}
-                errorText={s.error?.toString()}
-              />
-            );
-          if (s.status === "success")
-            return <WorkerItem name={name} success key={v.id} />;
+          if (s.status === "error") return <WorkerItem name={name} errored key={v.id} errorText={s.error?.toString()} />;
+          if (s.status === "success") return <WorkerItem name={name} success key={v.id} />;
           return <WorkerItem name={name} key={v.id} />;
         })}
         <Divider />
         <div className="flex justify-end">
-          <Button
-            theme="purple"
-            loading={testState.loading}
-            onClick={buttonDisabled ? undefined : runTests}
-            disabled={buttonDisabled}
-          >
+          <Button theme="purple" loading={testState.loading} onClick={buttonDisabled ? undefined : runTests} disabled={buttonDisabled}>
             Test workers
           </Button>
         </div>

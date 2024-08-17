@@ -1,16 +1,7 @@
-import {
-  Transition as HeadlessTransition,
-  TransitionClasses,
-} from "@headlessui/react";
+import { Transition as HeadlessTransition, TransitionClasses } from "@headlessui/react";
 import { CSSProperties, Fragment, ReactNode } from "react";
 
-export type TransitionAnimations =
-  | "slide-down"
-  | "slide-full-left"
-  | "slide-full-right"
-  | "slide-up"
-  | "fade"
-  | "none";
+export type TransitionAnimations = "slide-down" | "slide-full-left" | "slide-full-right" | "slide-up" | "fade" | "none";
 
 interface Props {
   show?: boolean;
@@ -22,10 +13,7 @@ interface Props {
   style?: CSSProperties;
 }
 
-function getClasses(
-  animation: TransitionAnimations,
-  duration: string,
-): TransitionClasses {
+function getClasses(animation: TransitionAnimations, duration: string): TransitionClasses {
   if (animation === "slide-down") {
     return {
       leave: `transition-[transform,opacity] ${duration}`,

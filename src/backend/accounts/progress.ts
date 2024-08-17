@@ -22,9 +22,7 @@ export interface ProgressInput {
   updatedAt?: string;
 }
 
-export function progressUpdateItemToInput(
-  item: ProgressUpdateItem,
-): ProgressInput {
+export function progressUpdateItemToInput(item: ProgressUpdateItem): ProgressInput {
   return {
     duration: item.progress?.duration ?? 0,
     watched: item.progress?.watched ?? 0,
@@ -42,10 +40,7 @@ export function progressUpdateItemToInput(
   };
 }
 
-export function progressMediaItemToInputs(
-  tmdbId: string,
-  item: ProgressMediaItem,
-): ProgressInput[] {
+export function progressMediaItemToInputs(tmdbId: string, item: ProgressMediaItem): ProgressInput[] {
   if (item.type === "show") {
     return Object.entries(item.episodes).flatMap(([_, episode]) => ({
       duration: item.progress?.duration ?? episode.progress.duration,
@@ -80,29 +75,16 @@ export function progressMediaItemToInputs(
   ];
 }
 
-export async function setProgress(
-  url: string,
-  account: AccountWithToken,
-  input: ProgressInput,
-) {
-  return ofetch<ProgressResponse>(
-    `/users/${account.userId}/progress/${input.tmdbId}`,
-    {
-      method: "PUT",
-      headers: getAuthHeaders(account.token),
-      baseURL: url,
-      body: input,
-    },
-  );
+export async function setProgress(url: string, account: AccountWithToken, input: ProgressInput) {
+  return ofetch<ProgressResponse>(`/users/${account.userId}/progress/${input.tmdbId}`, {
+    method: "PUT",
+    headers: getAuthHeaders(account.token),
+    baseURL: url,
+    body: input,
+  });
 }
 
-export async function removeProgress(
-  url: string,
-  account: AccountWithToken,
-  id: string,
-  episodeId?: string,
-  seasonId?: string,
-) {
+export async function removeProgress(url: string, account: AccountWithToken, id: string, episodeId?: string, seasonId?: string) {
   await ofetch(`/users/${account.userId}/progress/${id}`, {
     method: "DELETE",
     headers: getAuthHeaders(account.token),

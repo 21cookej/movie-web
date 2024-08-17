@@ -14,9 +14,7 @@ export interface Listener<T extends EventMap> {
 }
 
 export function makeEmitter<T extends EventMap>(): Emitter<T> {
-  const listeners: Partial<
-    Record<EventKey<T>, ((...params: any[]) => void)[]>
-  > = {};
+  const listeners: Partial<Record<EventKey<T>, ((...params: any[]) => void)[]>> = {};
 
   return {
     on(eventName, fn) {
@@ -24,8 +22,7 @@ export function makeEmitter<T extends EventMap>(): Emitter<T> {
       listeners[eventName]?.push(fn);
     },
     off(eventName, fn) {
-      listeners[eventName] =
-        listeners[eventName]?.filter((v) => v !== fn) ?? [];
+      listeners[eventName] = listeners[eventName]?.filter((v) => v !== fn) ?? [];
     },
     emit(eventName, params) {
       (listeners[eventName] ?? []).forEach((fn) => fn(params));

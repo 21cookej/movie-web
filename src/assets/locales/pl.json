@@ -120,33 +120,22 @@
       "noResults": "Nie mogliśmy niczego znaleźć!",
       "placeholder": {
         "default": "Co chciałbyś obejrzeć?",
-        "extra": [
-          "Co chcesz odkryć?",
-          "Co znajduje się na Twojej liście do obejrzenia?",
-          "Jaki jest twój ulubiony film?",
-          "Jaki jest twój ulubiony serial?"
-        ]
+        "extra": ["Co chcesz odkryć?", "Co znajduje się na Twojej liście do obejrzenia?", "Jaki jest twój ulubiony film?", "Jaki jest twój ulubiony serial?"]
       },
       "sectionTitle": "Wyniki wyszukiwania"
     },
     "titles": {
       "day": {
         "default": "Co chciałbyś obejrzeć dziś po południu?",
-        "extra": [
-          "Masz ochotę na przygodę? Park Jurajski może być idealnym wyborem."
-        ]
+        "extra": ["Masz ochotę na przygodę? Park Jurajski może być idealnym wyborem."]
       },
       "morning": {
         "default": "Co chciałbyś obejrzeć dziś rano?",
-        "extra": [
-          "Słyszałem że „Przed wschodem słońca” jest dobre"
-        ]
+        "extra": ["Słyszałem że „Przed wschodem słońca” jest dobre"]
       },
       "night": {
         "default": "Co chciałbyś obejrzeć dziś wieczorem?",
-        "extra": [
-          "Zmęczony? Słyszałem że „Egzorcysta” jest dobry."
-        ]
+        "extra": ["Zmęczony? Słyszałem że „Egzorcysta” jest dobry."]
       }
     }
   },

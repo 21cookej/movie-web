@@ -120,33 +120,22 @@
       "noResults": "Wir haben nichts gefunden!",
       "placeholder": {
         "default": "Was möchtest du schauen?",
-        "extra": [
-          "Was möchtest du entdecken?",
-          "Was ist auf deiner Merkliste?",
-          "Was ist dein Lieblingsfilm?",
-          "Was ist deine Lieblingsserie?"
-        ]
+        "extra": ["Was möchtest du entdecken?", "Was ist auf deiner Merkliste?", "Was ist dein Lieblingsfilm?", "Was ist deine Lieblingsserie?"]
       },
       "sectionTitle": "Suchergebnisse"
     },
     "titles": {
       "day": {
         "default": "Was würdest du diesem Nachmittag gerne schauen?",
-        "extra": [
-          "Lust auf ein Abenteuer? Dann ist Jurassic Park genau das Richtige."
-        ]
+        "extra": ["Lust auf ein Abenteuer? Dann ist Jurassic Park genau das Richtige."]
       },
       "morning": {
         "default": "Was würdest du diesen Morgen gerne schauen?",
-        "extra": [
-          "Before Sunrise soll gut sein"
-        ]
+        "extra": ["Before Sunrise soll gut sein"]
       },
       "night": {
         "default": "Was möchtest du diesen Abend gerne schauen?",
-        "extra": [
-          "Müde? Ich hab gehört The Exorcist soll gut sein."
-        ]
+        "extra": ["Müde? Ich hab gehört The Exorcist soll gut sein."]
       }
     }
   },

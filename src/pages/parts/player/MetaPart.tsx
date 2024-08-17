@@ -5,10 +5,7 @@ import type { AsyncReturnType } from "type-fest";
 
 import { isAllowedExtensionVersion } from "@/backend/extension/compatibility";
 import { extensionInfo, sendPage } from "@/backend/extension/messaging";
-import {
-  fetchMetadata,
-  setCachedMetadata,
-} from "@/backend/helpers/providerApi";
+import { fetchMetadata, setCachedMetadata } from "@/backend/helpers/providerApi";
 import { DetailedMeta, getMetaFromId } from "@/backend/metadata/getmeta";
 import { decodeTMDBId } from "@/backend/metadata/tmdb";
 import { MWMediaType } from "@/backend/metadata/types/mw";
@@ -29,8 +26,7 @@ export interface MetaPartProps {
 
 function isDisallowedMedia(id: string, type: MWMediaType): boolean {
   const disallowedEntries = conf().DISALLOWED_IDS.map((v) => v.split("-"));
-  if (disallowedEntries.find((entry) => id === entry[1] && type === entry[0]))
-    return true;
+  if (disallowedEntries.find((entry) => id === entry[1] && type === entry[0])) return true;
   return false;
 }
 
@@ -45,8 +41,7 @@ export function MetaPart(props: MetaPartProps) {
 
   const { error, value, loading } = useAsync(async () => {
     const info = await extensionInfo();
-    const isValidExtension =
-      info?.success && isAllowedExtensionVersion(info.version) && info.allowed;
+    const isValidExtension = info?.success && isAllowedExtensionVersion(info.version) && info.allowed;
 
     if (isValidExtension) {
       if (!info.hasPermission) throw new Error("extension-no-permission");
@@ -61,10 +56,7 @@ export function MetaPart(props: MetaPartProps) {
         throw new Error("failed-api-metadata");
       }
     } else {
-      setCachedMetadata([
-        ...getProviders().listSources(),
-        ...getProviders().listEmbeds(),
-      ]);
+      setCachedMetadata([...getProviders().listSources(), ...getProviders().listEmbeds()]);
     }
 
     // get media meta data
@@ -93,15 +85,10 @@ export function MetaPart(props: MetaPartProps) {
     // replace link with new link if youre not already on the right link
     let epId = params.episode;
     if (meta.meta.type === MWMediaType.SERIES) {
-      let ep = meta.meta.seasonData.episodes.find(
-        (v) => v.id === params.episode,
-      );
+      let ep = meta.meta.seasonData.episodes.find((v) => v.id === params.episode);
       if (!ep) ep = meta.meta.seasonData.episodes[0];
       epId = ep.id;
-      if (
-        params.season !== meta.meta.seasonData.id ||
-        params.episode !== ep.id
-      ) {
+      if (params.season !== meta.meta.seasonData.id || params.episode !== ep.id) {
         navigate(`/media/${params.media}/${meta.meta.seasonData.id}/${ep.id}`, {
           replace: true,
         });
@@ -115,9 +102,7 @@ export function MetaPart(props: MetaPartProps) {
     return (
       <ErrorLayout>
         <ErrorContainer>
-          <IconPill icon={Icons.WAND}>
-            {t("player.metadata.extensionPermission.badge")}
-          </IconPill>
+          <IconPill icon={Icons.WAND}>{t("player.metadata.extensionPermission.badge")}</IconPill>
           <Title>{t("player.metadata.extensionPermission.title")}</Title>
           <Paragraph>{t("player.metadata.extensionPermission.text")}</Paragraph>
           <Button
@@ -129,8 +114,7 @@ export function MetaPart(props: MetaPartProps) {
             }}
             theme="purple"
             padding="md:px-12 p-2.5"
-            className="mt-6"
-          >
+            className="mt-6">
             {t("player.metadata.extensionPermission.button")}
           </Button>
         </ErrorContainer>
@@ -142,17 +126,10 @@ export function MetaPart(props: MetaPartProps) {
     return (
       <ErrorLayout>
         <ErrorContainer>
-          <IconPill icon={Icons.DRAGON}>
-            {t("player.metadata.dmca.badge")}
-          </IconPill>
+          <IconPill icon={Icons.DRAGON}>{t("player.metadata.dmca.badge")}</IconPill>
           <Title>{t("player.metadata.dmca.title")}</Title>
           <Paragraph>{t("player.metadata.dmca.text")}</Paragraph>
-          <Button
-            href="/"
-            theme="purple"
-            padding="md:px-12 p-2.5"
-            className="mt-6"
-          >
+          <Button href="/" theme="purple" padding="md:px-12 p-2.5" className="mt-6">
             {t("player.metadata.failed.homeButton")}
           </Button>
         </ErrorContainer>
@@ -164,17 +141,10 @@ export function MetaPart(props: MetaPartProps) {
     return (
       <ErrorLayout>
         <ErrorContainer>
-          <IconPill icon={Icons.WAND}>
-            {t("player.metadata.failed.badge")}
-          </IconPill>
+          <IconPill icon={Icons.WAND}>{t("player.metadata.failed.badge")}</IconPill>
           <Title>{t("player.metadata.api.text")}</Title>
           <Paragraph>{t("player.metadata.api.title")}</Paragraph>
-          <Button
-            href="/"
-            theme="purple"
-            padding="md:px-12 p-2.5"
-            className="mt-6"
-          >
+          <Button href="/" theme="purple" padding="md:px-12 p-2.5" className="mt-6">
             {t("player.metadata.failed.homeButton")}
           </Button>
         </ErrorContainer>
@@ -186,17 +156,10 @@ export function MetaPart(props: MetaPartProps) {
     return (
       <ErrorLayout>
         <ErrorContainer>
-          <IconPill icon={Icons.WAND}>
-            {t("player.metadata.failed.badge")}
-          </IconPill>
+          <IconPill icon={Icons.WAND}>{t("player.metadata.failed.badge")}</IconPill>
           <Title>{t("player.metadata.failed.title")}</Title>
           <Paragraph>{t("player.metadata.failed.text")}</Paragraph>
-          <Button
-            href="/"
-            theme="purple"
-            padding="md:px-12 p-2.5"
-            className="mt-6"
-          >
+          <Button href="/" theme="purple" padding="md:px-12 p-2.5" className="mt-6">
             {t("player.metadata.failed.homeButton")}
           </Button>
         </ErrorContainer>
@@ -208,17 +171,10 @@ export function MetaPart(props: MetaPartProps) {
     return (
       <ErrorLayout>
         <ErrorContainer>
-          <IconPill icon={Icons.WAND}>
-            {t("player.metadata.notFound.badge")}
-          </IconPill>
+          <IconPill icon={Icons.WAND}>{t("player.metadata.notFound.badge")}</IconPill>
           <Title>{t("player.metadata.notFound.title")}</Title>
           <Paragraph>{t("player.metadata.notFound.text")}</Paragraph>
-          <Button
-            href="/"
-            theme="purple"
-            padding="md:px-12 p-2.5"
-            className="mt-6"
-          >
+          <Button href="/" theme="purple" padding="md:px-12 p-2.5" className="mt-6">
             {t("player.metadata.notFound.homeButton")}
           </Button>
         </ErrorContainer>

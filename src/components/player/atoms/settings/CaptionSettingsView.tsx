@@ -9,11 +9,7 @@ import { useOverlayRouter } from "@/hooks/useOverlayRouter";
 import { useProgressBar } from "@/hooks/useProgressBar";
 import { useSubtitleStore } from "@/stores/subtitles";
 
-export function ColorOption(props: {
-  color: string;
-  active?: boolean;
-  onClick: () => void;
-}) {
+export function ColorOption(props: { color: string; active?: boolean; onClick: () => void }) {
   return (
     <button
       type="button"
@@ -21,15 +17,9 @@ export function ColorOption(props: {
         "tabbable p-1.5 bg-video-context-buttonFocus rounded transition-colors duration-100",
         props.active ? "bg-opacity-100" : "bg-opacity-0 cursor-pointer",
       )}
-      onClick={props.onClick}
-    >
-      <div
-        className="w-6 h-6 rounded-full flex justify-center items-center"
-        style={{ backgroundColor: props.color }}
-      >
-        {props.active ? (
-          <Icon className="text-sm text-black" icon={Icons.CHECKMARK} />
-        ) : null}
+      onClick={props.onClick}>
+      <div className="w-6 h-6 rounded-full flex justify-center items-center" style={{ backgroundColor: props.color }}>
+        {props.active ? <Icon className="text-sm text-black" icon={Icons.CHECKMARK} /> : null}
       </div>
     </button>
   );
@@ -58,11 +48,7 @@ export function CaptionSetting(props: {
     [props],
   );
 
-  const { dragging, dragPercentage, dragMouseDown } = useProgressBar(
-    ref,
-    commit,
-    true,
-  );
+  const { dragging, dragPercentage, dragMouseDown } = useProgressBar(ref, commit, true);
 
   const [isFocused, setIsFocused] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -91,33 +77,19 @@ export function CaptionSetting(props: {
       <Menu.FieldTitle>{props.label}</Menu.FieldTitle>
       <div className="grid items-center grid-cols-[1fr,auto] gap-4">
         <div ref={ref}>
-          <div
-            className="group/progress w-full h-8 flex items-center cursor-pointer"
-            onMouseDown={dragMouseDown}
-            onTouchStart={dragMouseDown}
-          >
+          <div className="group/progress w-full h-8 flex items-center cursor-pointer" onMouseDown={dragMouseDown} onTouchStart={dragMouseDown}>
             <div
               dir="ltr"
               className={[
                 "relative w-full h-1 bg-video-context-slider bg-opacity-25 rounded-full transition-[height] duration-100 group-hover/progress:h-1.5",
                 dragging ? "!h-1.5" : "",
-              ].join(" ")}
-            >
+              ].join(" ")}>
               {/* Actual progress bar */}
               <div
                 className="absolute top-0 left-0 h-full rounded-full bg-video-context-sliderFilled flex justify-end items-center"
                 style={{
-                  width: `${
-                    Math.max(
-                      0,
-                      Math.min(
-                        1,
-                        dragging ? dragPercentage / 100 : currentPercentage,
-                      ),
-                    ) * 100
-                  }%`,
-                }}
-              >
+                  width: `${Math.max(0, Math.min(1, dragging ? dragPercentage / 100 : currentPercentage)) * 100}%`,
+                }}>
                 <div
                   className={[
                     "w-[1rem] min-w-[1rem] h-[1rem] border-[4px] border-video-context-sliderFilled rounded-full transform translate-x-1/2 bg-white transition-[transform] duration-100",
@@ -139,38 +111,22 @@ export function CaptionSetting(props: {
               onBlur={(e) => {
                 setIsFocused(false);
                 const num = Number((e.target as HTMLInputElement).value);
-                if (!Number.isNaN(num))
-                  props.onChange?.(
-                    (props.decimalsAllowed ?? 0) === 0 ? Math.round(num) : num,
-                  );
+                if (!Number.isNaN(num)) props.onChange?.((props.decimalsAllowed ?? 0) === 0 ? Math.round(num) : num);
               }}
               ref={inputRef}
-              onChange={(e) =>
-                setInputValue((e.target as HTMLInputElement).value)
-              }
+              onChange={(e) => setInputValue((e.target as HTMLInputElement).value)}
             />
           ) : (
             <div
               className="relative"
               onClick={(evt) => {
-                if ((evt.target as HTMLButtonElement).closest(".actions"))
-                  return;
+                if ((evt.target as HTMLButtonElement).closest(".actions")) return;
 
                 setInputValue(props.value.toFixed(props.decimalsAllowed ?? 0));
                 setIsFocused(true);
-              }}
-            >
-              <button
-                className={classNames(
-                  inputClasses,
-                  props.controlButtons ? "relative" : undefined,
-                )}
-                type="button"
-                tabIndex={0}
-              >
-                {textTransformer(
-                  props.value.toFixed(props.decimalsAllowed ?? 0),
-                )}
+              }}>
+              <button className={classNames(inputClasses, props.controlButtons ? "relative" : undefined)} type="button" tabIndex={0}>
+                {textTransformer(props.value.toFixed(props.decimalsAllowed ?? 0))}
               </button>
               {props.controlButtons ? (
                 <>
@@ -178,14 +134,9 @@ export function CaptionSetting(props: {
                     <button
                       type="button"
                       onClick={
-                        () =>
-                          props.onChange?.(
-                            props.value -
-                              1 / 10 ** (props.decimalsAllowed ?? 0),
-                          ) // Remove depending on the decimalsAllowed. If there's 1 decimal allowed, add 0.1. For 2, add 0.01, etc.
+                        () => props.onChange?.(props.value - 1 / 10 ** (props.decimalsAllowed ?? 0)) // Remove depending on the decimalsAllowed. If there's 1 decimal allowed, add 0.1. For 2, add 0.01, etc.
                       }
-                      className={arrowButtonClasses}
-                    >
+                      className={arrowButtonClasses}>
                       <Icon icon={Icons.CHEVRON_LEFT} />
                     </button>
                   </div>
@@ -193,14 +144,9 @@ export function CaptionSetting(props: {
                     <button
                       type="button"
                       onClick={
-                        () =>
-                          props.onChange?.(
-                            props.value +
-                              1 / 10 ** (props.decimalsAllowed ?? 0),
-                          ) // Add depending on the decimalsAllowed. If there's 1 decimal allowed, add 0.1. For 2, add 0.01, etc.
+                        () => props.onChange?.(props.value + 1 / 10 ** (props.decimalsAllowed ?? 0)) // Add depending on the decimalsAllowed. If there's 1 decimal allowed, add 0.1. For 2, add 0.01, etc.
                       }
-                      className={arrowButtonClasses}
-                    >
+                      className={arrowButtonClasses}>
                       <Icon icon={Icons.CHEVRON_RIGHT} />
                     </button>
                   </div>
@@ -228,9 +174,7 @@ export function CaptionSettingsView({ id }: { id: string }) {
 
   return (
     <>
-      <Menu.BackLink onClick={() => router.navigate("/captions")}>
-        {t("player.menus.subtitles.settings.backlink")}
-      </Menu.BackLink>
+      <Menu.BackLink onClick={() => router.navigate("/captions")}>{t("player.menus.subtitles.settings.backlink")}</Menu.BackLink>
       <Menu.Section className="space-y-6 pb-5">
         <CaptionSetting
           label={t("player.menus.subtitles.settings.delay")}
@@ -243,14 +187,9 @@ export function CaptionSettingsView({ id }: { id: string }) {
           controlButtons
         />
         <div className="flex justify-between items-center">
-          <Menu.FieldTitle>
-            {t("player.menus.subtitles.settings.fixCapitals")}
-          </Menu.FieldTitle>
+          <Menu.FieldTitle>{t("player.menus.subtitles.settings.fixCapitals")}</Menu.FieldTitle>
           <div className="flex justify-center items-center">
-            <Toggle
-              enabled={overrideCasing}
-              onClick={() => setOverrideCasing(!overrideCasing)}
-            />
+            <Toggle enabled={overrideCasing} onClick={() => setOverrideCasing(!overrideCasing)} />
           </div>
         </div>
         <Menu.Divider />
@@ -279,17 +218,10 @@ export function CaptionSettingsView({ id }: { id: string }) {
           value={styling.size * 100}
         />
         <div className="flex justify-between items-center">
-          <Menu.FieldTitle>
-            {t("settings.subtitles.colorLabel")}
-          </Menu.FieldTitle>
+          <Menu.FieldTitle>{t("settings.subtitles.colorLabel")}</Menu.FieldTitle>
           <div className="flex justify-center items-center">
             {colors.map((v) => (
-              <ColorOption
-                onClick={() => updateStyling({ color: v })}
-                color={v}
-                active={styling.color === v}
-                key={v}
-              />
+              <ColorOption onClick={() => updateStyling({ color: v })} color={v} active={styling.color === v} key={v} />
             ))}
           </div>
         </div>

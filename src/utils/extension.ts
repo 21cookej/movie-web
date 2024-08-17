@@ -1,13 +1,7 @@
 import { isAllowedExtensionVersion } from "@/backend/extension/compatibility";
 import { extensionInfo } from "@/backend/extension/messaging";
 
-export type ExtensionStatus =
-  | "unknown"
-  | "failed"
-  | "disallowed"
-  | "noperms"
-  | "outdated"
-  | "success";
+export type ExtensionStatus = "unknown" | "failed" | "disallowed" | "noperms" | "outdated" | "success";
 
 export async function getExtensionState(): Promise<ExtensionStatus> {
   const info = await extensionInfo();

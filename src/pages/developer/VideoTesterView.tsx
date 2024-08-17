@@ -84,22 +84,14 @@ export default function VideoTesterView() {
                     setSelectedItem={(item) => setSelected(item.id)}
                   />
                 </div>
-                <Button
-                  onClick={() => start(inputSource, selected as StreamType)}
-                >
-                  Start stream
-                </Button>
+                <Button onClick={() => start(inputSource, selected as StreamType)}>Start stream</Button>
               </div>
 
               <div className="flex-1">
                 <Title>Preset tests</Title>
                 <div className="grid grid-cols-[1fr,1fr] gap-2">
-                  <Button onClick={() => start(testStreams.hls, "hls")}>
-                    HLS test
-                  </Button>
-                  <Button onClick={() => start(testStreams.mp4, "mp4")}>
-                    MP4 test
-                  </Button>
+                  <Button onClick={() => start(testStreams.hls, "hls")}>HLS test</Button>
+                  <Button onClick={() => start(testStreams.mp4, "mp4")}>MP4 test</Button>
                 </div>
               </div>
             </div>

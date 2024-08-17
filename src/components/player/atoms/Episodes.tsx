@@ -22,11 +22,7 @@ import { useProgressStore } from "@/stores/progress";
 import { hasAired } from "../utils/aired";
 
 function CenteredText(props: { children: React.ReactNode }) {
-  return (
-    <div className="h-full w-full flex justify-center items-center p-8 text-center">
-      {props.children}
-    </div>
-  );
+  return <div className="h-full w-full flex justify-center items-center p-8 text-center">{props.children}</div>;
 }
 
 function useSeasonData(mediaId: string, seasonId: string) {
@@ -45,19 +41,10 @@ function useSeasonData(mediaId: string, seasonId: string) {
   return [state, seasons] as const;
 }
 
-function SeasonsView({
-  selectedSeason,
-  setSeason,
-}: {
-  selectedSeason: string;
-  setSeason: (id: string) => void;
-}) {
+function SeasonsView({ selectedSeason, setSeason }: { selectedSeason: string; setSeason: (id: string) => void }) {
   const { t } = useTranslation();
   const meta = usePlayerStore((s) => s.meta);
-  const [loadingState, seasons] = useSeasonData(
-    meta?.tmdbId ?? "",
-    selectedSeason,
-  );
+  const [loadingState, seasons] = useSeasonData(meta?.tmdbId ?? "", selectedSeason);
 
   let content: ReactNode = null;
   if (seasons) {
@@ -65,30 +52,19 @@ function SeasonsView({
       <Menu.Section className="pb-6">
         {seasons?.map((season) => {
           return (
-            <Menu.ChevronLink
-              key={season.id}
-              onClick={() => setSeason(season.id)}
-            >
+            <Menu.ChevronLink key={season.id} onClick={() => setSeason(season.id)}>
               {season.title}
             </Menu.ChevronLink>
           );
         })}
       </Menu.Section>
     );
-  } else if (loadingState.error)
-    content = (
-      <CenteredText>{t("player.menus.episodes.loadingError")}</CenteredText>
-    );
-  else if (loadingState.loading)
-    content = (
-      <CenteredText>{t("player.menus.episodes.loadingList")}</CenteredText>
-    );
+  } else if (loadingState.error) content = <CenteredText>{t("player.menus.episodes.loadingError")}</CenteredText>;
+  else if (loadingState.loading) content = <CenteredText>{t("player.menus.episodes.loadingList")}</CenteredText>;
 
   return (
     <Menu.CardWithScrollable>
-      <Menu.Title>
-        {meta?.title ?? t("player.menus.episodes.loadingTitle")}
-      </Menu.Title>
+      <Menu.Title>{meta?.title ?? t("player.menus.episodes.loadingTitle")}</Menu.Title>
       {content}
     </Menu.CardWithScrollable>
   );
@@ -128,41 +104,22 @@ function EpisodesView({
   if (!meta?.tmdbId) return null;
 
   let content: ReactNode = null;
-  if (loadingState.error)
-    content = (
-      <CenteredText>{t("player.menus.episodes.loadingError")}</CenteredText>
-    );
-  else if (loadingState.loading)
-    content = (
-      <CenteredText>{t("player.menus.episodes.loadingList")}</CenteredText>
-    );
+  if (loadingState.error) content = <CenteredText>{t("player.menus.episodes.loadingError")}</CenteredText>;
+  else if (loadingState.loading) content = <CenteredText>{t("player.menus.episodes.loadingList")}</CenteredText>;
   else if (loadingState.value) {
-    const hasUnairedEpisodes = loadingState.value.season.episodes.some(
-      (ep) => !hasAired(ep.air_date),
-    );
+    const hasUnairedEpisodes = loadingState.value.season.episodes.some((ep) => !hasAired(ep.air_date));
     content = (
       <Menu.ScrollToActiveSection className="pb-6">
         {loadingState.value.season.episodes.length === 0 ? (
-          <Menu.TextDisplay title="No episodes found">
-            {t("player.menus.episodes.emptyState")}
-          </Menu.TextDisplay>
+          <Menu.TextDisplay title="No episodes found">{t("player.menus.episodes.emptyState")}</Menu.TextDisplay>
         ) : null}
         {loadingState.value.season.episodes.map((ep) => {
-          const episodeProgress =
-            progress.items[meta?.tmdbId]?.episodes?.[ep.id];
+          const episodeProgress = progress.items[meta?.tmdbId]?.episodes?.[ep.id];
 
           let rightSide;
           if (episodeProgress) {
-            const percentage =
-              (episodeProgress.progress.watched /
-                episodeProgress.progress.duration) *
-              100;
-            rightSide = (
-              <ProgressRing
-                className="h-[18px] w-[18px] text-white"
-                percentage={percentage > 90 ? 100 : percentage}
-              />
-            );
+            const percentage = (episodeProgress.progress.watched / episodeProgress.progress.duration) * 100;
+            rightSide = <ProgressRing className="h-[18px] w-[18px] text-white" percentage={percentage > 90 ? 100 : percentage} />;
           }
 
           return (
@@ -171,28 +128,19 @@ function EpisodesView({
               onClick={() => playEpisode(ep.id)}
               active={ep.id === meta?.episode?.tmdbId}
               clickable={hasAired(ep.air_date)}
-              rightSide={rightSide}
-            >
+              rightSide={rightSide}>
               <Menu.LinkTitle>
                 <div
                   className={classNames(
                     "text-left flex items-center space-x-3 text-video-context-type-main",
-                    hasAired(ep.air_date) || ep.id === meta?.episode?.tmdbId
-                      ? ""
-                      : "text-opacity-25",
-                  )}
-                >
+                    hasAired(ep.air_date) || ep.id === meta?.episode?.tmdbId ? "" : "text-opacity-25",
+                  )}>
                   <span
                     className={classNames(
                       "p-0.5 px-2 rounded inline bg-video-context-hoverColor",
-                      ep.id === meta?.episode?.tmdbId
-                        ? "text-white bg-opacity-100"
-                        : "bg-opacity-50",
-                      hasAired(ep.air_date) || ep.id === meta?.episode?.tmdbId
-                        ? ""
-                        : "!bg-opacity-25",
-                    )}
-                  >
+                      ep.id === meta?.episode?.tmdbId ? "text-white bg-opacity-100" : "bg-opacity-50",
+                      hasAired(ep.air_date) || ep.id === meta?.episode?.tmdbId ? "" : "!bg-opacity-25",
+                    )}>
                     {t("player.menus.episodes.episodeBadge", {
                       episode: ep.number,
                     })}
@@ -203,24 +151,14 @@ function EpisodesView({
             </Menu.Link>
           );
         })}
-        {hasUnairedEpisodes ? (
-          <p>{t("player.menus.episodes.unairedEpisodes")}</p>
-        ) : null}
+        {hasUnairedEpisodes ? <p>{t("player.menus.episodes.unairedEpisodes")}</p> : null}
       </Menu.ScrollToActiveSection>
     );
   }
 
   return (
     <Menu.CardWithScrollable>
-      <Menu.BackLink
-        onClick={goBack}
-        rightSide={
-          <span>
-            {loadingState?.value?.season.title ||
-              t("player.menus.episodes.loadingTitle")}
-          </span>
-        }
-      >
+      <Menu.BackLink onClick={goBack} rightSide={<span>{loadingState?.value?.season.title || t("player.menus.episodes.loadingTitle")}</span>}>
         {t("player.menus.episodes.seasons")}
       </Menu.BackLink>
       {content}
@@ -228,13 +166,7 @@ function EpisodesView({
   );
 }
 
-function EpisodesOverlay({
-  id,
-  onChange,
-}: {
-  id: string;
-  onChange?: (meta: PlayerMeta) => void;
-}) {
+function EpisodesOverlay({ id, onChange }: { id: string; onChange?: (meta: PlayerMeta) => void }) {
   const router = useOverlayRouter(id);
   const meta = usePlayerStore((s) => s.meta);
   const [selectedSeason, setSelectedSeason] = useState("");
@@ -261,14 +193,7 @@ function EpisodesOverlay({
           <SeasonsView setSeason={setSeason} selectedSeason={selectedSeason} />
         </OverlayPage>
         <OverlayPage id={id} path="/episodes" width={343} height={431}>
-          {selectedSeason.length > 0 ? (
-            <EpisodesView
-              selectedSeason={selectedSeason}
-              id={id}
-              goBack={() => router.navigate("/")}
-              onChange={onChange}
-            />
-          ) : null}
+          {selectedSeason.length > 0 ? <EpisodesView selectedSeason={selectedSeason} id={id} goBack={() => router.navigate("/")} onChange={onChange} /> : null}
         </OverlayPage>
       </OverlayRouter>
     </Overlay>
@@ -296,10 +221,7 @@ export function Episodes() {
 
   return (
     <OverlayAnchor id={router.id}>
-      <VideoPlayerButton
-        onClick={() => router.open("/episodes")}
-        icon={Icons.EPISODES}
-      >
+      <VideoPlayerButton onClick={() => router.open("/episodes")} icon={Icons.EPISODES}>
         {t("player.menus.episodes.button")}
       </VideoPlayerButton>
     </OverlayAnchor>

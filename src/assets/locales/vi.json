@@ -125,21 +125,15 @@
     "titles": {
       "day": {
         "default": "Chiều nay bạn muốn coi gì?",
-        "extra": [
-          "Cảm thấy muốn phiêu lưu? Phim Công viên kỷ Jura có thể là sự lựa chọn hoàn hảo cho bạn."
-        ]
+        "extra": ["Cảm thấy muốn phiêu lưu? Phim Công viên kỷ Jura có thể là sự lựa chọn hoàn hảo cho bạn."]
       },
       "morning": {
         "default": "Sáng nay bạn muốn coi gì?",
-        "extra": [
-          "Tôi nghe nói rằng bộ phim Before Sunrise hay đấy"
-        ]
+        "extra": ["Tôi nghe nói rằng bộ phim Before Sunrise hay đấy"]
       },
       "night": {
         "default": "Đêm nay bạn muốn coi gì?",
-        "extra": [
-          "Cảm thấy mệt? Tôi nghe nói phim The Exorcist hay đấy."
-        ]
+        "extra": ["Cảm thấy mệt? Tôi nghe nói phim The Exorcist hay đấy."]
       }
     }
   },

@@ -5,11 +5,7 @@ import { genMnemonic } from "@/backend/accounts/crypto";
 import { Button } from "@/components/buttons/Button";
 import { PassphraseDisplay } from "@/components/form/PassphraseDisplay";
 import { Icon, Icons } from "@/components/Icon";
-import {
-  LargeCard,
-  LargeCardButtons,
-  LargeCardText,
-} from "@/components/layout/LargeCard";
+import { LargeCard, LargeCardButtons, LargeCardText } from "@/components/layout/LargeCard";
 
 interface PassphraseGeneratePartProps {
   onNext?: (mnemonic: string) => void;
@@ -21,10 +17,7 @@ export function PassphraseGeneratePart(props: PassphraseGeneratePartProps) {
 
   return (
     <LargeCard>
-      <LargeCardText
-        title={t("auth.generate.title")}
-        icon={<Icon icon={Icons.USER} />}
-      >
+      <LargeCardText title={t("auth.generate.title")} icon={<Icon icon={Icons.USER} />}>
         {t("auth.generate.description")}
       </LargeCardText>
       <PassphraseDisplay mnemonic={mnemonic} />

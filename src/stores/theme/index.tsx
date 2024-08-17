@@ -41,10 +41,7 @@ export const usePreviewThemeStore = create(
   })),
 );
 
-export function ThemeProvider(props: {
-  children?: ReactNode;
-  applyGlobal?: boolean;
-}) {
+export function ThemeProvider(props: { children?: ReactNode; applyGlobal?: boolean }) {
   const previewTheme = usePreviewThemeStore((s) => s.previewTheme);
   const theme = useThemeStore((s) => s.theme);
 

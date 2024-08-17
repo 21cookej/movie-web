@@ -22,24 +22,10 @@ export function mwFetch<T>(url: string, ops: P<T>[1] = {}): R<T> {
   return baseFetch<T>(url, ops);
 }
 
-export async function singularProxiedFetch<T>(
-  proxyUrl: string,
-  url: string,
-  ops: P<T>[1] = {},
-): R<T> {
+export async function singularProxiedFetch<T>(proxyUrl: string, url: string, ops: P<T>[1] = {}): R<T> {
   let combinedUrl = ops?.baseURL ?? "";
-  if (
-    combinedUrl.length > 0 &&
-    combinedUrl.endsWith("/") &&
-    url.startsWith("/")
-  )
-    combinedUrl += url.slice(1);
-  else if (
-    combinedUrl.length > 0 &&
-    !combinedUrl.endsWith("/") &&
-    !url.startsWith("/")
-  )
-    combinedUrl += `/${url}`;
+  if (combinedUrl.length > 0 && combinedUrl.endsWith("/") && url.startsWith("/")) combinedUrl += url.slice(1);
+  else if (combinedUrl.length > 0 && !combinedUrl.endsWith("/") && !url.startsWith("/")) combinedUrl += `/${url}`;
   else combinedUrl += url;
 
   const parsedUrl = new URL(combinedUrl);

@@ -8,10 +8,5 @@ export function Airplay() {
 
   if (!canAirplay) return null;
 
-  return (
-    <VideoPlayerButton
-      onClick={() => display?.startAirplay()}
-      icon={Icons.AIRPLAY}
-    />
-  );
+  return <VideoPlayerButton onClick={() => display?.startAirplay()} icon={Icons.AIRPLAY} />;
 }

@@ -1,9 +1,4 @@
-import {
-  JWContentTypes,
-  JWMediaResult,
-  JWSeasonMetaResult,
-  JW_IMAGE_BASE,
-} from "./types/justwatch";
+import { JWContentTypes, JWMediaResult, JWSeasonMetaResult, JW_IMAGE_BASE } from "./types/justwatch";
 import { MWMediaMeta, MWMediaType, MWSeasonMeta } from "./types/mw";
 
 export function mediaTypeToJW(type: MWMediaType): JWContentTypes {
@@ -18,10 +13,7 @@ export function JWMediaToMediaType(type: string): MWMediaType {
   throw new Error("unsupported type");
 }
 
-export function formatJWMeta(
-  media: JWMediaResult,
-  season?: JWSeasonMetaResult,
-): MWMediaMeta {
+export function formatJWMeta(media: JWMediaResult, season?: JWSeasonMetaResult): MWMediaMeta {
   const type = JWMediaToMediaType(media.object_type);
   let seasons: undefined | MWSeasonMeta[];
   if (type === MWMediaType.SERIES) {
@@ -40,9 +32,7 @@ export function formatJWMeta(
     title: media.title,
     id: media.id.toString(),
     year: media.original_release_year?.toString(),
-    poster: media.poster
-      ? `${JW_IMAGE_BASE}${media.poster.replace("{profile}", "s166")}`
-      : undefined,
+    poster: media.poster ? `${JW_IMAGE_BASE}${media.poster.replace("{profile}", "s166")}` : undefined,
     type,
     seasons: seasons as any,
     seasonData: season
@@ -66,9 +56,7 @@ export function JWMediaToId(media: MWMediaMeta): string {
   return ["JW", mediaTypeToJW(media.type), media.id].join("-");
 }
 
-export function decodeJWId(
-  paramId: string,
-): { id: string; type: MWMediaType } | null {
+export function decodeJWId(paramId: string): { id: string; type: MWMediaType } | null {
   const [prefix, type, id] = paramId.split("-", 3);
   if (prefix !== "JW") return null;
   let mediaType;

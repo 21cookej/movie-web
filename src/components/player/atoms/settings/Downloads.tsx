@@ -14,8 +14,7 @@ function useDownloadLink() {
   const source = usePlayerStore((s) => s.source);
   const currentQuality = usePlayerStore((s) => s.currentQuality);
   const url = useMemo(() => {
-    if (source?.type === "file" && currentQuality)
-      return source.qualities[currentQuality]?.url ?? null;
+    if (source?.type === "file" && currentQuality) return source.qualities[currentQuality]?.url ?? null;
     if (source?.type === "hls") return source.url;
     return null;
   }, [source, currentQuality]);
@@ -29,12 +28,8 @@ function StyleTrans(props: { k: string }) {
       components={{
         bold: <Menu.Highlight />,
         br: <br />,
-        ios_share: (
-          <Icon icon={Icons.IOS_SHARE} className="inline-block text-xl -mb-1" />
-        ),
-        ios_files: (
-          <Icon icon={Icons.IOS_FILES} className="inline-block text-xl -mb-1" />
-        ),
+        ios_share: <Icon icon={Icons.IOS_SHARE} className="inline-block text-xl -mb-1" />,
+        ios_files: <Icon icon={Icons.IOS_FILES} className="inline-block text-xl -mb-1" />,
       }}
     />
   );
@@ -49,9 +44,7 @@ export function DownloadView({ id }: { id: string }) {
   const sourceType = usePlayerStore((s) => s.source?.type);
   const selectedCaption = usePlayerStore((s) => s.caption?.selected);
   const openSubtitleDownload = useCallback(() => {
-    const dataUrl = selectedCaption
-      ? convertSubtitlesToSrtDataurl(selectedCaption?.srtData)
-      : null;
+    const dataUrl = selectedCaption ? convertSubtitlesToSrtDataurl(selectedCaption?.srtData) : null;
     if (!dataUrl) return;
     window.open(dataUrl);
   }, [selectedCaption]);
@@ -60,9 +53,7 @@ export function DownloadView({ id }: { id: string }) {
 
   return (
     <>
-      <Menu.BackLink onClick={() => router.navigate("/")}>
-        {t("player.menus.downloads.title")}
-      </Menu.BackLink>
+      <Menu.BackLink onClick={() => router.navigate("/")}>{t("player.menus.downloads.title")}</Menu.BackLink>
       <Menu.Section>
         <div>
           {sourceType === "hls" ? (
@@ -80,34 +71,18 @@ export function DownloadView({ id }: { id: string }) {
                   event.preventDefault();
 
                   copyToClipboard(downloadUrl);
-                }}
-              >
+                }}>
                 {t("player.menus.downloads.copyHlsPlaylist")}
               </Button>
-              <Button
-                className="w-full mt-2"
-                onClick={openSubtitleDownload}
-                disabled={!selectedCaption}
-                theme="secondary"
-              >
+              <Button className="w-full mt-2" onClick={openSubtitleDownload} disabled={!selectedCaption} theme="secondary">
                 {t("player.menus.downloads.downloadSubtitle")}
               </Button>
             </>
           ) : (
             <>
-              <Menu.ChevronLink onClick={() => router.navigate("/download/pc")}>
-                {t("player.menus.downloads.onPc.title")}
-              </Menu.ChevronLink>
-              <Menu.ChevronLink
-                onClick={() => router.navigate("/download/ios")}
-              >
-                {t("player.menus.downloads.onIos.title")}
-              </Menu.ChevronLink>
-              <Menu.ChevronLink
-                onClick={() => router.navigate("/download/android")}
-              >
-                {t("player.menus.downloads.onAndroid.title")}
-              </Menu.ChevronLink>
+              <Menu.ChevronLink onClick={() => router.navigate("/download/pc")}>{t("player.menus.downloads.onPc.title")}</Menu.ChevronLink>
+              <Menu.ChevronLink onClick={() => router.navigate("/download/ios")}>{t("player.menus.downloads.onIos.title")}</Menu.ChevronLink>
+              <Menu.ChevronLink onClick={() => router.navigate("/download/android")}>{t("player.menus.downloads.onAndroid.title")}</Menu.ChevronLink>
 
               <Menu.Divider />
 
@@ -118,13 +93,7 @@ export function DownloadView({ id }: { id: string }) {
               <Button className="w-full" href={downloadUrl} theme="purple">
                 {t("player.menus.downloads.downloadVideo")}
               </Button>
-              <Button
-                className="w-full mt-2"
-                onClick={openSubtitleDownload}
-                disabled={!selectedCaption}
-                theme="secondary"
-                download="subtitles.srt"
-              >
+              <Button className="w-full mt-2" onClick={openSubtitleDownload} disabled={!selectedCaption} theme="secondary" download="subtitles.srt">
                 {t("player.menus.downloads.downloadSubtitle")}
               </Button>
             </>
@@ -141,9 +110,7 @@ function AndroidExplanationView({ id }: { id: string }) {
 
   return (
     <>
-      <Menu.BackLink onClick={() => router.navigate("/download")}>
-        {t("player.menus.downloads.onAndroid.shortTitle")}
-      </Menu.BackLink>
+      <Menu.BackLink onClick={() => router.navigate("/download")}>{t("player.menus.downloads.onAndroid.shortTitle")}</Menu.BackLink>
       <Menu.Section>
         <Menu.Paragraph>
           <StyleTrans k="player.menus.downloads.onAndroid.1" />
@@ -159,9 +126,7 @@ function PCExplanationView({ id }: { id: string }) {
 
   return (
     <>
-      <Menu.BackLink onClick={() => router.navigate("/download")}>
-        {t("player.menus.downloads.onPc.shortTitle")}
-      </Menu.BackLink>
+      <Menu.BackLink onClick={() => router.navigate("/download")}>{t("player.menus.downloads.onPc.shortTitle")}</Menu.BackLink>
       <Menu.Section>
         <Menu.Paragraph>
           <StyleTrans k="player.menus.downloads.onPc.1" />

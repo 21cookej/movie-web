@@ -120,33 +120,22 @@
       "noResults": "Við gátum ekki fundið neitt!",
       "placeholder": {
         "default": "Hvað viltu horfa á?",
-        "extra": [
-          "Hvað viltu kanna?",
-          "Hvað er á áhorfslistanum þínum?",
-          "Hvað er uppáhalds bíómyndin þín?",
-          "Hvað er uppáhalds þáttaröðin þín?"
-        ]
+        "extra": ["Hvað viltu kanna?", "Hvað er á áhorfslistanum þínum?", "Hvað er uppáhalds bíómyndin þín?", "Hvað er uppáhalds þáttaröðin þín?"]
       },
       "sectionTitle": "Leitar niðurstöður"
     },
     "titles": {
       "day": {
         "default": "Hvað myndirðu vilja horfa á þetta kvöldið?",
-        "extra": [
-          "Fynnst þér þú vera ævintýralegur? Jurrasic Park gæti verið fullkomna valið."
-        ]
+        "extra": ["Fynnst þér þú vera ævintýralegur? Jurrasic Park gæti verið fullkomna valið."]
       },
       "morning": {
         "default": "Hvað myndirðu vilja horfa á þessum morgni?",
-        "extra": [
-          "Ég heyrði að Before Sunrise sé góð"
-        ]
+        "extra": ["Ég heyrði að Before Sunrise sé góð"]
       },
       "night": {
         "default": "Hvað myndirðu vilja horfa á í nótt?",
-        "extra": [
-          "Þreytt? Ég heyrði að The Exorcist sé góð."
-        ]
+        "extra": ["Þreytt? Ég heyrði að The Exorcist sé góð."]
       }
     }
   },

@@ -13,12 +13,7 @@ import { Heading2 } from "@/components/utils/Text";
 import { useBackendUrl } from "@/hooks/auth/useBackendUrl";
 import { useAuthStore } from "@/stores/auth";
 
-export function Device(props: {
-  name: string;
-  id: string;
-  isCurrent?: boolean;
-  onRemove?: () => void;
-}) {
+export function Device(props: { name: string; id: string; isCurrent?: boolean; onRemove?: () => void }) {
   const { t } = useTranslation();
   const url = useBackendUrl();
   const token = useAuthStore((s) => s.account?.token);
@@ -30,14 +25,9 @@ export function Device(props: {
   }, [url, token, props.id]);
 
   return (
-    <SettingsCard
-      className="flex justify-between items-center"
-      paddingClass="px-6 py-4"
-    >
+    <SettingsCard className="flex justify-between items-center" paddingClass="px-6 py-4">
       <div className="font-medium">
-        <SecondaryLabel>
-          {t("settings.account.devices.deviceNameLabel")}
-        </SecondaryLabel>
+        <SecondaryLabel>{t("settings.account.devices.deviceNameLabel")}</SecondaryLabel>
         <p className="text-white">{props.name}</p>
       </div>
       {!props.isCurrent ? (
@@ -49,12 +39,7 @@ export function Device(props: {
   );
 }
 
-export function DeviceListPart(props: {
-  loading?: boolean;
-  error?: boolean;
-  sessions: SessionResponse[];
-  onChange?: () => void;
-}) {
+export function DeviceListPart(props: { loading?: boolean; error?: boolean; sessions: SessionResponse[]; onChange?: () => void }) {
   const { t } = useTranslation();
   const seed = useAuthStore((s) => s.account?.seed);
   const sessions = props.sessions;
@@ -90,13 +75,7 @@ export function DeviceListPart(props: {
       ) : (
         <div className="space-y-5">
           {deviceListSorted.map((session) => (
-            <Device
-              name={session.name}
-              id={session.id}
-              key={session.id}
-              isCurrent={session.current}
-              onRemove={props.onChange}
-            />
+            <Device name={session.name} id={session.id} key={session.id} isCurrent={session.current} onRemove={props.onChange} />
           ))}
         </div>
       )}

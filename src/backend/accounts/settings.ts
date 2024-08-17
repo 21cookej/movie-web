@@ -17,11 +17,7 @@ export interface SettingsResponse {
   proxyUrls?: string[] | null;
 }
 
-export function updateSettings(
-  url: string,
-  account: AccountWithToken,
-  settings: SettingsInput,
-) {
+export function updateSettings(url: string, account: AccountWithToken, settings: SettingsInput) {
   return ofetch<SettingsResponse>(`/users/${account.userId}/settings`, {
     method: "PUT",
     body: settings,

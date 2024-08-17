@@ -99,10 +99,7 @@ function parseEventInput(inp: string): any {
   return JSON.parse(inp);
 }
 
-export async function connectServerSideEvents<T>(
-  url: string,
-  endEvents: string[],
-) {
+export async function connectServerSideEvents<T>(url: string, endEvents: string[]) {
   const apiToken = await getApiToken();
 
   // insert token, if its set
@@ -133,8 +130,7 @@ export async function connectServerSideEvents<T>(
     if (err.data) {
       const data = JSON.parse(err.data);
       let errObj = new Error("scrape error");
-      if (data.name === NotFoundError.name)
-        errObj = new NotFoundError("Notfound from server");
+      if (data.name === NotFoundError.name) errObj = new NotFoundError("Notfound from server");
       Object.assign(errObj, data);
       promReject(errObj);
       return;

@@ -1,11 +1,7 @@
 import { ScrapeMedia } from "@davidmorgan/providers";
 
 import { MakeSlice } from "@/stores/player/slices/types";
-import {
-  SourceQuality,
-  SourceSliceSource,
-  selectQuality,
-} from "@/stores/player/utils/qualities";
+import { SourceQuality, SourceSliceSource, selectQuality } from "@/stores/player/utils/qualities";
 import { useQualityStore } from "@/stores/quality";
 import { ValuesOf } from "@/utils/typeguard";
 
@@ -77,11 +73,7 @@ export interface SourceSlice {
   };
   meta: PlayerMeta | null;
   setStatus(status: PlayerStatus): void;
-  setSource(
-    stream: SourceSliceSource,
-    captions: CaptionListItem[],
-    startAt: number,
-  ): void;
+  setSource(stream: SourceSliceSource, captions: CaptionListItem[], startAt: number): void;
   switchQuality(quality: SourceQuality): void;
   setMeta(meta: PlayerMeta, status?: PlayerStatus): void;
   setCaption(caption: Caption | null): void;
@@ -152,11 +144,7 @@ export const createSourceSlice: MakeSlice<SourceSlice> = (set, get) => ({
       s.caption.selected = caption;
     });
   },
-  setSource(
-    stream: SourceSliceSource,
-    captions: CaptionListItem[],
-    startAt: number,
-  ) {
+  setSource(stream: SourceSliceSource, captions: CaptionListItem[], startAt: number) {
     let qualities: string[] = [];
     if (stream.type === "file") qualities = Object.keys(stream.qualities);
     const qualityPreferences = useQualityStore.getState();

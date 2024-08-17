@@ -20,10 +20,7 @@ export function useInitializePlayer() {
 
 export function useInitializeSource() {
   const source = usePlayerStore((s) => s.source);
-  const sourceIdentifier = useMemo(
-    () => (source ? JSON.stringify(source) : null),
-    [source],
-  );
+  const sourceIdentifier = useMemo(() => (source ? JSON.stringify(source) : null), [source]);
   const { selectLastUsedLanguageIfEnabled } = useCaptions();
 
   const funRef = useRef(selectLastUsedLanguageIfEnabled);

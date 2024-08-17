@@ -8,16 +8,5 @@ import { ProgressSlice } from "@/stores/player/slices/progress";
 import { SourceSlice } from "@/stores/player/slices/source";
 import { ThumbnailSlice } from "@/stores/player/slices/thumbnails";
 
-export type AllSlices = InterfaceSlice &
-  PlayingSlice &
-  ProgressSlice &
-  SourceSlice &
-  DisplaySlice &
-  CastingSlice &
-  ThumbnailSlice;
-export type MakeSlice<Slice> = StateCreator<
-  AllSlices,
-  [["zustand/immer", never]],
-  [],
-  Slice
->;
+export type AllSlices = InterfaceSlice & PlayingSlice & ProgressSlice & SourceSlice & DisplaySlice & CastingSlice & ThumbnailSlice;
+export type MakeSlice<Slice> = StateCreator<AllSlices, [["zustand/immer", never]], [], Slice>;

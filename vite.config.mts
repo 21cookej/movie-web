@@ -13,14 +13,7 @@ import { createHtmlPlugin } from "vite-plugin-html";
 import tailwind from "tailwindcss";
 import rtl from "postcss-rtlcss";
 
-const captioningPackages = [
-  "dompurify",
-  "htmlparser2",
-  "subsrt-ts",
-  "parse5",
-  "entities",
-  "fuse",
-];
+const captioningPackages = ["dompurify", "htmlparser2", "subsrt-ts", "parse5", "entities", "fuse"];
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd());
@@ -31,9 +24,7 @@ export default defineConfig(({ mode }) => {
       handlebars({
         vars: {
           opensearchEnabled: env.VITE_OPENSEARCH_ENABLED === "true",
-          routeDomain:
-            env.VITE_APP_DOMAIN +
-            (env.VITE_NORMAL_ROUTER !== "true" ? "/#" : ""),
+          routeDomain: env.VITE_APP_DOMAIN + (env.VITE_NORMAL_ROUTER !== "true" ? "/#" : ""),
           domain: env.VITE_APP_DOMAIN,
           env,
         },
@@ -41,8 +32,7 @@ export default defineConfig(({ mode }) => {
       createHtmlPlugin({
         inject: {
           data: {
-            adsScriptSrc:
-              `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${env.VITE_GOOGLE_ADS_ID}`,
+            adsScriptSrc: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${env.VITE_GOOGLE_ADS_ID}`,
           },
         },
       }),
@@ -70,11 +60,7 @@ export default defineConfig(({ mode }) => {
           maximumFileSizeToCacheInBytes: 4000000, // 4mb
           globIgnores: ["**ping.txt**"],
         },
-        includeAssets: [
-          "favicon.ico",
-          "apple-touch-icon.png",
-          "safari-pinned-tab.svg",
-        ],
+        includeAssets: ["favicon.ico", "apple-touch-icon.png", "safari-pinned-tab.svg"],
         manifest: {
           name: "movie-web",
           short_name: "movie-web",
@@ -127,10 +113,7 @@ export default defineConfig(({ mode }) => {
       rollupOptions: {
         output: {
           manualChunks(id: string) {
-            if (
-              id.includes("@sozialhelden+ietf-language-tags") ||
-              id.includes("country-language")
-            ) {
+            if (id.includes("@sozialhelden+ietf-language-tags") || id.includes("country-language")) {
               return "language-db";
             }
             if (id.includes("hls.js")) {
@@ -148,9 +131,7 @@ export default defineConfig(({ mode }) => {
             if (id.includes("Icon.tsx")) {
               return "Icons";
             }
-            const isCaptioningPackage = captioningPackages.some((packageName) =>
-              id.includes(packageName),
-            );
+            const isCaptioningPackage = captioningPackages.some((packageName) => id.includes(packageName));
             if (isCaptioningPackage) {
               return "caption-parsing";
             }
@@ -167,10 +148,7 @@ export default defineConfig(({ mode }) => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
-        "@sozialhelden/ietf-language-tags": path.resolve(
-          __dirname,
-          "./node_modules/@sozialhelden/ietf-language-tags/dist/cjs",
-        ),
+        "@sozialhelden/ietf-language-tags": path.resolve(__dirname, "./node_modules/@sozialhelden/ietf-language-tags/dist/cjs"),
       },
     },
 

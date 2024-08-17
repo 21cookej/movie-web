@@ -24,12 +24,7 @@ export function NotFoundPart() {
             <IconPill icon={Icons.EYE_SLASH}>{t("notFound.badge")}</IconPill>
             <Title>{t("notFound.title")}</Title>
             <Paragraph>{t("notFound.message")}</Paragraph>
-            <Button
-              href="/"
-              theme="purple"
-              padding="md:px-12 p-2.5"
-              className="mt-6"
-            >
+            <Button href="/" theme="purple" padding="md:px-12 p-2.5" className="mt-6">
               {t("notFound.goHome")}
             </Button>
           </ErrorContainer>

@@ -1,12 +1,4 @@
-import {
-  MouseEvent,
-  RefObject,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { MouseEvent, RefObject, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useProgressBar } from "@/hooks/useProgressBar";
 import { nearestImageAt } from "@/stores/player/slices/thumbnails";
@@ -44,23 +36,10 @@ function ThumbnailDisplay(props: { at: number; show: boolean }) {
         <div ref={ref}>
           <div
             style={{
-              transform: `translateX(${
-                offsets.offscreenLeft > 0
-                  ? offsets.offscreenLeft
-                  : -offsets.offscreenRight
-              }px)`,
-            }}
-          >
-            <img
-              src={currentThumbnail.data}
-              className="h-24 border rounded-xl border-gray-800"
-            />
-            <p className="text-center mt-1">
-              {formatSeconds(
-                Math.max(props.at, 0),
-                durationExceedsHour(props.at),
-              )}
-            </p>
+              transform: `translateX(${offsets.offscreenLeft > 0 ? offsets.offscreenLeft : -offsets.offscreenRight}px)`,
+            }}>
+            <img src={currentThumbnail.data} className="h-24 border rounded-xl border-gray-800" />
+            <p className="text-center mt-1">{formatSeconds(Math.max(props.at, 0), durationExceedsHour(props.at))}</p>
           </div>
         </div>
       </div>
@@ -106,10 +85,7 @@ export function ProgressBar() {
   const ref = useRef<HTMLDivElement>(null);
   const { mouseMove, mouseLeave, mousePos } = useMouseHoverPosition(ref);
 
-  const { dragging, dragPercentage, dragMouseDown } = useProgressBar(
-    ref,
-    commitTime,
-  );
+  const { dragging, dragPercentage, dragMouseDown } = useProgressBar(ref, commitTime);
   useEffect(() => {
     setSeeking(dragging);
   }, [setSeeking, dragging]);
@@ -125,12 +101,8 @@ export function ProgressBar() {
           className="absolute bottom-0"
           style={{
             left: `${mousePos}%`,
-          }}
-        >
-          <ThumbnailDisplay
-            at={Math.floor((mousePos / 100) * duration)}
-            show={mousePos > -1}
-          />
+          }}>
+          <ThumbnailDisplay at={Math.floor((mousePos / 100) * duration)} show={mousePos > -1} />
         </div>
       </div>
 
@@ -140,14 +112,12 @@ export function ProgressBar() {
           onMouseDown={dragMouseDown}
           onTouchStart={dragMouseDown}
           onMouseLeave={mouseLeave}
-          onMouseMove={mouseMove}
-        >
+          onMouseMove={mouseMove}>
           <div
             className={[
               "relative w-full h-1 bg-progress-background bg-opacity-25 rounded-full transition-[height] duration-100 group-hover:h-1.5",
               dragging ? "!h-1.5" : "",
-            ].join(" ")}
-          >
+            ].join(" ")}>
             {/* Pre-loaded content bar */}
             <div
               className="absolute top-0 left-0 h-full rounded-full bg-progress-preloaded bg-opacity-50 flex justify-end items-center"
@@ -160,17 +130,8 @@ export function ProgressBar() {
             <div
               className="absolute top-0 dir-neutral:left-0 h-full rounded-full bg-progress-filled flex justify-end items-center"
               style={{
-                width: `${
-                  Math.max(
-                    0,
-                    Math.min(
-                      1,
-                      dragging ? dragPercentage / 100 : time / duration,
-                    ),
-                  ) * 100
-                }%`,
-              }}
-            >
+                width: `${Math.max(0, Math.min(1, dragging ? dragPercentage / 100 : time / duration)) * 100}%`,
+              }}>
               <div
                 className={[
                   "w-[1rem] min-w-[1rem] h-[1rem] rounded-full transform translate-x-1/2 scale-0 group-hover:scale-100 bg-white transition-[transform] duration-100",

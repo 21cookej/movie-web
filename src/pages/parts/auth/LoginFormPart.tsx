@@ -6,11 +6,7 @@ import type { AsyncReturnType } from "type-fest";
 import { verifyValidMnemonic } from "@/backend/accounts/crypto";
 import { Button } from "@/components/buttons/Button";
 import { BrandPill } from "@/components/layout/BrandPill";
-import {
-  LargeCard,
-  LargeCardButtons,
-  LargeCardText,
-} from "@/components/layout/LargeCard";
+import { LargeCard, LargeCardButtons, LargeCardText } from "@/components/layout/LargeCard";
 import { MwLink } from "@/components/text/Link";
 import { AuthInputBox } from "@/components/text-inputs/AuthInputBox";
 import { useAuth } from "@/hooks/auth/useAuth";
@@ -31,12 +27,10 @@ export function LoginFormPart(props: LoginFormPartProps) {
 
   const [result, execute] = useAsyncFn(
     async (inputMnemonic: string, inputdevice: string) => {
-      if (!verifyValidMnemonic(inputMnemonic))
-        throw new Error(t("auth.login.validationError") ?? undefined);
+      if (!verifyValidMnemonic(inputMnemonic)) throw new Error(t("auth.login.validationError") ?? undefined);
 
       const validatedDevice = inputdevice.trim();
-      if (validatedDevice.length === 0)
-        throw new Error(t("auth.login.deviceLengthError") ?? undefined);
+      if (validatedDevice.length === 0) throw new Error(t("auth.login.deviceLengthError") ?? undefined);
 
       let account: AsyncReturnType<typeof login>;
       try {
@@ -47,13 +41,11 @@ export function LoginFormPart(props: LoginFormPartProps) {
           },
         });
       } catch (err) {
-        if ((err as any).status === 401)
-          throw new Error(t("auth.login.validationError") ?? undefined);
+        if ((err as any).status === 401) throw new Error(t("auth.login.validationError") ?? undefined);
         throw err;
       }
 
-      if (!account)
-        throw new Error(t("auth.login.validationError") ?? undefined);
+      if (!account) throw new Error(t("auth.login.validationError") ?? undefined);
 
       await importData(account, progressItems, bookmarkItems);
 
@@ -66,9 +58,7 @@ export function LoginFormPart(props: LoginFormPartProps) {
 
   return (
     <LargeCard top={<BrandPill backgroundClass="bg-[#161527]" />}>
-      <LargeCardText title={t("auth.login.title")}>
-        {t("auth.login.description")}
-      </LargeCardText>
+      <LargeCardText title={t("auth.login.title")}>{t("auth.login.description")}</LargeCardText>
       <div className="space-y-4">
         <AuthInputBox
           label={t("auth.login.passphraseLabel") ?? undefined}
@@ -85,19 +75,11 @@ export function LoginFormPart(props: LoginFormPartProps) {
           onChange={setDevice}
           placeholder={t("auth.deviceNamePlaceholder") ?? undefined}
         />
-        {result.error && !result.loading ? (
-          <p className="text-authentication-errorText">
-            {result.error.message}
-          </p>
-        ) : null}
+        {result.error && !result.loading ? <p className="text-authentication-errorText">{result.error.message}</p> : null}
       </div>
 
       <LargeCardButtons>
-        <Button
-          theme="purple"
-          loading={result.loading}
-          onClick={() => execute(mnemonic, device)}
-        >
+        <Button theme="purple" loading={result.loading} onClick={() => execute(mnemonic, device)}>
           {t("auth.login.submit")}
         </Button>
       </LargeCardButtons>

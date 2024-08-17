@@ -58,10 +58,7 @@ export interface DisplayInterface extends Listener<DisplayInterfaceEvents> {
   play(): void;
   pause(): void;
   load(ops: qualityChangeOptions): void;
-  changeQuality(
-    automaticQuality: boolean,
-    preferredQuality: SourceQuality | null,
-  ): void;
+  changeQuality(automaticQuality: boolean, preferredQuality: SourceQuality | null): void;
   changeAudioTrack(audioTrack: AudioTrack): void;
   processVideoElement(video: HTMLVideoElement): void;
   processContainerElement(container: HTMLElement): void;

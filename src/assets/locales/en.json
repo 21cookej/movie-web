@@ -120,21 +120,14 @@
       "noResults": "We couldn't find anything!",
       "placeholder": {
         "default": "What do you want to watch?",
-        "extra": [
-          "What do you want to explore?",
-          "What's on your watchlist?",
-          "What's your favorite movie?",
-          "What's your favorite series?"
-        ]
+        "extra": ["What do you want to explore?", "What's on your watchlist?", "What's your favorite movie?", "What's your favorite series?"]
       },
       "sectionTitle": "Search results"
     },
     "titles": {
       "day": {
         "default": "What would you like to watch this afternoon?",
-        "extra": [
-          "Feeling adventurous? Jurassic Park might be the perfect choice."
-        ]
+        "extra": ["Feeling adventurous? Jurassic Park might be the perfect choice."]
       },
       "morning": {
         "default": "What would you like to watch this morning?",

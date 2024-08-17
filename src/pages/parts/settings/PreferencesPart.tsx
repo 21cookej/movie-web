@@ -30,68 +30,38 @@ export function PreferencesPart(props: {
       leftIcon: <FlagIcon langCode={opt.code} />,
     }));
 
-  const selected = options.find(
-    (item) => item.id === getLocaleInfo(props.language)?.code,
-  );
+  const selected = options.find((item) => item.id === getLocaleInfo(props.language)?.code);
 
   return (
     <div className="space-y-12">
       <Heading1 border>{t("settings.preferences.title")}</Heading1>
       <div>
-        <p className="text-white font-bold mb-3">
-          {t("settings.preferences.language")}
-        </p>
-        <p className="max-w-[20rem] font-medium">
-          {t("settings.preferences.languageDescription")}
-        </p>
-        <Dropdown
-          options={options}
-          selectedItem={selected || options[0]}
-          setSelectedItem={(opt) => props.setLanguage(opt.id)}
-        />
+        <p className="text-white font-bold mb-3">{t("settings.preferences.language")}</p>
+        <p className="max-w-[20rem] font-medium">{t("settings.preferences.languageDescription")}</p>
+        <Dropdown options={options} selectedItem={selected || options[0]} setSelectedItem={(opt) => props.setLanguage(opt.id)} />
       </div>
 
       <div>
-        <p className="text-white font-bold mb-3">
-          {t("settings.preferences.thumbnail")}
-        </p>
-        <p className="max-w-[25rem] font-medium">
-          {t("settings.preferences.thumbnailDescription")}
-        </p>
+        <p className="text-white font-bold mb-3">{t("settings.preferences.thumbnail")}</p>
+        <p className="max-w-[25rem] font-medium">{t("settings.preferences.thumbnailDescription")}</p>
         <div
           onClick={() => props.setEnableThumbnails(!props.enableThumbnails)}
-          className="bg-dropdown-background hover:bg-dropdown-hoverBackground select-none my-4 cursor-pointer space-x-3 flex items-center max-w-[25rem] py-3 px-4 rounded-lg"
-        >
+          className="bg-dropdown-background hover:bg-dropdown-hoverBackground select-none my-4 cursor-pointer space-x-3 flex items-center max-w-[25rem] py-3 px-4 rounded-lg">
           <Toggle enabled={props.enableThumbnails} />
-          <p className="flex-1 text-white font-bold">
-            {t("settings.preferences.thumbnailLabel")}
-          </p>
+          <p className="flex-1 text-white font-bold">{t("settings.preferences.thumbnailLabel")}</p>
         </div>
       </div>
       <div>
-        <p className="text-white font-bold mb-3">
-          {t("settings.preferences.autoplay")}
-        </p>
-        <p className="max-w-[25rem] font-medium">
-          {t("settings.preferences.autoplayDescription")}
-        </p>
+        <p className="text-white font-bold mb-3">{t("settings.preferences.autoplay")}</p>
+        <p className="max-w-[25rem] font-medium">{t("settings.preferences.autoplayDescription")}</p>
         <div
-          onClick={() =>
-            allowAutoplay
-              ? props.setEnableAutoplay(!props.enableAutoplay)
-              : null
-          }
+          onClick={() => (allowAutoplay ? props.setEnableAutoplay(!props.enableAutoplay) : null)}
           className={classNames(
             "bg-dropdown-background hover:bg-dropdown-hoverBackground select-none my-4 cursor-pointer space-x-3 flex items-center max-w-[25rem] py-3 px-4 rounded-lg",
-            allowAutoplay
-              ? "cursor-pointer opacity-100 pointer-events-auto"
-              : "cursor-not-allowed opacity-50 pointer-events-none",
-          )}
-        >
+            allowAutoplay ? "cursor-pointer opacity-100 pointer-events-auto" : "cursor-not-allowed opacity-50 pointer-events-none",
+          )}>
           <Toggle enabled={props.enableAutoplay && allowAutoplay} />
-          <p className="flex-1 text-white font-bold">
-            {t("settings.preferences.autoplayLabel")}
-          </p>
+          <p className="flex-1 text-white font-bold">{t("settings.preferences.autoplayLabel")}</p>
         </div>
       </div>
     </div>

@@ -19,11 +19,7 @@ export function getAuthHeaders(token: string): Record<string, string> {
   };
 }
 
-export async function accountLogin(
-  url: string,
-  id: string,
-  deviceName: string,
-): Promise<LoginResponse> {
+export async function accountLogin(url: string, id: string, deviceName: string): Promise<LoginResponse> {
   return ofetch<LoginResponse>("/auth/login", {
     method: "POST",
     body: {

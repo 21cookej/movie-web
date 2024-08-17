@@ -67,20 +67,10 @@ export const useSubtitleStore = create(
       },
       updateStyling(newStyling) {
         set((s) => {
-          if (newStyling.backgroundOpacity !== undefined)
-            s.styling.backgroundOpacity = Math.min(
-              1,
-              Math.max(0, newStyling.backgroundOpacity),
-            );
-          if (newStyling.backgroundBlur !== undefined)
-            s.styling.backgroundBlur = Math.min(
-              1,
-              Math.max(0, newStyling.backgroundBlur),
-            );
-          if (newStyling.color !== undefined)
-            s.styling.color = newStyling.color.toLowerCase();
-          if (newStyling.size !== undefined)
-            s.styling.size = Math.min(10, Math.max(0.01, newStyling.size));
+          if (newStyling.backgroundOpacity !== undefined) s.styling.backgroundOpacity = Math.min(1, Math.max(0, newStyling.backgroundOpacity));
+          if (newStyling.backgroundBlur !== undefined) s.styling.backgroundBlur = Math.min(1, Math.max(0, newStyling.backgroundBlur));
+          if (newStyling.color !== undefined) s.styling.color = newStyling.color.toLowerCase();
+          if (newStyling.size !== undefined) s.styling.size = Math.min(10, Math.max(0.01, newStyling.size));
         });
       },
       setLanguage(lang) {

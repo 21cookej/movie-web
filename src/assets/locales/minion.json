@@ -124,9 +124,7 @@
     "titles": {
       "day": {
         "default": "What would you like to banana this banana?",
-        "extra": [
-          "Feeling banana? Jurassic banana banana banana banana perfect banana."
-        ]
+        "extra": ["Feeling banana? Jurassic banana banana banana banana perfect banana."]
       },
       "morning": {
         "default": "What would you like to banana this banana?",

@@ -32,10 +32,7 @@ export async function initializeOldStores() {
     const versions = internal.versions.sort((a, b) => a.version - b.version);
 
     const data = store._raw();
-    const dataVersion =
-      data["--version"] && typeof data["--version"] === "number"
-        ? data["--version"]
-        : 0;
+    const dataVersion = data["--version"] && typeof data["--version"] === "number" ? data["--version"] : 0;
 
     // Find which versions need to be used for migrations
     const relevantVersions = versions.filter((v) => v.version >= dataVersion);
@@ -45,18 +42,14 @@ export async function initializeOldStores() {
     try {
       for (const version of relevantVersions) {
         if (version.migrate) {
-          localStorage.setItem(
-            `BACKUP-v${version.version}-${internal.key}`,
-            JSON.stringify(mostRecentData),
-          );
+          localStorage.setItem(`BACKUP-v${version.version}-${internal.key}`, JSON.stringify(mostRecentData));
           mostRecentData = await version.migrate(mostRecentData);
         }
       }
     } catch (err) {
       console.error(`FAILED TO MIGRATE STORE ${internal.key}`, err);
       // reset store to lastest version create
-      mostRecentData =
-        relevantVersions[relevantVersions.length - 1].create?.() ?? {};
+      mostRecentData = relevantVersions[relevantVersions.length - 1].create?.() ?? {};
     }
 
     store.save(mostRecentData);
@@ -120,25 +113,20 @@ function buildStorageObject<T>(store: InternalStoreData): StoreRet<T> {
 }
 
 function assertStore(store: InternalStoreData) {
-  const versionListSorted = store.versions.sort(
-    (a, b) => a.version - b.version,
-  );
+  const versionListSorted = store.versions.sort((a, b) => a.version - b.version);
   versionListSorted.forEach((v, i, arr) => {
     if (i === 0) return;
-    if (v.version !== arr[i - 1].version + 1)
-      throw new Error("Version list of store is not incremental");
+    if (v.version !== arr[i - 1].version + 1) throw new Error("Version list of store is not incremental");
   });
   versionListSorted.forEach((v) => {
     if (v.version < 0) throw new Error("Versions cannot be negative");
   });
 
   // version zero must exist
-  if (versionListSorted[0]?.version !== 0)
-    throw new Error("Version 0 doesn't exist in version list of store");
+  if (versionListSorted[0]?.version !== 0) throw new Error("Version 0 doesn't exist in version list of store");
 
   // max version must have create function
-  if (!store.versions[store.versions.length - 1].create)
-    throw new Error(`Missing create function on latest version of store`);
+  if (!store.versions[store.versions.length - 1].create) throw new Error(`Missing create function on latest version of store`);
 
   // check storage string
   if (!store.key) throw new Error("storage key not set in store");
@@ -147,8 +135,7 @@ function assertStore(store: InternalStoreData) {
   const migrations = [...versionListSorted];
   migrations.pop();
   migrations.forEach((v) => {
-    if (!v.migrate)
-      throw new Error(`Migration missing on version ${v.version}`);
+    if (!v.migrate) throw new Error(`Migration missing on version ${v.version}`);
   });
 }
 

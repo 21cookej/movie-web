@@ -1,14 +1,7 @@
-import {
-  makeProviders,
-  makeStandardFetcher,
-  targets,
-} from "@davidmorgan/providers";
+import { makeProviders, makeStandardFetcher, targets } from "@davidmorgan/providers";
 
 import { isExtensionActiveCached } from "@/backend/extension/messaging";
-import {
-  makeExtensionFetcher,
-  makeLoadBalancedSimpleProxyFetcher,
-} from "@/backend/providers/fetchers";
+import { makeExtensionFetcher, makeLoadBalancedSimpleProxyFetcher } from "@/backend/providers/fetchers";
 
 export function getProviders() {
   if (isExtensionActiveCached()) {

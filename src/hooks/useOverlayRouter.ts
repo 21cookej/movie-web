@@ -15,10 +15,7 @@ function joinPath(path: string[]): string {
 export function useRouterAnchorUpdate(id: string) {
   const [route] = useQueryParam("r");
   const setAnchorPoint = useOverlayStore((s) => s.setAnchorPoint);
-  const routerActive = useMemo(
-    () => !!route && route.startsWith(`/${id}`),
-    [route, id],
-  );
+  const routerActive = useMemo(() => !!route && route.startsWith(`/${id}`), [route, id]);
 
   const update = useCallback(() => {
     if (!routerActive) return;
@@ -73,13 +70,8 @@ export function useInternalOverlayRouter(id: string) {
     if (!transition) return "none";
     const current = joinPath(splitPath(path, id));
 
-    if (current === transition.to && transition.from.startsWith(transition.to))
-      return "yes";
-    if (
-      current === transition.from &&
-      transition.to.startsWith(transition.from)
-    )
-      return "yes";
+    if (current === transition.to && transition.from.startsWith(transition.to)) return "yes";
+    if (current === transition.from && transition.to.startsWith(transition.from)) return "yes";
     return "no";
   }
 
@@ -107,9 +99,7 @@ export function useInternalOverlayRouter(id: string) {
     [id, setRoute, setTransition],
   );
 
-  const activeRoute = routerActive
-    ? joinPath(splitPath(route.slice(`/${id}`.length)))
-    : "/";
+  const activeRoute = routerActive ? joinPath(splitPath(route.slice(`/${id}`.length))) : "/";
 
   return {
     activeRoute,

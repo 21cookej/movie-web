@@ -4,11 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Icon, Icons } from "@/components/Icon";
 import { useBannerStore, useRegisterBanner } from "@/stores/banner";
 
-export function Banner(props: {
-  children: React.ReactNode;
-  type: "error";
-  id: string;
-}) {
+export function Banner(props: { children: React.ReactNode; type: "error"; id: string }) {
   const [ref] = useRegisterBanner<HTMLDivElement>(props.id);
   const hideBanner = useBannerStore((s) => s.hideBanner);
   const styles = {
@@ -20,20 +16,12 @@ export function Banner(props: {
 
   return (
     <div ref={ref}>
-      <div
-        className={[
-          styles[props.type],
-          "flex items-center justify-center p-1",
-        ].join(" ")}
-      >
+      <div className={[styles[props.type], "flex items-center justify-center p-1"].join(" ")}>
         <div className="flex items-center space-x-3">
           <Icon icon={icons[props.type]} />
           <div>{props.children}</div>
         </div>
-        <span
-          className="absolute right-4 hover:cursor-pointer"
-          onClick={() => hideBanner(props.id, true)}
-        >
+        <span className="absolute right-4 hover:cursor-pointer" onClick={() => hideBanner(props.id, true)}>
           <Icon icon={Icons.X} />
         </span>
       </div>

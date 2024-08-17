@@ -6,9 +6,7 @@ import { getLocaleInfo } from "@/utils/language";
 
 // Languages
 const langCodes = Object.keys(locales);
-const resources = Object.fromEntries(
-  Object.entries(locales).map((entry) => [entry[0], { translation: entry[1] }]),
-);
+const resources = Object.fromEntries(Object.entries(locales).map((entry) => [entry[0], { translation: entry[1] }]));
 i18n.use(initReactI18next).init({
   fallbackLng: "zh",
   resources,
@@ -19,8 +17,7 @@ i18n.use(initReactI18next).init({
 
 export const appLanguageOptions = langCodes.map((lang) => {
   const langObj = getLocaleInfo(lang);
-  if (!langObj)
-    throw new Error(`Language with code ${lang} cannot be found in database`);
+  if (!langObj) throw new Error(`Language with code ${lang} cannot be found in database`);
   return langObj;
 });
 

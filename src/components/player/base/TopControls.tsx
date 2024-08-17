@@ -5,14 +5,9 @@ import { useBannerSize } from "@/stores/banner";
 import { BannerLocation } from "@/stores/banner/BannerLocation";
 import { usePlayerStore } from "@/stores/player/store";
 
-export function TopControls(props: {
-  show?: boolean;
-  children: React.ReactNode;
-}) {
+export function TopControls(props: { show?: boolean; children: React.ReactNode }) {
   const bannerSize = useBannerSize("player");
-  const setHoveringAnyControls = usePlayerStore(
-    (s) => s.setHoveringAnyControls,
-  );
+  const setHoveringAnyControls = usePlayerStore((s) => s.setHoveringAnyControls);
 
   useEffect(() => {
     return () => {
@@ -39,13 +34,8 @@ export function TopControls(props: {
         className="pointer-events-auto pl-[calc(2rem+env(safe-area-inset-left))] pr-[calc(2rem+env(safe-area-inset-right))] pt-6 absolute top-0 w-full"
         style={{
           top: `${bannerSize}px`,
-        }}
-      >
-        <Transition
-          animation="slide-down"
-          show={props.show}
-          className="text-white"
-        >
+        }}>
+        <Transition animation="slide-down" show={props.show} className="text-white">
           {props.children}
         </Transition>
       </div>

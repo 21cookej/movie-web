@@ -23,38 +23,29 @@ export function migrateV4Videos(old: WatchedStoreData) {
       }
 
       // Add episodes
-      if (
-        oldItem.item.series &&
-        !newItems[oldItem.item.meta.id].episodes[oldItem.item.series.episodeId]
-      ) {
+      if (oldItem.item.series && !newItems[oldItem.item.meta.id].episodes[oldItem.item.series.episodeId]) {
         // Find episode ID (barely ever works)
-        const episodeTitle = oldItem.item.meta.seasonData.episodes.find(
-          (ep) => ep.number === oldItem.item.series?.episode,
-        )?.title;
+        const episodeTitle = oldItem.item.meta.seasonData.episodes.find((ep) => ep.number === oldItem.item.series?.episode)?.title;
 
         // Add season to season data
         newItems[oldItem.item.meta.id].seasons[oldItem.item.series.seasonId] = {
           id: oldItem.item.series.seasonId,
           number: oldItem.item.series.season,
-          title:
-            oldItem.item.meta.seasons.find(
-              (s) => s.number === oldItem.item.series?.season,
-            )?.title || "Unknown season",
+          title: oldItem.item.meta.seasons.find((s) => s.number === oldItem.item.series?.season)?.title || "Unknown season",
         };
 
         // Populate episode data
-        newItems[oldItem.item.meta.id].episodes[oldItem.item.series.episodeId] =
-          {
-            title: episodeTitle || "Unknown",
-            id: oldItem.item.series.episodeId,
-            number: oldItem.item.series.episode,
-            seasonId: oldItem.item.series.seasonId,
-            updatedAt: oldItem.watchedAt,
-            progress: {
-              duration: (100 / oldItem.percentage) * oldItem.progress,
-              watched: oldItem.progress,
-            },
-          };
+        newItems[oldItem.item.meta.id].episodes[oldItem.item.series.episodeId] = {
+          title: episodeTitle || "Unknown",
+          id: oldItem.item.series.episodeId,
+          number: oldItem.item.series.episode,
+          seasonId: oldItem.item.series.seasonId,
+          updatedAt: oldItem.watchedAt,
+          progress: {
+            duration: (100 / oldItem.percentage) * oldItem.progress,
+            watched: oldItem.progress,
+          },
+        };
       }
     } else {
       newItems[oldItem.item.meta.id] = {

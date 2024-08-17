@@ -47,8 +47,7 @@ export function TMDBTestPart() {
       return setStatus({
         hasTested: true,
         success: false,
-        errorText:
-          "Failed to call TMDB, double check API key and your internet connection",
+        errorText: "Failed to call TMDB, double check API key and your internet connection",
       });
     }
 
@@ -69,19 +68,13 @@ export function TMDBTestPart() {
               <p>Run the test to validate TMDB</p>
             ) : status.success ? (
               <p className="flex items-center">
-                <Icon
-                  icon={Icons.CIRCLE_CHECK}
-                  className="text-video-scraping-success mr-2"
-                />
+                <Icon icon={Icons.CIRCLE_CHECK} className="text-video-scraping-success mr-2" />
                 TMDB is working as expected
               </p>
             ) : (
               <>
                 <p className="text-white font-bold w-full mb-3 flex items-center gap-1">
-                  <Icon
-                    icon={Icons.CIRCLE_EXCLAMATION}
-                    className="text-video-scraping-error mr-2"
-                  />
+                  <Icon icon={Icons.CIRCLE_EXCLAMATION} className="text-video-scraping-error mr-2" />
                   TMDB is not working
                 </p>
                 <p>{status.errorText}</p>

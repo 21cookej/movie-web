@@ -23,12 +23,8 @@ export function AutoPlayStart() {
   return (
     <div
       onClick={handleClick}
-      className="group pointer-events-auto flex h-16 w-16 cursor-pointer items-center justify-center bg-video-autoPlay-background hover:bg-video-autoPlay-hover rounded-full text-white transition-[background-color,transform] hover:scale-125 active:scale-100"
-    >
-      <Icon
-        icon={Icons.PLAY}
-        className="text-2xl transition-transform group-hover:scale-125"
-      />
+      className="group pointer-events-auto flex h-16 w-16 cursor-pointer items-center justify-center bg-video-autoPlay-background hover:bg-video-autoPlay-hover rounded-full text-white transition-[background-color,transform] hover:scale-125 active:scale-100">
+      <Icon icon={Icons.PLAY} className="text-2xl transition-transform group-hover:scale-125" />
     </div>
   );
 }

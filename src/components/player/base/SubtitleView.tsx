@@ -1,12 +1,7 @@
 import classNames from "classnames";
 import { useMemo } from "react";
 
-import {
-  captionIsVisible,
-  makeQueId,
-  parseSubtitles,
-  sanitize,
-} from "@/components/player/utils/captions";
+import { captionIsVisible, makeQueId, parseSubtitles, sanitize } from "@/components/player/utils/captions";
 import { Transition } from "@/components/utils/Transition";
 import { usePlayerStore } from "@/stores/player/store";
 import { SubtitleStyling, useSubtitleStore } from "@/stores/subtitles";
@@ -15,15 +10,7 @@ const wordOverrides: Record<string, string> = {
   i: "I",
 };
 
-export function CaptionCue({
-  text,
-  styling,
-  overrideCasing,
-}: {
-  text?: string;
-  styling: SubtitleStyling;
-  overrideCasing: boolean;
-}) {
+export function CaptionCue({ text, styling, overrideCasing }: { text?: string; styling: SubtitleStyling; overrideCasing: boolean }) {
   const parsedHtml = useMemo(() => {
     let textToUse = text;
     if (overrideCasing && text) {
@@ -55,12 +42,8 @@ export function CaptionCue({
         color: styling.color,
         fontSize: `${(1.5 * styling.size).toFixed(2)}em`,
         backgroundColor: `rgba(0,0,0,${styling.backgroundOpacity.toFixed(2)})`,
-        backdropFilter:
-          styling.backgroundBlur !== 0
-            ? `blur(${Math.floor(styling.backgroundBlur * 64)}px)`
-            : "none",
-      }}
-    >
+        backdropFilter: styling.backgroundBlur !== 0 ? `blur(${Math.floor(styling.backgroundBlur * 64)}px)` : "none",
+      }}>
       <span
         // its sanitised a few lines up
         // eslint-disable-next-line react/no-danger
@@ -81,28 +64,17 @@ export function SubtitleRenderer() {
   const overrideCasing = useSubtitleStore((s) => s.overrideCasing);
   const delay = useSubtitleStore((s) => s.delay);
 
-  const parsedCaptions = useMemo(
-    () => (srtData ? parseSubtitles(srtData, language) : []),
-    [srtData, language],
-  );
+  const parsedCaptions = useMemo(() => (srtData ? parseSubtitles(srtData, language) : []), [srtData, language]);
 
   const visibileCaptions = useMemo(
-    () =>
-      parsedCaptions.filter(({ start, end }) =>
-        captionIsVisible(start, end, delay, videoTime),
-      ),
+    () => parsedCaptions.filter(({ start, end }) => captionIsVisible(start, end, delay, videoTime)),
     [parsedCaptions, videoTime, delay],
   );
 
   return (
     <div>
       {visibileCaptions.map(({ start, end, content }, i) => (
-        <CaptionCue
-          key={makeQueId(i, start, end)}
-          text={content}
-          styling={styling}
-          overrideCasing={overrideCasing}
-        />
+        <CaptionCue key={makeQueId(i, start, end)} text={content} styling={styling} overrideCasing={overrideCasing} />
       ))}
     </div>
   );
@@ -117,17 +89,9 @@ export function SubtitleView(props: { controlsShown: boolean }) {
   if (captionAsTrack || !caption || isCasting) return null;
 
   return (
-    <Transition
-      className="absolute inset-0 pointer-events-none"
-      animation="slide-up"
-      show
-    >
+    <Transition className="absolute inset-0 pointer-events-none" animation="slide-up" show>
       <div
-        className={classNames([
-          "text-white absolute flex w-full flex-col items-center transition-[bottom]",
-          props.controlsShown ? "bottom-24" : "bottom-12",
-        ])}
-      >
+        className={classNames(["text-white absolute flex w-full flex-col items-center transition-[bottom]", props.controlsShown ? "bottom-24" : "bottom-12"])}>
         <SubtitleRenderer />
       </div>
     </Transition>

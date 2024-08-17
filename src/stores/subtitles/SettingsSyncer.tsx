@@ -8,9 +8,7 @@ import { useSubtitleStore } from "@/stores/subtitles";
 const syncIntervalMs = 5 * 1000;
 
 export function SettingsSyncer() {
-  const importSubtitleLanguage = useSubtitleStore(
-    (s) => s.importSubtitleLanguage,
-  );
+  const importSubtitleLanguage = useSubtitleStore((s) => s.importSubtitleLanguage);
   const url = useBackendUrl();
 
   useEffect(() => {
@@ -19,8 +17,7 @@ export function SettingsSyncer() {
         if (!url) return;
         const state = useSubtitleStore.getState();
         const user = useAuthStore.getState();
-        if (state.lastSync.lastSelectedLanguage === state.lastSelectedLanguage)
-          return; // only sync if there is a difference
+        if (state.lastSync.lastSelectedLanguage === state.lastSelectedLanguage) return; // only sync if there is a difference
         if (!user.account) return;
         if (!state.lastSelectedLanguage) return;
         await updateSettings(url, user.account, {

@@ -5,10 +5,7 @@ import { OverlayAnchor } from "@/components/overlays/OverlayAnchor";
 import { Overlay } from "@/components/overlays/OverlayDisplay";
 import { OverlayPage } from "@/components/overlays/OverlayPage";
 import { OverlayRouter } from "@/components/overlays/OverlayRouter";
-import {
-  EmbedSelectionView,
-  SourceSelectionView,
-} from "@/components/player/atoms/settings/SourceSelectingView";
+import { EmbedSelectionView, SourceSelectionView } from "@/components/player/atoms/settings/SourceSelectingView";
 import { VideoPlayerButton } from "@/components/player/internals/Button";
 import { Menu } from "@/components/player/internals/ContextMenu";
 import { useOverlayRouter } from "@/hooks/useOverlayRouter";

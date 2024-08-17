@@ -1,23 +1,12 @@
 import fscreen from "fscreen";
 import Hls, { Level } from "hls.js";
 
-import {
-  RULE_IDS,
-  isExtensionActiveCached,
-  setDomainRule,
-} from "@/backend/extension/messaging";
-import {
-  DisplayInterface,
-  DisplayInterfaceEvents,
-} from "@/components/player/display/displayInterface";
+import { RULE_IDS, isExtensionActiveCached, setDomainRule } from "@/backend/extension/messaging";
+import { DisplayInterface, DisplayInterfaceEvents } from "@/components/player/display/displayInterface";
 import { handleBuffered } from "@/components/player/utils/handleBuffered";
 import { getMediaErrorDetails } from "@/components/player/utils/mediaErrorDetails";
 import { useLanguageStore } from "@/stores/language";
-import {
-  LoadableSource,
-  SourceQuality,
-  getPreferredQuality,
-} from "@/stores/player/utils/qualities";
+import { LoadableSource, SourceQuality, getPreferredQuality } from "@/stores/player/utils/qualities";
 import { processCdnLink } from "@/utils/cdn";
 import {
   canChangeVolume,
@@ -42,16 +31,12 @@ function hlsLevelToQuality(level?: Level): SourceQuality | null {
 }
 
 function qualityToHlsLevel(quality: SourceQuality): number | null {
-  const found = Object.entries(levelConversionMap).find(
-    (entry) => entry[1] === quality,
-  );
+  const found = Object.entries(levelConversionMap).find((entry) => entry[1] === quality);
   return found ? +found[0] : null;
 }
 
 function hlsLevelsToQualities(levels: Level[]): SourceQuality[] {
-  return levels
-    .map((v) => hlsLevelToQuality(v))
-    .filter((v): v is SourceQuality => !!v);
+  return levels.map((v) => hlsLevelToQuality(v)).filter((v): v is SourceQuality => !!v);
 }
 
 export function makeVideoElementDisplayInterface(): DisplayInterface {
@@ -68,17 +53,12 @@ export function makeVideoElementDisplayInterface(): DisplayInterface {
   let preferenceQuality: SourceQuality | null = null;
   let lastVolume = 1;
 
-  const languagePromises = new Map<
-    string,
-    (value: void | PromiseLike<void>) => void
-  >();
+  const languagePromises = new Map<string, (value: void | PromiseLike<void>) => void>();
 
   function reportLevels() {
     if (!hls) return;
     const levels = hls.levels;
-    const convertedLevels = levels
-      .map((v) => hlsLevelToQuality(v))
-      .filter((v): v is SourceQuality => !!v);
+    const convertedLevels = levels.map((v) => hlsLevelToQuality(v)).filter((v): v is SourceQuality => !!v);
     emit("qualities", convertedLevels);
   }
 
@@ -120,9 +100,7 @@ export function makeVideoElementDisplayInterface(): DisplayInterface {
         automaticQuality,
       });
       if (availableQuality) {
-        const levelIndex = hls.levels.findIndex(
-          (v) => v.height === qualityToHlsLevel(availableQuality),
-        );
+        const levelIndex = hls.levels.findIndex((v) => v.height === qualityToHlsLevel(availableQuality));
         if (levelIndex !== -1) {
           hls.currentLevel = levelIndex;
           hls.loadLevel = levelIndex;
@@ -186,9 +164,7 @@ export function makeVideoElementDisplayInterface(): DisplayInterface {
 
           if (isExtensionActiveCached()) {
             hls.on(Hls.Events.LEVEL_LOADED, async (_, data) => {
-              const chunkUrlsDomains = data.details.fragments.map(
-                (v) => new URL(v.url).hostname,
-              );
+              const chunkUrlsDomains = data.details.fragments.map((v) => new URL(v.url).hostname);
               const chunkUrls = [...new Set(chunkUrlsDomains)];
 
               await setDomainRule({
@@ -201,9 +177,7 @@ export function makeVideoElementDisplayInterface(): DisplayInterface {
               });
             });
             hls.on(Hls.Events.AUDIO_TRACK_LOADED, async (_, data) => {
-              const chunkUrlsDomains = data.details.fragments.map(
-                (v) => new URL(v.url).hostname,
-              );
+              const chunkUrlsDomains = data.details.fragments.map((v) => new URL(v.url).hostname);
               const chunkUrls = [...new Set(chunkUrlsDomains)];
 
               await setDomainRule({
@@ -265,46 +239,28 @@ export function makeVideoElementDisplayInterface(): DisplayInterface {
     videoElement.addEventListener("pause", () => emit("pause", undefined));
     videoElement.addEventListener("canplay", () => emit("loading", false));
     videoElement.addEventListener("waiting", () => emit("loading", true));
-    videoElement.addEventListener("volumechange", () =>
-      emit(
-        "volumechange",
-        videoElement?.muted ? 0 : (videoElement?.volume ?? 0),
-      ),
-    );
-    videoElement.addEventListener("timeupdate", () =>
-      emit("time", videoElement?.currentTime ?? 0),
-    );
+    videoElement.addEventListener("volumechange", () => emit("volumechange", videoElement?.muted ? 0 : (videoElement?.volume ?? 0)));
+    videoElement.addEventListener("timeupdate", () => emit("time", videoElement?.currentTime ?? 0));
     videoElement.addEventListener("loadedmetadata", () => {
-      if (
-        source?.type === "hls" &&
-        videoElement &&
-        canPlayHlsNatively(videoElement)
-      ) {
+      if (source?.type === "hls" && videoElement && canPlayHlsNatively(videoElement)) {
         emit("qualities", ["unknown"]);
         emit("changedquality", "unknown");
       }
       emit("duration", videoElement?.duration ?? 0);
     });
     videoElement.addEventListener("progress", () => {
-      if (videoElement)
-        emit(
-          "buffered",
-          handleBuffered(videoElement.currentTime, videoElement.buffered),
-        );
+      if (videoElement) emit("buffered", handleBuffered(videoElement.currentTime, videoElement.buffered));
     });
     videoElement.addEventListener("webkitendfullscreen", () => {
       isFullscreen = false;
       emit("fullscreen", isFullscreen);
       if (!isFullscreen) emit("needstrack", false);
     });
-    videoElement.addEventListener(
-      "webkitplaybacktargetavailabilitychanged",
-      (e: any) => {
-        if (e.availability === "available") {
-          emit("canairplay", true);
-        }
-      },
-    );
+    videoElement.addEventListener("webkitplaybacktargetavailabilitychanged", (e: any) => {
+      if (e.availability === "available") {
+        emit("canairplay", true);
+      }
+    });
     videoElement.addEventListener("ratechange", () => {
       if (videoElement) emit("playbackrate", videoElement.playbackRate);
     });
@@ -452,11 +408,7 @@ export function makeVideoElementDisplayInterface(): DisplayInterface {
       if (!videoElement) return;
       if (canWebkitPictureInPicture()) {
         const webkitPlayer = videoElement as any;
-        webkitPlayer.webkitSetPresentationMode(
-          webkitPlayer.webkitPresentationMode === "picture-in-picture"
-            ? "inline"
-            : "picture-in-picture",
-        );
+        webkitPlayer.webkitSetPresentationMode(webkitPlayer.webkitPresentationMode === "picture-in-picture" ? "inline" : "picture-in-picture");
       }
       if (canPictureInPicture()) {
         if (videoElement !== document.pictureInPictureElement) {
@@ -512,9 +464,7 @@ export function makeVideoElementDisplayInterface(): DisplayInterface {
     },
     changeAudioTrack(track) {
       if (!hls) return;
-      const audioTrack = hls?.audioTracks.find(
-        (t) => t.id.toString() === track.id,
-      );
+      const audioTrack = hls?.audioTracks.find((t) => t.id.toString() === track.id);
       if (!audioTrack) return;
       hls.audioTrack = hls.audioTracks.indexOf(audioTrack);
       emit("changedaudiotrack", {

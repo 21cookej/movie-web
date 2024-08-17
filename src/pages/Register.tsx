@@ -4,25 +4,15 @@ import { useNavigate } from "react-router-dom";
 
 import { MetaResponse } from "@/backend/accounts/meta";
 import { SubPageLayout } from "@/pages/layouts/SubPageLayout";
-import {
-  AccountCreatePart,
-  AccountProfile,
-} from "@/pages/parts/auth/AccountCreatePart";
+import { AccountCreatePart, AccountProfile } from "@/pages/parts/auth/AccountCreatePart";
 import { PassphraseGeneratePart } from "@/pages/parts/auth/PassphraseGeneratePart";
 import { TrustBackendPart } from "@/pages/parts/auth/TrustBackendPart";
 import { VerifyPassphrase } from "@/pages/parts/auth/VerifyPassphrasePart";
 import { PageTitle } from "@/pages/parts/util/PageTitle";
 
-function CaptchaProvider(props: {
-  siteKey: string | null;
-  children: JSX.Element;
-}) {
+function CaptchaProvider(props: { siteKey: string | null; children: JSX.Element }) {
   if (!props.siteKey) return props.children;
-  return (
-    <GoogleReCaptchaProvider reCaptchaKey={props.siteKey}>
-      {props.children}
-    </GoogleReCaptchaProvider>
-  );
+  return <GoogleReCaptchaProvider reCaptchaKey={props.siteKey}>{props.children}</GoogleReCaptchaProvider>;
 }
 
 export function RegisterPage() {
@@ -39,11 +29,7 @@ export function RegisterPage() {
         {step === 0 ? (
           <TrustBackendPart
             onNext={(meta: MetaResponse) => {
-              setSiteKey(
-                meta.hasCaptcha && meta.captchaClientKey
-                  ? meta.captchaClientKey
-                  : null,
-              );
+              setSiteKey(meta.hasCaptcha && meta.captchaClientKey ? meta.captchaClientKey : null);
               setStep(1);
             }}
           />

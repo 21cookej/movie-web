@@ -7,12 +7,7 @@ import { BookmarkUpdateItem, useBookmarkStore } from "@/stores/bookmarks";
 
 const syncIntervalMs = 5 * 1000;
 
-async function syncBookmarks(
-  items: BookmarkUpdateItem[],
-  finish: (id: string) => void,
-  url: string,
-  account: AccountWithToken | null,
-) {
+async function syncBookmarks(items: BookmarkUpdateItem[], finish: (id: string) => void, url: string, account: AccountWithToken | null) {
   for (const item of items) {
     // complete it beforehand so it doesn't get handled while in progress
     finish(item.id);
@@ -38,10 +33,7 @@ async function syncBookmarks(
         continue;
       }
     } catch (err) {
-      console.error(
-        `Failed to sync bookmark: ${item.tmdbId} - ${item.action}`,
-        err,
-      );
+      console.error(`Failed to sync bookmark: ${item.tmdbId} - ${item.action}`, err);
     }
   }
 }
@@ -63,12 +55,7 @@ export function BookmarkSyncer() {
         if (!url) return;
         const state = useBookmarkStore.getState();
         const user = useAuthStore.getState();
-        await syncBookmarks(
-          state.updateQueue,
-          removeUpdateItem,
-          url,
-          user.account,
-        );
+        await syncBookmarks(state.updateQueue, removeUpdateItem, url, user.account);
       })();
     }, syncIntervalMs);
 

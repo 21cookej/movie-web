@@ -125,21 +125,15 @@
     "titles": {
       "day": {
         "default": "What be yer fancy for this fine afternoon's viewing, me heartie?",
-        "extra": [
-          "Feelin' adventurous? Pirates of the Caribbean might be the perfect choice."
-        ]
+        "extra": ["Feelin' adventurous? Pirates of the Caribbean might be the perfect choice."]
       },
       "morning": {
         "default": "What be yer fancy for this mornin's viewing, me heartie?",
-        "extra": [
-          "I be hearin' that 'Before Sunrise' be a fine choice, me heartie"
-        ]
+        "extra": ["I be hearin' that 'Before Sunrise' be a fine choice, me heartie"]
       },
       "night": {
         "default": "What be yer desire for the night's entertainment, me heartie?",
-        "extra": [
-          "Feelin' weary, are ye? I be hearin' 'The Exorcist' be a good pick to stir the spirits, me heartie."
-        ]
+        "extra": ["Feelin' weary, are ye? I be hearin' 'The Exorcist' be a good pick to stir the spirits, me heartie."]
       }
     }
   },

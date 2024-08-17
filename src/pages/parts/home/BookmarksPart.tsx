@@ -45,20 +45,12 @@ export function BookmarksPart() {
 
   return (
     <div>
-      <SectionHeading
-        title={t("home.bookmarks.sectionTitle") || "Bookmarks"}
-        icon={Icons.BOOKMARK}
-      >
+      <SectionHeading title={t("home.bookmarks.sectionTitle") || "Bookmarks"} icon={Icons.BOOKMARK}>
         <EditButton editing={editing} onEdit={setEditing} />
       </SectionHeading>
       <MediaGrid ref={gridRef}>
         {items.map((v) => (
-          <WatchedMediaCard
-            key={v.id}
-            media={v}
-            closable={editing}
-            onClose={() => removeBookmark(v.id)}
-          />
+          <WatchedMediaCard key={v.id} media={v} closable={editing} onClose={() => removeBookmark(v.id)} />
         ))}
       </MediaGrid>
     </div>

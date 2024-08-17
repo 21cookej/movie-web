@@ -15,11 +15,7 @@ export interface TurnstileStore {
     id: string;
   }[];
   cbs: ((token: string | null) => void)[];
-  setTurnstile(
-    id: string,
-    v: BoundTurnstileObject | null,
-    isInPopout: boolean,
-  ): void;
+  setTurnstile(id: string, v: BoundTurnstileObject | null, isInPopout: boolean): void;
   getToken(): Promise<string>;
   processToken(token: string | null, widgetId: string): void;
 }
@@ -81,10 +77,7 @@ export async function getTurnstileToken() {
   const turnstile = getTurnstile();
   try {
     // I hate turnstile
-    (window as any).turnstile.execute(
-      document.querySelector(`#${turnstile.id}`),
-      {},
-    );
+    (window as any).turnstile.execute(document.querySelector(`#${turnstile.id}`), {});
     const token = await useTurnstileStore.getState().getToken();
     reportCaptchaSolve(true);
     return token;
@@ -94,10 +87,7 @@ export async function getTurnstileToken() {
   }
 }
 
-export function TurnstileProvider(props: {
-  isInPopout?: boolean;
-  onUpdateShow?: (show: boolean) => void;
-}) {
+export function TurnstileProvider(props: { isInPopout?: boolean; onUpdateShow?: (show: boolean) => void }) {
   const siteKey = conf().TURNSTILE_KEY;
   const idRef = useRef<string | null>(null);
   const setTurnstile = useTurnstileStore((s) => s.setTurnstile);
@@ -107,8 +97,7 @@ export function TurnstileProvider(props: {
     <div
       className={classNames({
         hidden: !props.isInPopout,
-      })}
-    >
+      })}>
       <Turnstile
         sitekey={siteKey}
         onLoad={(widgetId, bound) => {

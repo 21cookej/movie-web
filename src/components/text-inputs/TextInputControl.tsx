@@ -19,25 +19,8 @@ export interface TextInputControlProps extends TextInputControlPropsNoLabel {
   label?: string;
 }
 
-export const TextInputControl = forwardRef<
-  HTMLInputElement,
-  TextInputControlProps
->(
-  (
-    {
-      onChange,
-      onUnFocus,
-      value,
-      label,
-      name,
-      autoComplete,
-      className,
-      placeholder,
-      onFocus,
-      passwordToggleable,
-    },
-    ref,
-  ) => {
+export const TextInputControl = forwardRef<HTMLInputElement, TextInputControlProps>(
+  ({ onChange, onUnFocus, value, label, name, autoComplete, className, placeholder, onFocus, passwordToggleable }, ref) => {
     let inputType = "text";
     const [showPassword, setShowPassword] = useState(true);
     if (passwordToggleable) inputType = showPassword ? "password" : "text";
@@ -55,16 +38,10 @@ export const TextInputControl = forwardRef<
           autoComplete={autoComplete}
           onBlur={() => onUnFocus && onUnFocus()}
           onFocus={() => onFocus?.()}
-          onKeyDown={(e) =>
-            e.key === "Enter" ? (e.target as HTMLInputElement).blur() : null
-          }
+          onKeyDown={(e) => (e.key === "Enter" ? (e.target as HTMLInputElement).blur() : null)}
         />
         {passwordToggleable ? (
-          <button
-            type="button"
-            className="absolute top-1/2 -translate-y-1/2 right-1 text-xl p-3"
-            onClick={() => setShowPassword(!showPassword)}
-          >
+          <button type="button" className="absolute top-1/2 -translate-y-1/2 right-1 text-xl p-3" onClick={() => setShowPassword(!showPassword)}>
             <Icon icon={showPassword ? Icons.EYE : Icons.EYE_SLASH} />
           </button>
         ) : null}

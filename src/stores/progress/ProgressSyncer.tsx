@@ -1,22 +1,13 @@
 import { useEffect } from "react";
 
-import {
-  progressUpdateItemToInput,
-  removeProgress,
-  setProgress,
-} from "@/backend/accounts/progress";
+import { progressUpdateItemToInput, removeProgress, setProgress } from "@/backend/accounts/progress";
 import { useBackendUrl } from "@/hooks/auth/useBackendUrl";
 import { AccountWithToken, useAuthStore } from "@/stores/auth";
 import { ProgressUpdateItem, useProgressStore } from "@/stores/progress";
 
 const syncIntervalMs = 5 * 1000;
 
-async function syncProgress(
-  items: ProgressUpdateItem[],
-  finish: (id: string) => void,
-  url: string,
-  account: AccountWithToken | null,
-) {
+async function syncProgress(items: ProgressUpdateItem[], finish: (id: string) => void, url: string, account: AccountWithToken | null) {
   for (const item of items) {
     // complete it beforehand so it doesn't get handled while in progress
     finish(item.id);
@@ -25,13 +16,7 @@ async function syncProgress(
 
     try {
       if (item.action === "delete") {
-        await removeProgress(
-          url,
-          account,
-          item.tmdbId,
-          item.seasonId,
-          item.episodeId,
-        );
+        await removeProgress(url, account, item.tmdbId, item.seasonId, item.episodeId);
         continue;
       }
 
@@ -40,10 +25,7 @@ async function syncProgress(
         continue;
       }
     } catch (err) {
-      console.error(
-        `Failed to sync progress: ${item.tmdbId} - ${item.action}`,
-        err,
-      );
+      console.error(`Failed to sync progress: ${item.tmdbId} - ${item.action}`, err);
     }
   }
 }
@@ -65,12 +47,7 @@ export function ProgressSyncer() {
         if (!url) return;
         const state = useProgressStore.getState();
         const user = useAuthStore.getState();
-        await syncProgress(
-          state.updateQueue,
-          removeUpdateItem,
-          url,
-          user.account,
-        );
+        await syncProgress(state.updateQueue, removeUpdateItem, url, user.account);
       })();
     }, syncIntervalMs);
 

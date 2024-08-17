@@ -21,16 +21,9 @@ export function EditButton(props: EditButtonProps) {
     <button
       type="button"
       onClick={onClick}
-      className="flex h-12 items-center overflow-hidden rounded-full bg-background-secondary px-4 py-2 text-white transition-[background-color,transform] hover:bg-background-secondaryHover active:scale-105"
-    >
+      className="flex h-12 items-center overflow-hidden rounded-full bg-background-secondary px-4 py-2 text-white transition-[background-color,transform] hover:bg-background-secondaryHover active:scale-105">
       <span ref={parent}>
-        {props.editing ? (
-          <span className="mx-2 sm:mx-4 whitespace-nowrap">
-            {t("home.mediaList.stopEditing")}
-          </span>
-        ) : (
-          <Icon icon={Icons.EDIT} />
-        )}
+        {props.editing ? <span className="mx-2 sm:mx-4 whitespace-nowrap">{t("home.mediaList.stopEditing")}</span> : <Icon icon={Icons.EDIT} />}
       </span>
     </button>
   );

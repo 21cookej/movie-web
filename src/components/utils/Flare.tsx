@@ -13,18 +13,9 @@ export interface FlareProps {
 const SIZE_DEFAULT = 200;
 const CSS_VAR_DEFAULT = "--colors-global-accentA";
 
-function Base(props: {
-  className?: string;
-  children?: ReactNode;
-  tabIndex?: number;
-  onKeyUp?: (e: React.KeyboardEvent<HTMLDivElement>) => void;
-}) {
+function Base(props: { className?: string; children?: ReactNode; tabIndex?: number; onKeyUp?: (e: React.KeyboardEvent<HTMLDivElement>) => void }) {
   return (
-    <div
-      tabIndex={props.tabIndex}
-      className={c(props.className, "relative")}
-      onKeyUp={props.onKeyUp}
-    >
+    <div tabIndex={props.tabIndex} className={c(props.className, "relative")} onKeyUp={props.onKeyUp}>
       {props.children}
     </div>
   );
@@ -44,14 +35,8 @@ function Light(props: FlareProps) {
       if (!outerRef.current) return;
       const rect = outerRef.current.getBoundingClientRect();
       const halfSize = size / 2;
-      outerRef.current.style.setProperty(
-        "--bg-x",
-        `${(e.clientX - rect.left - halfSize).toFixed(0)}px`,
-      );
-      outerRef.current.style.setProperty(
-        "--bg-y",
-        `${(e.clientY - rect.top - halfSize).toFixed(0)}px`,
-      );
+      outerRef.current.style.setProperty("--bg-x", `${(e.clientX - rect.left - halfSize).toFixed(0)}px`);
+      outerRef.current.style.setProperty("--bg-y", `${(e.clientY - rect.top - halfSize).toFixed(0)}px`);
     }
     document.addEventListener("mousemove", mouseMove);
 
@@ -61,27 +46,16 @@ function Light(props: FlareProps) {
   return (
     <div
       ref={outerRef}
-      className={c(
-        "flare-light pointer-events-none absolute inset-0 overflow-hidden opacity-0 transition-opacity duration-[400ms]",
-        props.className,
-        {
-          "!opacity-100": props.enabled ?? false,
-        },
-      )}
+      className={c("flare-light pointer-events-none absolute inset-0 overflow-hidden opacity-0 transition-opacity duration-[400ms]", props.className, {
+        "!opacity-100": props.enabled ?? false,
+      })}
       style={{
         backgroundImage: `radial-gradient(circle at center, rgba(var(${cssVar}) / 1), rgba(var(${cssVar}) / 0) 70%)`,
         backgroundPosition: `var(--bg-x) var(--bg-y)`,
         backgroundRepeat: "no-repeat",
         backgroundSize: `${size.toFixed(0)}px ${size.toFixed(0)}px`,
-      }}
-    >
-      <div
-        className={c(
-          "absolute inset-[1px] overflow-hidden",
-          props.className,
-          props.backgroundClass,
-        )}
-      >
+      }}>
+      <div className={c("absolute inset-[1px] overflow-hidden", props.className, props.backgroundClass)}>
         <div
           className="absolute inset-0 opacity-10"
           style={{

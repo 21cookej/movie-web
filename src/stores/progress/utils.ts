@@ -1,9 +1,4 @@
-import {
-  ProgressEpisodeItem,
-  ProgressItem,
-  ProgressMediaItem,
-  ProgressSeasonItem,
-} from "@/stores/progress";
+import { ProgressEpisodeItem, ProgressItem, ProgressMediaItem, ProgressSeasonItem } from "@/stores/progress";
 
 export interface ShowProgressResult {
   episode?: ProgressEpisodeItem;
@@ -46,25 +41,17 @@ function progressIsAcceptableRange(duration: number, watched: number): boolean {
   return true;
 }
 
-function isFirstEpisodeOfShow(
-  item: ProgressMediaItem,
-  episode: ProgressEpisodeItem,
-): boolean {
+function isFirstEpisodeOfShow(item: ProgressMediaItem, episode: ProgressEpisodeItem): boolean {
   const seasonId = episode.seasonId;
   const season = item.seasons[seasonId];
   return season.number === 1 && episode.number === 1;
 }
 
-export function shouldShowProgress(
-  item: ProgressMediaItem,
-): ShowProgressResult {
+export function shouldShowProgress(item: ProgressMediaItem): ShowProgressResult {
   // non shows just hide or show depending on acceptable ranges
   if (item.type !== "show") {
     return {
-      show: progressIsAcceptableRange(
-        item.progress?.duration ?? 0,
-        item.progress?.watched ?? 0,
-      ),
+      show: progressIsAcceptableRange(item.progress?.duration ?? 0, item.progress?.watched ?? 0),
       progress: item.progress ?? defaultProgress,
     };
   }
@@ -73,11 +60,7 @@ export function shouldShowProgress(
   // Otherwise you would lose episode progress
   const ep = Object.values(item.episodes)
     .sort((a, b) => b.updatedAt - a.updatedAt)
-    .filter(
-      (epi) =>
-        !progressIsNotStarted(epi.progress.duration, epi.progress.watched) ||
-        !isFirstEpisodeOfShow(item, epi),
-    )[0];
+    .filter((epi) => !progressIsNotStarted(epi.progress.duration, epi.progress.watched) || !isFirstEpisodeOfShow(item, epi))[0];
 
   const season = item.seasons[ep?.seasonId];
   if (!ep || !season)

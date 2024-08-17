@@ -13,10 +13,7 @@ import { ErrorLine } from "@/components/utils/ErrorLine";
 import { Heading2, Paragraph } from "@/components/utils/Text";
 import { useBackendUrl } from "@/hooks/auth/useBackendUrl";
 import { MinimalPageLayout } from "@/pages/layouts/MinimalPageLayout";
-import {
-  useNavigateOnboarding,
-  useRedirectBack,
-} from "@/pages/onboarding/onboardingHooks";
+import { useNavigateOnboarding, useRedirectBack } from "@/pages/onboarding/onboardingHooks";
 import { Link } from "@/pages/onboarding/utils";
 import { PageTitle } from "@/pages/parts/util/PageTitle";
 import { conf } from "@/setup/config";
@@ -35,12 +32,10 @@ export function OnboardingProxyPage() {
   const account = useAuthStore((s) => s.account);
 
   const [{ loading, error }, test] = useAsyncFn(async () => {
-    if (!url.startsWith("http"))
-      throw new Error("onboarding.proxy.input.errorInvalidUrl");
+    if (!url.startsWith("http")) throw new Error("onboarding.proxy.input.errorInvalidUrl");
     try {
       const res = await singularProxiedFetch(url, testUrl, {});
-      if (res.url !== testUrl)
-        throw new Error("onboarding.proxy.input.errorNotProxy");
+      if (res.url !== testUrl) throw new Error("onboarding.proxy.input.errorNotProxy");
       setProxySet([url]);
 
       if (account && backendUrl) {
@@ -60,12 +55,8 @@ export function OnboardingProxyPage() {
       <PageTitle subpage k="global.pages.onboarding" />
       <CenterContainer>
         <Stepper steps={2} current={2} className="mb-12" />
-        <Heading2 className="!mt-0 !text-3xl max-w-[435px]">
-          {t("onboarding.proxy.title")}
-        </Heading2>
-        <Paragraph className="max-w-[320px] !mb-5">
-          {t("onboarding.proxy.explainer")}
-        </Paragraph>
+        <Heading2 className="!mt-0 !text-3xl max-w-[435px]">{t("onboarding.proxy.title")}</Heading2>
+        <Paragraph className="max-w-[320px] !mb-5">{t("onboarding.proxy.explainer")}</Paragraph>
         {installLink ? (
           <Link href={installLink} target="_blank" className="mb-12">
             {t("onboarding.proxy.link")}

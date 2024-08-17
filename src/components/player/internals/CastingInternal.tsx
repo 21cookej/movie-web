@@ -48,11 +48,7 @@ export function CastingInternal() {
 
   useEffect(() => {
     if (isCasting) {
-      if (
-        dataRef.current.controller &&
-        dataRef.current.instance &&
-        dataRef.current.player
-      ) {
+      if (dataRef.current.controller && dataRef.current.instance && dataRef.current.player) {
         const newDisplay = makeChromecastDisplayInterface({
           controller: dataRef.current.controller,
           instance: dataRef.current.instance,
@@ -100,16 +96,10 @@ export function CastingInternal() {
         setIsCasting(e.value);
       }
     }
-    newControlller.addEventListener(
-      cast.framework.RemotePlayerEventType.IS_CONNECTED_CHANGED,
-      connectionChanged,
-    );
+    newControlller.addEventListener(cast.framework.RemotePlayerEventType.IS_CONNECTED_CHANGED, connectionChanged);
 
     return () => {
-      newControlller.removeEventListener(
-        cast.framework.RemotePlayerEventType.IS_CONNECTED_CHANGED,
-        connectionChanged,
-      );
+      newControlller.removeEventListener(cast.framework.RemotePlayerEventType.IS_CONNECTED_CHANGED, connectionChanged);
     };
   }, [available, setPlayer, setController, setInstance, setIsCasting]);
 

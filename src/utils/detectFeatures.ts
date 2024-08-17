@@ -2,9 +2,7 @@ import { detect } from "detect-browser";
 import fscreen from "fscreen";
 import Hls from "hls.js";
 
-export const isSafari = /^((?!chrome|android).)*safari/i.test(
-  navigator.userAgent,
-);
+export const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 let cachedVolumeResult: boolean | null = null;
 export async function canChangeVolume(): Promise<boolean> {
@@ -67,13 +65,7 @@ export function detectExtensionInstall(): ExtensionDetectionResult {
   if (res?.type !== "browser") return "unknown";
 
   if (res.name === "ios" || res.name === "ios-webview") return "ios";
-  if (
-    res.name === "chrome" ||
-    res.name === "chromium-webview" ||
-    res.name === "edge-chromium" ||
-    res.name === "opera"
-  )
-    return "chrome";
+  if (res.name === "chrome" || res.name === "chromium-webview" || res.name === "edge-chromium" || res.name === "opera") return "chrome";
   if (res.name === "firefox") return "firefox";
   return "unknown";
 }

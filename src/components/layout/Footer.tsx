@@ -36,8 +36,7 @@ function FooterLink(props: FooterLinkProps) {
       target={props.href ? "_blank" : undefined}
       rel="noreferrer"
       className="tabbable rounded py-2 px-3 inline-flex cursor-pointer items-center space-x-3 transition-colors duration-200 hover:text-type-emphasis"
-      onClick={props.to ? navigateTo : undefined}
-    >
+      onClick={props.to ? navigateTo : undefined}>
       <Icon icon={props.icon} className="text-2xl" />
       <span className="font-medium">{props.children}</span>
     </a>
@@ -70,9 +69,7 @@ export function Footer() {
           <p className="mt-4 lg:max-w-[400px]">{t("footer.tagline")}</p>
         </div>
         <div className="md:text-right">
-          <h3 className="font-semibold text-type-emphasis">
-            {t("footer.legal.disclaimer")}
-          </h3>
+          <h3 className="font-semibold text-type-emphasis">{t("footer.legal.disclaimer")}</h3>
           <p className="mt-3">{t("footer.legal.disclaimerText")}</p>
         </div>
         <div className="flex flex-wrap gap-[0.5rem] -ml-3">
@@ -95,16 +92,9 @@ export function Footer() {
   );
 }
 
-export function FooterView(props: {
-  children: React.ReactNode;
-  className?: string;
-}) {
+export function FooterView(props: { children: React.ReactNode; className?: string }) {
   return (
-    <div
-      className={["flex min-h-screen flex-col", props.className || ""].join(
-        " ",
-      )}
-    >
+    <div className={["flex min-h-screen flex-col", props.className || ""].join(" ")}>
       <div style={{ flex: "1 0 auto" }}>{props.children}</div>
       <Footer />
     </div>

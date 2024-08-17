@@ -26,9 +26,7 @@ export function ProfileEditModal(props: ProfileEditModalProps) {
     <Modal id={props.id}>
       <ModalCard>
         <div className="flex justify-between items-center mb-9">
-          <Heading2 className="!mt-0 !mb-0">
-            {t("settings.account.profile.title")}
-          </Heading2>
+          <Heading2 className="!mt-0 !mb-0">{t("settings.account.profile.title")}</Heading2>
           <Avatar
             profile={{
               colorA: props.colorA,
@@ -40,21 +38,9 @@ export function ProfileEditModal(props: ProfileEditModalProps) {
           />
         </div>
         <div className="space-y-6">
-          <ColorPicker
-            label={t("settings.account.profile.firstColor")}
-            value={props.colorA}
-            onInput={props.setColorA}
-          />
-          <ColorPicker
-            label={t("settings.account.profile.secondColor")}
-            value={props.colorB}
-            onInput={props.setColorB}
-          />
-          <IconPicker
-            label={t("settings.account.profile.userIcon")}
-            value={props.userIcon}
-            onInput={props.setUserIcon}
-          />
+          <ColorPicker label={t("settings.account.profile.firstColor")} value={props.colorA} onInput={props.setColorA} />
+          <ColorPicker label={t("settings.account.profile.secondColor")} value={props.colorB} onInput={props.setColorB} />
+          <IconPicker label={t("settings.account.profile.userIcon")} value={props.userIcon} onInput={props.setUserIcon} />
         </div>
         <div className="flex justify-center mt-8">
           <Button theme="purple" className="!px-20" onClick={props.close}>

@@ -19,9 +19,7 @@ export function useModal(id: string) {
 export function ModalCard(props: { children?: ReactNode }) {
   return (
     <div className="w-full max-w-[30rem] m-4">
-      <div className="w-full bg-modal-background rounded-xl p-8 pointer-events-auto">
-        {props.children}
-      </div>
+      <div className="w-full bg-modal-background rounded-xl p-8 pointer-events-auto">{props.children}</div>
     </div>
   );
 }
@@ -34,9 +32,7 @@ export function Modal(props: { id: string; children?: ReactNode }) {
       <Helmet>
         <html data-no-scroll />
       </Helmet>
-      <div className="flex absolute inset-0 items-center justify-center flex-col">
-        {props.children}
-      </div>
+      <div className="flex absolute inset-0 items-center justify-center flex-col">{props.children}</div>
     </OverlayPortal>
   );
 }

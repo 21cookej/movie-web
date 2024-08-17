@@ -19,10 +19,7 @@ function RouterBase(props: { id: string; children: ReactNode }) {
 
   const routes = useOverlayStore((s) => s.routes);
   const router = useInternalOverlayRouter(props.id);
-  const routeMeta = useMemo(
-    () => routes[router.currentRoute ?? ""],
-    [routes, router],
-  );
+  const routeMeta = useMemo(() => routes[router.currentRoute ?? ""], [routes, router]);
 
   const [dimensions, api] = useSpring(
     () => ({
@@ -46,9 +43,7 @@ function RouterBase(props: { id: string; children: ReactNode }) {
     };
     const dataStr = JSON.stringify(data);
     if (dataStr !== currentState.current) {
-      const oldData = currentState.current
-        ? JSON.parse(currentState.current)
-        : null;
+      const oldData = currentState.current ? JSON.parse(currentState.current) : null;
       currentState.current = dataStr;
       if (data.isMobile) {
         api.set({
@@ -72,11 +67,7 @@ function RouterBase(props: { id: string; children: ReactNode }) {
   }, [routeMeta?.height, routeMeta?.width, isMobile, api]);
 
   return (
-    <a.div
-      ref={ref}
-      style={dimensions}
-      className="overflow-hidden relative z-10 max-h-full"
-    >
+    <a.div ref={ref} style={dimensions} className="overflow-hidden relative z-10 max-h-full">
       <Flare.Base className="group w-full bg-video-context-border h-full rounded-2xl transition-colors duration-100 text-video-context-type-main">
         <Flare.Light
           flareSize={400}
@@ -84,9 +75,7 @@ function RouterBase(props: { id: string; children: ReactNode }) {
           backgroundClass="bg-video-context-background duration-100"
           className="rounded-2xl opacity-100"
         />
-        <Flare.Child className="pointer-events-auto relative transition-transform duration-100 h-full">
-          {props.children}
-        </Flare.Child>
+        <Flare.Child className="pointer-events-auto relative transition-transform duration-100 h-full">{props.children}</Flare.Child>
       </Flare.Base>
     </a.div>
   );

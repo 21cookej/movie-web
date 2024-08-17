@@ -20,13 +20,9 @@ function makeLoadbalancedList(getter: () => string[]) {
 }
 
 export const getLoadbalancedProxyUrl = makeLoadbalancedList(getProxyUrls);
-export const getLoadbalancedProviderApiUrl =
-  makeLoadbalancedList(getProviderApiUrls);
+export const getLoadbalancedProviderApiUrl = makeLoadbalancedList(getProviderApiUrls);
 
-async function fetchButWithApiTokens(
-  input: RequestInfo | URL,
-  init?: RequestInit | undefined,
-): Promise<Response> {
+async function fetchButWithApiTokens(input: RequestInfo | URL, init?: RequestInit | undefined): Promise<Response> {
   const apiToken = await getApiToken();
   const headers = new Headers(init?.headers);
   if (apiToken) headers.set("X-Token", apiToken);
@@ -46,25 +42,15 @@ async function fetchButWithApiTokens(
 
 export function makeLoadBalancedSimpleProxyFetcher() {
   const fetcher: Fetcher = async (a, b) => {
-    const currentFetcher = makeSimpleProxyFetcher(
-      getLoadbalancedProxyUrl(),
-      fetchButWithApiTokens,
-    );
+    const currentFetcher = makeSimpleProxyFetcher(getLoadbalancedProxyUrl(), fetchButWithApiTokens);
     return currentFetcher(a, b);
   };
   return fetcher;
 }
 
-function makeFinalHeaders(
-  readHeaders: string[],
-  headers: Record<string, string>,
-): Headers {
+function makeFinalHeaders(readHeaders: string[], headers: Record<string, string>): Headers {
   const lowercasedHeaders = readHeaders.map((v) => v.toLowerCase());
-  return new Headers(
-    Object.entries(headers).filter((entry) =>
-      lowercasedHeaders.includes(entry[0].toLowerCase()),
-    ),
-  );
+  return new Headers(Object.entries(headers).filter((entry) => lowercasedHeaders.includes(entry[0].toLowerCase())));
 }
 
 export function makeExtensionFetcher() {

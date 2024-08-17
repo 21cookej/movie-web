@@ -37,11 +37,7 @@ export function ProgressSaver() {
 
     let isDifferent = false;
     if (!lastSavedRef.current) isDifferent = true;
-    else if (
-      lastSavedRef.current?.duration !== progress.duration ||
-      lastSavedRef.current?.watched !== progress.time
-    )
-      isDifferent = true;
+    else if (lastSavedRef.current?.duration !== progress.duration || lastSavedRef.current?.watched !== progress.time) isDifferent = true;
 
     lastSavedRef.current = {
       duration: progress.duration,

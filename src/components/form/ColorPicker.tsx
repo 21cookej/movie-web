@@ -5,16 +5,10 @@ import { Icon, Icons } from "../Icon";
 const colors = ["#0A54FF", "#CF2E68", "#F9DD7F", "#7652DD", "#2ECFA8"];
 export const initialColor = colors[0];
 
-export function ColorPicker(props: {
-  label: string;
-  value: string;
-  onInput: (v: string) => void;
-}) {
+export function ColorPicker(props: { label: string; value: string; onInput: (v: string) => void }) {
   return (
     <div className="space-y-3">
-      {props.label ? (
-        <p className="font-bold text-white">{props.label}</p>
-      ) : null}
+      {props.label ? <p className="font-bold text-white">{props.label}</p> : null}
 
       <div className="flex gap-3">
         {colors.map((color) => {
@@ -28,8 +22,7 @@ export function ColorPicker(props: {
               )}
               onClick={() => props.onInput(color)}
               style={{ backgroundColor: color }}
-              key={color}
-            >
+              key={color}>
               {props.value === color ? <Icon icon={Icons.CHECKMARK} /> : null}
             </button>
           );

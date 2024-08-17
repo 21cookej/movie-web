@@ -12,25 +12,15 @@ export function makePercentage(num: number) {
   return Number(Math.max(0, Math.min(num, 100)).toFixed(2));
 }
 
-function isClickEvent(
-  evt: ActivityEvent,
-): evt is React.MouseEvent<HTMLElement> | MouseEvent {
-  return (
-    evt.type === "mousedown" ||
-    evt.type === "mouseup" ||
-    evt.type === "mousemove"
-  );
+function isClickEvent(evt: ActivityEvent): evt is React.MouseEvent<HTMLElement> | MouseEvent {
+  return evt.type === "mousedown" || evt.type === "mouseup" || evt.type === "mousemove";
 }
 
 const getEventX = (evt: ActivityEvent) => {
   return isClickEvent(evt) ? evt.pageX : evt.changedTouches[0].pageX;
 };
 
-export function useProgressBar(
-  barRef: RefObject<HTMLElement>,
-  commit: (percentage: number) => void,
-  commitImmediately = false,
-) {
+export function useProgressBar(barRef: RefObject<HTMLElement>, commit: (percentage: number) => void, commitImmediately = false) {
   const [mouseDown, setMouseDown] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
 
@@ -74,8 +64,7 @@ export function useProgressBar(
 
       if (!barRef.current) return;
       const rect = barRef.current.getBoundingClientRect();
-      const pos =
-        ((getEventX(ev) - rect.left) / barRef.current.offsetWidth) * 100;
+      const pos = ((getEventX(ev) - rect.left) / barRef.current.offsetWidth) * 100;
       setProgress(pos);
     },
     [setProgress, barRef],

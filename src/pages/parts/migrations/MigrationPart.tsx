@@ -16,9 +16,7 @@ export function MigrationPart() {
 
       {/* Content */}
       <Loading />
-      <p className="max-w-[19rem] mt-3 mb-12 text-type-secondary">
-        {t("screens.migration.inProgress")}
-      </p>
+      <p className="max-w-[19rem] mt-3 mb-12 text-type-secondary">{t("screens.migration.inProgress")}</p>
     </div>
   );
 }

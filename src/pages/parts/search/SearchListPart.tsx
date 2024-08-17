@@ -19,23 +19,10 @@ function SearchSuffix(props: { failed?: boolean; results?: number }) {
 
   return (
     <div className="mb-24 mt-40  flex flex-col items-center justify-center space-y-3 text-center">
-      <IconPatch
-        icon={icon}
-        className={`text-xl ${
-          props.failed ? "text-red-400" : "text-type-logo"
-        }`}
-      />
+      <IconPatch icon={icon} className={`text-xl ${props.failed ? "text-red-400" : "text-type-logo"}`} />
 
       {/* standard suffix */}
-      {!props.failed ? (
-        <div>
-          {(props.results ?? 0) > 0 ? (
-            <p>{t("home.search.allResults")}</p>
-          ) : (
-            <p>{t("home.search.noResults")}</p>
-          )}
-        </div>
-      ) : null}
+      {!props.failed ? <div>{(props.results ?? 0) > 0 ? <p>{t("home.search.allResults")}</p> : <p>{t("home.search.noResults")}</p>}</div> : null}
 
       {/* Error result */}
       {props.failed ? (
@@ -71,10 +58,7 @@ export function SearchListPart({ searchQuery }: { searchQuery: string }) {
     <div>
       {results.length > 0 ? (
         <div>
-          <SectionHeading
-            title={t("home.search.sectionTitle")}
-            icon={Icons.SEARCH}
-          />
+          <SectionHeading title={t("home.search.sectionTitle")} icon={Icons.SEARCH} />
           <MediaGrid>
             {results.map((v) => (
               <WatchedMediaCard key={v.id.toString()} media={v} />

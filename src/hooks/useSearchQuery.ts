@@ -5,11 +5,7 @@ function decode(query: string | null | undefined) {
   return query ? decodeURIComponent(query) : "";
 }
 
-export function useSearchQuery(): [
-  string,
-  (inp: string, force?: boolean) => void,
-  () => void,
-] {
+export function useSearchQuery(): [string, (inp: string, force?: boolean) => void, () => void] {
   const navigate = useNavigate();
   const params = useParams<{ query: string }>();
   const [search, setSearch] = useState(decode(params.query));

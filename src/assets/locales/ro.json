@@ -120,33 +120,22 @@
       "noResults": "Nu am putut găsi nimic!",
       "placeholder": {
         "default": "La ce dorești să te uiți?",
-        "extra": [
-          "Ce vrei să explorezi?",
-          "Ce e pe lista dvs. de urmărire?",
-          "Care e filmul tău preferat?",
-          "Care e serialul tău preferat?"
-        ]
+        "extra": ["Ce vrei să explorezi?", "Ce e pe lista dvs. de urmărire?", "Care e filmul tău preferat?", "Care e serialul tău preferat?"]
       },
       "sectionTitle": "Rezultate de căutare"
     },
     "titles": {
       "day": {
         "default": "La ce vrei să te uiți după-amiaza asta?",
-        "extra": [
-          "Te simți aventuros? Jurassic Park ar putea fi o alegere perfectă."
-        ]
+        "extra": ["Te simți aventuros? Jurassic Park ar putea fi o alegere perfectă."]
       },
       "morning": {
         "default": "La ce dorești să te in uiți dimineață aceasta?",
-        "extra": [
-          "Aud că Before Sunrise este bun"
-        ]
+        "extra": ["Aud că Before Sunrise este bun"]
       },
       "night": {
         "default": "La ce dorești să te uiți în astă seară?",
-        "extra": [
-          "Obosit? Aud că The Exorcist is good."
-        ]
+        "extra": ["Obosit? Aud că The Exorcist is good."]
       }
     }
   },

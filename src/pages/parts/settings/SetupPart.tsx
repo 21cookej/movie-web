@@ -10,10 +10,7 @@ import { Button } from "@/components/buttons/Button";
 import { Icon, Icons } from "@/components/Icon";
 import { Loading } from "@/components/layout/Loading";
 import { SettingsCard } from "@/components/layout/SettingsCard";
-import {
-  StatusCircle,
-  StatusCircleProps,
-} from "@/components/player/internals/StatusCircle";
+import { StatusCircle, StatusCircleProps } from "@/components/player/internals/StatusCircle";
 import { Heading3 } from "@/components/utils/Text";
 import { useAuthStore } from "@/stores/auth";
 
@@ -42,9 +39,7 @@ function testProxy(url: string) {
 function useIsSetup() {
   const proxyUrls = useAuthStore((s) => s.proxySet);
   const { loading, value } = useAsync(async (): Promise<SetupData> => {
-    const extensionStatus: Status = (await isExtensionActive())
-      ? "success"
-      : "unset";
+    const extensionStatus: Status = (await isExtensionActive()) ? "success" : "unset";
     let proxyStatus: Status = "unset";
     if (proxyUrls && proxyUrls.length > 0) {
       try {
@@ -62,10 +57,8 @@ function useIsSetup() {
   }, [proxyUrls]);
 
   let globalState: Status = "unset";
-  if (value?.extension === "success" || value?.proxy === "success")
-    globalState = "success";
-  if (value?.proxy === "error" || value?.extension === "error")
-    globalState = "error";
+  if (value?.extension === "success" || value?.proxy === "success") globalState = "success";
+  if (value?.proxy === "error" || value?.extension === "error") globalState = "error";
 
   return {
     setupStates: value,
@@ -74,12 +67,7 @@ function useIsSetup() {
   };
 }
 
-function SetupCheckList(props: {
-  status: Status;
-  grey?: boolean;
-  highlight?: boolean;
-  children?: ReactNode;
-}) {
+function SetupCheckList(props: { status: Status; grey?: boolean; highlight?: boolean; children?: ReactNode }) {
   const { t } = useTranslation();
   const statusMap: Record<Status, StatusCircleProps["type"]> = {
     error: "error",
@@ -92,8 +80,7 @@ function SetupCheckList(props: {
       <StatusCircle
         type={statusMap[props.status]}
         className={classNames({
-          "!text-video-scraping-noresult !bg-video-scraping-noresult opacity-50":
-            props.grey,
+          "!text-video-scraping-noresult !bg-video-scraping-noresult opacity-50": props.grey,
           "scale-90 mr-3": true,
         })}
       />
@@ -104,15 +91,10 @@ function SetupCheckList(props: {
             "!text-type-dimmed opacity-75": props.grey && !props.highlight,
             "text-type-danger": props.status === "error",
             "text-white": props.status === "success",
-          })}
-        >
+          })}>
           {props.children}
         </p>
-        {props.status === "error" ? (
-          <p className="max-w-96">
-            {t("settings.connections.setup.itemError")}
-          </p>
-        ) : null}
+        {props.status === "error" ? <p className="max-w-96">{t("settings.connections.setup.itemError")}</p> : null}
       </div>
     </div>
   );
@@ -132,10 +114,7 @@ export function SetupPart() {
     );
   }
 
-  const textLookupMap: Record<
-    Status,
-    { title: string; desc: string; button: string }
-  > = {
+  const textLookupMap: Record<Status, { title: string; desc: string; button: string }> = {
     error: {
       title: "settings.connections.setup.errorStatus.title",
       desc: "settings.connections.setup.errorStatus.description",
@@ -159,37 +138,19 @@ export function SetupPart() {
         <div>
           <div
             className={classNames({
-              "rounded-full h-12 w-12 flex bg-opacity-15 justify-center items-center":
-                true,
+              "rounded-full h-12 w-12 flex bg-opacity-15 justify-center items-center": true,
               "text-type-success bg-type-success": globalState === "success",
-              "text-type-danger bg-type-danger":
-                globalState === "error" || globalState === "unset",
-            })}
-          >
-            <Icon
-              icon={globalState === "success" ? Icons.CHECKMARK : Icons.X}
-              className="text-xl"
-            />
+              "text-type-danger bg-type-danger": globalState === "error" || globalState === "unset",
+            })}>
+            <Icon icon={globalState === "success" ? Icons.CHECKMARK : Icons.X} className="text-xl" />
           </div>
         </div>
         <div className="flex-1">
-          <Heading3 className="!mb-3">
-            {t(textLookupMap[globalState].title)}
-          </Heading3>
-          <p className="max-w-[20rem] font-medium mb-6">
-            {t(textLookupMap[globalState].desc)}
-          </p>
-          <SetupCheckList status={setupStates.extension}>
-            {t("settings.connections.setup.items.extension")}
-          </SetupCheckList>
-          <SetupCheckList status={setupStates.proxy}>
-            {t("settings.connections.setup.items.proxy")}
-          </SetupCheckList>
-          <SetupCheckList
-            grey
-            highlight={globalState === "unset"}
-            status={setupStates.defaultProxy}
-          >
+          <Heading3 className="!mb-3">{t(textLookupMap[globalState].title)}</Heading3>
+          <p className="max-w-[20rem] font-medium mb-6">{t(textLookupMap[globalState].desc)}</p>
+          <SetupCheckList status={setupStates.extension}>{t("settings.connections.setup.items.extension")}</SetupCheckList>
+          <SetupCheckList status={setupStates.proxy}>{t("settings.connections.setup.items.proxy")}</SetupCheckList>
+          <SetupCheckList grey highlight={globalState === "unset"} status={setupStates.defaultProxy}>
             {t("settings.connections.setup.items.default")}
           </SetupCheckList>
         </div>

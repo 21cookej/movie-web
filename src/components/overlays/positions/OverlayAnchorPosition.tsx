@@ -15,22 +15,14 @@ function useCalculatePositions() {
   const [top, setTop] = useState<number>(0);
   const [cardRect, setCardRect] = useState<DOMRect | null>(null);
 
-  const calculateAndSetCoords = useCallback(
-    (anchor: typeof anchorPoint, card: DOMRect) => {
-      if (!anchor) return;
-      const buttonCenter = anchor.x + anchor.w / 2;
-      const bottomReal = window.innerHeight - (anchor.y + anchor.h);
+  const calculateAndSetCoords = useCallback((anchor: typeof anchorPoint, card: DOMRect) => {
+    if (!anchor) return;
+    const buttonCenter = anchor.x + anchor.w / 2;
+    const bottomReal = window.innerHeight - (anchor.y + anchor.h);
 
-      setTop(window.innerHeight - bottomReal - anchor.h - card.height - 30);
-      setLeft(
-        Math.min(
-          buttonCenter - card.width / 2,
-          window.innerWidth - card.width - 30,
-        ),
-      );
-    },
-    [],
-  );
+    setTop(window.innerHeight - bottomReal - anchor.h - card.height - 30);
+    setLeft(Math.min(buttonCenter - card.width / 2, window.innerWidth - card.width - 30));
+  }, []);
 
   useEffect(() => {
     if (!anchorPoint || !cardRect) return;
@@ -66,8 +58,7 @@ export function OverlayAnchorPosition(props: AnchorPositionProps) {
       className={classNames([
         "[&>*]:pointer-events-auto z-10 flex dir-neutral:items-start rtl:justify-start ltr:justify-end dir-neutral:origin-top-left touch-none",
         props.className,
-      ])}
-    >
+      ])}>
       {props.children}
     </div>
   );

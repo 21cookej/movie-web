@@ -10,10 +10,7 @@ interface Props {
 export function OverlayAnchor(props: Props) {
   return (
     <div className={classNames("relative", props.className)}>
-      <div
-        id={`__overlayRouter::${props.id}`}
-        className="absolute inset-0 -z-10"
-      />
+      <div id={`__overlayRouter::${props.id}`} className="absolute inset-0 -z-10" />
       {props.children}
     </div>
   );

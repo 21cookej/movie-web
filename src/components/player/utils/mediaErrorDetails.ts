@@ -17,9 +17,7 @@ const mediaErrorMap: Record<number, { name: string; key: string }> = {
   },
 };
 
-export function getMediaErrorDetails(
-  err: MediaError | null,
-): (typeof mediaErrorMap)[number] {
+export function getMediaErrorDetails(err: MediaError | null): (typeof mediaErrorMap)[number] {
   const item = mediaErrorMap[err?.code ?? -1];
   if (!item) {
     return {

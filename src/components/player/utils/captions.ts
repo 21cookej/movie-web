@@ -8,18 +8,10 @@ import { CaptionListItem } from "@/stores/player/slices/source";
 export type CaptionCueType = ContentCaption;
 export const sanitize = DOMPurify.sanitize;
 
-export function captionIsVisible(
-  start: number,
-  end: number,
-  delay: number,
-  currentTime: number,
-) {
+export function captionIsVisible(start: number, end: number, delay: number, currentTime: number) {
   const delayedStart = start / 1000 + delay;
   const delayedEnd = end / 1000 + delay;
-  return (
-    Math.max(0, delayedStart) <= currentTime &&
-    Math.max(0, delayedEnd) >= currentTime
-  );
+  return Math.max(0, delayedStart) <= currentTime && Math.max(0, delayedEnd) >= currentTime;
 }
 
 export function makeQueId(index: number, start: number, end: number): string {
@@ -53,10 +45,7 @@ export function convertSubtitlesToSrt(text: string): string {
 export function filterDuplicateCaptionCues(cues: ContentCaption[]) {
   return cues.reduce((acc: ContentCaption[], cap: ContentCaption) => {
     const lastCap = acc[acc.length - 1];
-    const isSameAsLast =
-      lastCap?.start === cap.start &&
-      lastCap?.end === cap.end &&
-      lastCap?.content === cap.content;
+    const isSameAsLast = lastCap?.start === cap.start && lastCap?.end === cap.end && lastCap?.content === cap.content;
     if (lastCap === undefined || !isSameAsLast) {
       acc.push(cap);
     }
@@ -68,10 +57,7 @@ export function parseVttSubtitles(vtt: string) {
   return parse(vtt).filter((cue) => cue.type === "caption") as CaptionCueType[];
 }
 
-export function parseSubtitles(
-  text: string,
-  _language?: string,
-): CaptionCueType[] {
+export function parseSubtitles(text: string, _language?: string): CaptionCueType[] {
   const vtt = convertSubtitlesToVtt(text);
   return parseVttSubtitles(vtt);
 }
@@ -81,9 +67,7 @@ function stringToBase64(input: string): string {
 }
 
 export function convertSubtitlesToSrtDataurl(text: string): string {
-  return `data:application/x-subrip;base64,${stringToBase64(
-    convertSubtitlesToSrt(text),
-  )}`;
+  return `data:application/x-subrip;base64,${stringToBase64(convertSubtitlesToSrt(text))}`;
 }
 
 export function convertSubtitlesToObjectUrl(text: string): string {
@@ -94,9 +78,7 @@ export function convertSubtitlesToObjectUrl(text: string): string {
   );
 }
 
-export function convertProviderCaption(
-  captions: RunOutput["stream"]["captions"],
-): CaptionListItem[] {
+export function convertProviderCaption(captions: RunOutput["stream"]["captions"]): CaptionListItem[] {
   return captions.map((v) => ({
     id: v.id,
     language: v.language,

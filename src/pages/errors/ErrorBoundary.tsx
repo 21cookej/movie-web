@@ -9,10 +9,7 @@ interface ErrorBoundaryState {
   };
 }
 
-export class ErrorBoundary extends Component<
-  Record<string, unknown>,
-  ErrorBoundaryState
-> {
+export class ErrorBoundary extends Component<Record<string, unknown>, ErrorBoundaryState> {
   constructor(props: { children: any }) {
     super(props);
     this.state = {
@@ -34,11 +31,6 @@ export class ErrorBoundary extends Component<
   render() {
     if (!this.state.error) return this.props.children as any;
 
-    return (
-      <ErrorPart
-        error={this.state.error.error}
-        errorInfo={this.state.error.errorInfo}
-      />
-    );
+    return <ErrorPart error={this.state.error.error} errorInfo={this.state.error.errorInfo} />;
   }
 }

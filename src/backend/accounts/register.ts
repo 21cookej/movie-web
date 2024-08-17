@@ -7,10 +7,7 @@ export interface ChallengeTokenResponse {
   challenge: string;
 }
 
-export async function getRegisterChallengeToken(
-  url: string,
-  captchaToken?: string,
-): Promise<ChallengeTokenResponse> {
+export async function getRegisterChallengeToken(url: string, captchaToken?: string): Promise<ChallengeTokenResponse> {
   return ofetch<ChallengeTokenResponse>("/auth/register/start", {
     method: "POST",
     body: {
@@ -40,10 +37,7 @@ export interface RegisterInput {
   };
 }
 
-export async function registerAccount(
-  url: string,
-  data: RegisterInput,
-): Promise<RegisterResponse> {
+export async function registerAccount(url: string, data: RegisterInput): Promise<RegisterResponse> {
   return ofetch<RegisterResponse>("/auth/register/complete", {
     method: "POST",
     body: {

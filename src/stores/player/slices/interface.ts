@@ -85,8 +85,7 @@ export const createInterfaceSlice: MakeSlice<InterfaceSlice> = (set, get) => ({
   },
   updateInterfaceHovering(newState: PlayerHoverState) {
     set((s) => {
-      if (newState !== PlayerHoverState.NOT_HOVERING)
-        s.interface.lastHoveringState = newState;
+      if (newState !== PlayerHoverState.NOT_HOVERING) s.interface.lastHoveringState = newState;
       s.interface.hovering = newState;
     });
   },

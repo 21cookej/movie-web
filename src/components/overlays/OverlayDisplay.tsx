@@ -5,10 +5,7 @@ import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 
 import { Transition } from "@/components/utils/Transition";
-import {
-  useInternalOverlayRouter,
-  useRouterAnchorUpdate,
-} from "@/hooks/useOverlayRouter";
+import { useInternalOverlayRouter, useRouterAnchorUpdate } from "@/hooks/useOverlayRouter";
 import { TurnstileProvider } from "@/stores/turnstile";
 
 export interface OverlayProps {
@@ -27,19 +24,13 @@ function TurnstileInteractive() {
       className={classNames(
         "absolute w-10/12 max-w-[800px] bg-background-main p-20 rounded-lg select-none z-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform",
         show ? "" : "hidden",
-      )}
-    >
+      )}>
       <div className="w-full grid lg:grid-cols-[1fr,auto] gap-12 items-center">
         <div className="text-left">
-          <h2 className="text-type-emphasis font-bold text-xl mb-6">
-            {t("player.turnstile.title")}
-          </h2>
+          <h2 className="text-type-emphasis font-bold text-xl mb-6">{t("player.turnstile.title")}</h2>
           <p>{t("player.turnstile.description")}</p>
         </div>
-        <TurnstileProvider
-          isInPopout
-          onUpdateShow={(shouldShow) => setShow(shouldShow)}
-        />
+        <TurnstileProvider isInPopout onUpdateShow={(shouldShow) => setShow(shouldShow)} />
       </div>
     </div>
   );
@@ -65,12 +56,7 @@ export function OverlayDisplay(props: { children: ReactNode }) {
   );
 }
 
-export function OverlayPortal(props: {
-  children?: ReactNode;
-  darken?: boolean;
-  show?: boolean;
-  close?: () => void;
-}) {
+export function OverlayPortal(props: { children?: ReactNode; darken?: boolean; show?: boolean; close?: () => void }) {
   const [portalElement, setPortalElement] = useState<Element | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const close = props.close;
@@ -96,16 +82,9 @@ export function OverlayPortal(props: {
                       })}
                     />
                   </Transition>
-                  <Transition
-                    animation="slide-up"
-                    className="absolute inset-0 pointer-events-none"
-                    isChild
-                  >
+                  <Transition animation="slide-up" className="absolute inset-0 pointer-events-none" isChild>
                     {/* a tabable index that does nothing - used so focus trap doesn't error when nothing is rendered yet */}
-                    <div
-                      tabIndex={1}
-                      className="focus:ring-0 focus:outline-none opacity-0"
-                    />
+                    <div tabIndex={1} className="focus:ring-0 focus:outline-none opacity-0" />
                     {props.children}
                   </Transition>
                 </div>
@@ -130,11 +109,7 @@ export function Overlay(props: OverlayProps) {
   }, [realClose]);
 
   return (
-    <OverlayPortal
-      close={close}
-      show={router.isOverlayActive()}
-      darken={props.darken}
-    >
+    <OverlayPortal close={close} show={router.isOverlayActive()} darken={props.darken}>
       {props.children}
     </OverlayPortal>
   );

@@ -23,11 +23,7 @@ export async function getSessions(url: string, account: AccountWithToken) {
   });
 }
 
-export async function updateSession(
-  url: string,
-  account: AccountWithToken,
-  update: SessionUpdate,
-) {
+export async function updateSession(url: string, account: AccountWithToken, update: SessionUpdate) {
   return ofetch<SessionResponse[]>(`/sessions/${account.sessionId}`, {
     method: "PATCH",
     headers: getAuthHeaders(account.token),
@@ -36,11 +32,7 @@ export async function updateSession(
   });
 }
 
-export async function removeSession(
-  url: string,
-  token: string,
-  sessionId: string,
-) {
+export async function removeSession(url: string, token: string, sessionId: string) {
   return ofetch<SessionResponse[]>(`/sessions/${sessionId}`, {
     method: "DELETE",
     headers: getAuthHeaders(token),

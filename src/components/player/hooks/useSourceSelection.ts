@@ -1,20 +1,10 @@
-import {
-  EmbedOutput,
-  NotFoundError,
-  SourcererOutput,
-} from "@davidmorgan/providers";
+import { EmbedOutput, NotFoundError, SourcererOutput } from "@davidmorgan/providers";
 import { useAsyncFn } from "react-use";
 
 import { isExtensionActiveCached } from "@/backend/extension/messaging";
 import { prepareStream } from "@/backend/extension/streams";
-import {
-  connectServerSideEvents,
-  makeProviderUrl,
-} from "@/backend/helpers/providerApi";
-import {
-  scrapeSourceOutputToProviderMetric,
-  useReportProviders,
-} from "@/backend/helpers/report";
+import { connectServerSideEvents, makeProviderUrl } from "@/backend/helpers/providerApi";
+import { scrapeSourceOutputToProviderMetric, useReportProviders } from "@/backend/helpers/report";
 import { getLoadbalancedProviderApiUrl } from "@/backend/providers/fetchers";
 import { getProviders } from "@/backend/providers/providers";
 import { convertProviderCaption } from "@/components/player/utils/captions";
@@ -23,12 +13,7 @@ import { useOverlayRouter } from "@/hooks/useOverlayRouter";
 import { metaToScrapeMedia } from "@/stores/player/slices/source";
 import { usePlayerStore } from "@/stores/player/store";
 
-export function useEmbedScraping(
-  routerId: string,
-  sourceId: string,
-  url: string,
-  embedId: string,
-) {
+export function useEmbedScraping(routerId: string, sourceId: string, url: string, embedId: string) {
   const setSource = usePlayerStore((s) => s.setSource);
   const setCaption = usePlayerStore((s) => s.setCaption);
   const setSourceId = usePlayerStore((s) => s.setSourceId);
@@ -44,10 +29,7 @@ export function useEmbedScraping(
     try {
       if (providerApiUrl && !isExtensionActiveCached()) {
         const baseUrlMaker = makeProviderUrl(providerApiUrl);
-        const conn = await connectServerSideEvents<EmbedOutput>(
-          baseUrlMaker.scrapeEmbed(embedId, url),
-          ["completed", "noOutput"],
-        );
+        const conn = await connectServerSideEvents<EmbedOutput>(baseUrlMaker.scrapeEmbed(embedId, url), ["completed", "noOutput"]);
         result = await conn.promise();
       } else {
         result = await getProviders().runEmbedScraper({
@@ -59,28 +41,14 @@ export function useEmbedScraping(
       console.error(`Failed to scrape ${embedId}`, err);
       const notFound = err instanceof NotFoundError;
       const status = notFound ? "notfound" : "failed";
-      report([
-        scrapeSourceOutputToProviderMetric(
-          meta,
-          sourceId,
-          embedId,
-          status,
-          err,
-        ),
-      ]);
+      report([scrapeSourceOutputToProviderMetric(meta, sourceId, embedId, status, err)]);
       throw err;
     }
-    report([
-      scrapeSourceOutputToProviderMetric(meta, sourceId, null, "success", null),
-    ]);
+    report([scrapeSourceOutputToProviderMetric(meta, sourceId, null, "success", null)]);
     if (isExtensionActiveCached()) await prepareStream(result.stream[0]);
     setSourceId(sourceId);
     setCaption(null);
-    setSource(
-      convertRunoutputToSource({ stream: result.stream[0] }),
-      convertProviderCaption(result.stream[0].captions),
-      progress,
-    );
+    setSource(convertRunoutputToSource({ stream: result.stream[0] }), convertProviderCaption(result.stream[0].captions), progress);
     router.close();
   }, [embedId, sourceId, meta, router, report, setCaption]);
 
@@ -109,10 +77,7 @@ export function useSourceScraping(sourceId: string | null, routerId: string) {
     try {
       if (providerApiUrl && !isExtensionActiveCached()) {
         const baseUrlMaker = makeProviderUrl(providerApiUrl);
-        const conn = await connectServerSideEvents<SourcererOutput>(
-          baseUrlMaker.scrapeSource(sourceId, scrapeMedia),
-          ["completed", "noOutput"],
-        );
+        const conn = await connectServerSideEvents<SourcererOutput>(baseUrlMaker.scrapeSource(sourceId, scrapeMedia), ["completed", "noOutput"]);
         result = await conn.promise();
       } else {
         result = await getProviders().runSourceScraper({
@@ -124,23 +89,15 @@ export function useSourceScraping(sourceId: string | null, routerId: string) {
       console.error(`Failed to scrape ${sourceId}`, err);
       const notFound = err instanceof NotFoundError;
       const status = notFound ? "notfound" : "failed";
-      report([
-        scrapeSourceOutputToProviderMetric(meta, sourceId, null, status, err),
-      ]);
+      report([scrapeSourceOutputToProviderMetric(meta, sourceId, null, status, err)]);
       throw err;
     }
-    report([
-      scrapeSourceOutputToProviderMetric(meta, sourceId, null, "success", null),
-    ]);
+    report([scrapeSourceOutputToProviderMetric(meta, sourceId, null, "success", null)]);
 
     if (result.stream) {
       if (isExtensionActiveCached()) await prepareStream(result.stream[0]);
       setCaption(null);
-      setSource(
-        convertRunoutputToSource({ stream: result.stream[0] }),
-        convertProviderCaption(result.stream[0].captions),
-        progress,
-      );
+      setSource(convertRunoutputToSource({ stream: result.stream[0] }), convertProviderCaption(result.stream[0].captions), progress);
       setSourceId(sourceId);
       router.close();
       return null;
@@ -151,13 +108,10 @@ export function useSourceScraping(sourceId: string | null, routerId: string) {
       try {
         if (providerApiUrl && !isExtensionActiveCached()) {
           const baseUrlMaker = makeProviderUrl(providerApiUrl);
-          const conn = await connectServerSideEvents<EmbedOutput>(
-            baseUrlMaker.scrapeEmbed(
-              result.embeds[0].embedId,
-              result.embeds[0].url,
-            ),
-            ["completed", "noOutput"],
-          );
+          const conn = await connectServerSideEvents<EmbedOutput>(baseUrlMaker.scrapeEmbed(result.embeds[0].embedId, result.embeds[0].url), [
+            "completed",
+            "noOutput",
+          ]);
           embedResult = await conn.promise();
         } else {
           embedResult = await getProviders().runEmbedScraper({
@@ -169,34 +123,14 @@ export function useSourceScraping(sourceId: string | null, routerId: string) {
         console.error(`Failed to scrape ${result.embeds[0].embedId}`, err);
         const notFound = err instanceof NotFoundError;
         const status = notFound ? "notfound" : "failed";
-        report([
-          scrapeSourceOutputToProviderMetric(
-            meta,
-            sourceId,
-            result.embeds[0].embedId,
-            status,
-            err,
-          ),
-        ]);
+        report([scrapeSourceOutputToProviderMetric(meta, sourceId, result.embeds[0].embedId, status, err)]);
         throw err;
       }
-      report([
-        scrapeSourceOutputToProviderMetric(
-          meta,
-          sourceId,
-          result.embeds[0].embedId,
-          "success",
-          null,
-        ),
-      ]);
+      report([scrapeSourceOutputToProviderMetric(meta, sourceId, result.embeds[0].embedId, "success", null)]);
       setSourceId(sourceId);
       setCaption(null);
       if (isExtensionActiveCached()) await prepareStream(embedResult.stream[0]);
-      setSource(
-        convertRunoutputToSource({ stream: embedResult.stream[0] }),
-        convertProviderCaption(embedResult.stream[0].captions),
-        progress,
-      );
+      setSource(convertRunoutputToSource({ stream: embedResult.stream[0] }), convertProviderCaption(embedResult.stream[0].captions), progress);
       router.close();
     }
     return result.embeds;

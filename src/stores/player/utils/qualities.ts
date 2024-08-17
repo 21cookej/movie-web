@@ -44,21 +44,12 @@ const sortedQualities: SourceQuality[] = Object.entries(qualitySorting)
   .sort((a, b) => b[1] - a[1])
   .map<SourceQuality>((v) => v[0] as SourceQuality);
 
-export function getPreferredQuality(
-  availableQualites: SourceQuality[],
-  qualityPreferences: QualityStore["quality"],
-) {
-  if (
-    qualityPreferences.automaticQuality ||
-    qualityPreferences.lastChosenQuality === null ||
-    qualityPreferences.lastChosenQuality === "unknown"
-  )
+export function getPreferredQuality(availableQualites: SourceQuality[], qualityPreferences: QualityStore["quality"]) {
+  if (qualityPreferences.automaticQuality || qualityPreferences.lastChosenQuality === null || qualityPreferences.lastChosenQuality === "unknown")
     return sortedQualities.find((v) => availableQualites.includes(v));
 
   // get preferred quality - not automatic or unknown
-  const chosenQualityIndex = sortedQualities.indexOf(
-    qualityPreferences.lastChosenQuality,
-  );
+  const chosenQualityIndex = sortedQualities.indexOf(qualityPreferences.lastChosenQuality);
   let nearestChoseQuality: undefined | SourceQuality;
 
   // check chosen quality or lower

@@ -78,9 +78,7 @@ const extraLanguages: Record<string, LocaleInfo> = {
 function populateLanguageCode(language: string): string {
   if (language.includes("-")) return language;
   if (language.length !== 2) return language;
-  return (
-    defaultLanguageCodes.find((v) => v.startsWith(`${language}-`)) ?? language
-  );
+  return defaultLanguageCodes.find((v) => v.startsWith(`${language}-`)) ?? language;
 }
 
 /**
@@ -108,12 +106,8 @@ export function sortLangCodes(langCodes: string[]) {
   const languagesOrder = [...languageOrder].reverse(); // Reverse is necessary, not sure why
 
   const results = langCodes.sort((a, b) => {
-    const langOrderA = languagesOrder.findIndex(
-      (v) => a.startsWith(`${v}-`) || a === v,
-    );
-    const langOrderB = languagesOrder.findIndex(
-      (v) => b.startsWith(`${v}-`) || b === v,
-    );
+    const langOrderA = languagesOrder.findIndex((v) => a.startsWith(`${v}-`) || a === v);
+    const langOrderB = languagesOrder.findIndex((v) => b.startsWith(`${v}-`) || b === v);
     if (langOrderA !== -1 || langOrderB !== -1) return langOrderB - langOrderA;
 
     return a.localeCompare(b);
@@ -144,9 +138,7 @@ export function getCountryCodeForLocale(locale: string): string | null {
   }
 
   if (priority) {
-    const prioritizedCountry = output.countries.find(
-      (v) => v.code_2.toLowerCase() === priority,
-    );
+    const prioritizedCountry = output.countries.find((v) => v.code_2.toLowerCase() === priority);
     if (prioritizedCountry) return prioritizedCountry.code_2.toLowerCase();
   }
 
@@ -154,11 +146,7 @@ export function getCountryCodeForLocale(locale: string): string | null {
   // return the region if it matches
   const regionSubtag = tag?.region?.Subtag.toLowerCase();
   if (regionSubtag) {
-    const regionCode = output.countries.find(
-      (c) =>
-        c.code_2.toLowerCase() === regionSubtag ||
-        c.code_3.toLowerCase() === regionSubtag,
-    );
+    const regionCode = output.countries.find((c) => c.code_2.toLowerCase() === regionSubtag || c.code_3.toLowerCase() === regionSubtag);
     if (regionCode) return regionCode.code_2.toLowerCase();
   }
   return output.countries[0].code_2.toLowerCase();

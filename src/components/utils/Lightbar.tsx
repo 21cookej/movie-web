@@ -57,11 +57,7 @@ class Particle {
     const second = 60;
     this.lifetime = second * 3 + Math.random() * (second * 30);
 
-    this.size = this.options.sizeRange
-      ? Math.random() *
-          (this.options.sizeRange[1] - this.options.sizeRange[0]) +
-        this.options.sizeRange[0]
-      : 10;
+    this.size = this.options.sizeRange ? Math.random() * (this.options.sizeRange[1] - this.options.sizeRange[0]) + this.options.sizeRange[0] : 10;
 
     if (this.options.horizontalMotion) {
       this.direction = Math.random() <= 0.5 ? 0 : Math.PI;
@@ -110,15 +106,7 @@ class Particle {
       ctx.rotate(this.direction - Math.PI);
       ctx.drawImage(this.image, -w / 2, h, h, w);
     } else {
-      ctx.ellipse(
-        this.x,
-        this.y,
-        this.radius,
-        this.radius * 1.5,
-        this.direction,
-        0,
-        Math.PI * 2,
-      );
+      ctx.ellipse(this.x, this.y, this.radius, this.radius * 1.5, this.direction, 0, Math.PI * 2);
       ctx.fillStyle = "white";
       ctx.fill();
     }

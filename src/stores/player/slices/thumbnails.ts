@@ -22,10 +22,7 @@ export interface ThumbnailImagePosition {
  * get nearest image at the timestamp provided
  * @param images images, must be sorted
  */
-export function nearestImageAt(
-  images: ThumbnailImage[],
-  at: number,
-): ThumbnailImagePosition | null {
+export function nearestImageAt(images: ThumbnailImage[], at: number): ThumbnailImagePosition | null {
   // no images, early return
   if (images.length === 0) return null;
 
@@ -81,9 +78,7 @@ export const createThumbnailSlice: MakeSlice<ThumbnailSlice> = (set, get) => ({
     },
     addImage(img) {
       const store = get();
-      const exactOrPastImageIndex = store.thumbnails.images.findIndex(
-        (v) => v.at >= img.at,
-      );
+      const exactOrPastImageIndex = store.thumbnails.images.findIndex((v) => v.at >= img.at);
 
       // not found past or exact, so just append to the end
       if (exactOrPastImageIndex === -1) {

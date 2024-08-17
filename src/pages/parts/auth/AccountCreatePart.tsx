@@ -5,11 +5,7 @@ import { Avatar } from "@/components/Avatar";
 import { Button } from "@/components/buttons/Button";
 import { ColorPicker, initialColor } from "@/components/form/ColorPicker";
 import { IconPicker, initialIcon } from "@/components/form/IconPicker";
-import {
-  LargeCard,
-  LargeCardButtons,
-  LargeCardText,
-} from "@/components/layout/LargeCard";
+import { LargeCard, LargeCardButtons, LargeCardText } from "@/components/layout/LargeCard";
 import { AuthInputBox } from "@/components/text-inputs/AuthInputBox";
 import { UserIcons } from "@/components/UserIcon";
 
@@ -55,15 +51,8 @@ export function AccountCreatePart(props: AccountCreatePartProps) {
   return (
     <LargeCard>
       <LargeCardText
-        icon={
-          <Avatar
-            profile={{ colorA, colorB, icon: userIcon }}
-            iconClass="text-3xl"
-            sizeClass="w-16 h-16"
-          />
-        }
-        title={t("auth.register.information.title") ?? undefined}
-      >
+        icon={<Avatar profile={{ colorA, colorB, icon: userIcon }} iconClass="text-3xl" sizeClass="w-16 h-16" />}
+        title={t("auth.register.information.title") ?? undefined}>
         {t("auth.register.information.header")}
       </LargeCardText>
       <div className="space-y-6">
@@ -73,26 +62,10 @@ export function AccountCreatePart(props: AccountCreatePartProps) {
           onChange={setDevice}
           placeholder={t("auth.deviceNamePlaceholder") ?? undefined}
         />
-        <ColorPicker
-          label={t("auth.register.information.color1")}
-          value={colorA}
-          onInput={setColorA}
-        />
-        <ColorPicker
-          label={t("auth.register.information.color2")}
-          value={colorB}
-          onInput={setColorB}
-        />
-        <IconPicker
-          label={t("auth.register.information.icon")}
-          value={userIcon}
-          onInput={setUserIcon}
-        />
-        {hasDeviceError ? (
-          <p className="text-authentication-errorText">
-            {t("auth.login.deviceLengthError")}
-          </p>
-        ) : null}
+        <ColorPicker label={t("auth.register.information.color1")} value={colorA} onInput={setColorA} />
+        <ColorPicker label={t("auth.register.information.color2")} value={colorB} onInput={setColorB} />
+        <IconPicker label={t("auth.register.information.icon")} value={userIcon} onInput={setUserIcon} />
+        {hasDeviceError ? <p className="text-authentication-errorText">{t("auth.login.deviceLengthError")}</p> : null}
       </div>
       <LargeCardButtons>
         <Button theme="purple" onClick={() => nextStep()}>

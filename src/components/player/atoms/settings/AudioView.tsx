@@ -10,12 +10,7 @@ import { getPrettyLanguageNameFromLocale } from "@/utils/language";
 
 import { SelectableLink } from "../../internals/ContextMenu/Links";
 
-export function AudioOption(props: {
-  langCode?: string;
-  children: React.ReactNode;
-  selected?: boolean;
-  onClick?: () => void;
-}) {
+export function AudioOption(props: { langCode?: string; children: React.ReactNode; selected?: boolean; onClick?: () => void }) {
   return (
     <SelectableLink selected={props.selected} onClick={props.onClick}>
       <span className="flex items-center">
@@ -54,8 +49,7 @@ export function AudioView({ id }: { id: string }) {
             key={v.id}
             selected={v.id === currentAudioTrack?.id}
             langCode={v.language}
-            onClick={audioTracks.includes(v) ? () => change(v) : undefined}
-          >
+            onClick={audioTracks.includes(v) ? () => change(v) : undefined}>
             {getPrettyLanguageNameFromLocale(v.language) ?? unknownChoice}
           </AudioOption>
         ))}

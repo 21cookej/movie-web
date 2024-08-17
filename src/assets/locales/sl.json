@@ -132,21 +132,15 @@
     "titles": {
       "day": {
         "default": "Kateri film ali serijo bi si želeli ogledati ob tem popoldnevu?",
-        "extra": [
-          "Se počutite pustolovsko? Jurski park je morda odlična izbira."
-        ]
+        "extra": ["Se počutite pustolovsko? Jurski park je morda odlična izbira."]
       },
       "morning": {
         "default": "Kateri film ali serijo bi si želeli ogledati ob tem jutru?",
-        "extra": [
-          "Slišala sem, da je film \"Pred sončnim vzhodom\" odličen"
-        ]
+        "extra": ["Slišala sem, da je film \"Pred sončnim vzhodom\" odličen"]
       },
       "night": {
         "default": "Kateri film ali serijo bi si želeli ogledati nocoj?",
-        "extra": [
-          "Utrujeni? Slišal sem, da je \"Izganjalec mrtvih\" odličen film."
-        ]
+        "extra": ["Utrujeni? Slišal sem, da je \"Izganjalec mrtvih\" odličen film."]
       }
     }
   },

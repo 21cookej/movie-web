@@ -34,10 +34,7 @@ export interface OldBookmarks {
   bookmarks: (OldMovie | OldSeries)[];
 }
 
-async function getMetas(
-  uniqueMedias: Record<string, any>,
-  oldData?: OldData,
-): Promise<Record<string, Record<string, DetailedMeta | null>> | undefined> {
+async function getMetas(uniqueMedias: Record<string, any>, oldData?: OldData): Promise<Record<string, Record<string, DetailedMeta | null>> | undefined> {
   const yearsAreClose = (a: number, b: number) => {
     return Math.abs(a - b) <= 1;
   };
@@ -50,11 +47,7 @@ async function getMetas(
       const data = await searchForMedia({
         searchQuery: `${item.title} ${year}`,
       });
-      const relevantItem = data.find(
-        (res) =>
-          yearsAreClose(Number(res.year), year) &&
-          compareTitle(res.title, item.title),
-      );
+      const relevantItem = data.find((res) => yearsAreClose(Number(res.year), year) && compareTitle(res.title, item.title));
       if (!relevantItem) {
         console.error(`No item found for migration: ${item.title}`);
         return;
@@ -76,9 +69,7 @@ async function getMetas(
       const seasonNumbers = [
         ...new Set(
           oldData?.items
-            ? oldData.items
-                .filter((watchedEntry: any) => watchedEntry.mediaId === item.id)
-                .map((watchedEntry: any) => watchedEntry.seasonId)
+            ? oldData.items.filter((watchedEntry: any) => watchedEntry.mediaId === item.id).map((watchedEntry: any) => watchedEntry.seasonId)
             : ["0"],
         ),
       ];
@@ -86,20 +77,14 @@ async function getMetas(
         num,
         season: meta.meta?.seasons?.[Math.max(0, (num as number) - 1)],
       }));
-      keys = seasons
-        .map((season) => (season ? [season.num, season?.season?.id] : []))
-        .filter((entry) => entry.length > 0);
+      keys = seasons.map((season) => (season ? [season.num, season?.season?.id] : [])).filter((entry) => entry.length > 0);
     }
 
     if (!mediaMetas[item.id]) mediaMetas[item.id] = {};
     await Promise.all(
       keys.map(async ([key, id]) => {
         if (!key) return;
-        mediaMetas[item.id][key] = await getMetaFromId(
-          mediaItemTypeToMediaType(item.data.type),
-          item.data.id,
-          id === "0" || id === null ? undefined : id,
-        );
+        mediaMetas[item.id][key] = await getMetaFromId(mediaItemTypeToMediaType(item.data.type), item.data.id, id === "0" || id === null ? undefined : id);
       }),
     );
   }
@@ -165,15 +150,12 @@ export async function migrateV2Videos(old: OldData) {
         watchedAt: Date.now(), // There was no watchedAt in V2
       };
 
-      oldData.items = oldData.items.filter(
-        (item) => JSON.stringify(item) !== JSON.stringify(oldWatched),
-      );
+      oldData.items = oldData.items.filter((item) => JSON.stringify(item) !== JSON.stringify(oldWatched));
       newData.items.push(newItem);
     } else if (oldWatched.mediaType === "series") {
       if (!mediaMetas[oldWatched.mediaId][oldWatched.seasonId]?.meta) continue;
 
-      const meta = mediaMetas[oldWatched.mediaId][oldWatched.seasonId]
-        ?.meta as MWMediaMeta;
+      const meta = mediaMetas[oldWatched.mediaId][oldWatched.seasonId]?.meta as MWMediaMeta;
 
       if (meta.type !== "series") return;
 
@@ -184,31 +166,18 @@ export async function migrateV2Videos(old: OldData) {
             episode: Number(oldWatched.episodeId),
             season: Number(oldWatched.seasonId),
             seasonId: meta.seasonData.id,
-            episodeId:
-              meta.seasonData.episodes[Number(oldWatched.episodeId) - 1].id,
+            episodeId: meta.seasonData.episodes[Number(oldWatched.episodeId) - 1].id,
           },
         },
         progress: oldWatched.progress,
         percentage: oldWatched.percentage,
-        watchedAt:
-          now +
-          Number(oldWatched.seasonId) * 1000 +
-          Number(oldWatched.episodeId), // There was no watchedAt in V2
+        watchedAt: now + Number(oldWatched.seasonId) * 1000 + Number(oldWatched.episodeId), // There was no watchedAt in V2
         // JANK ALERT: Put watchedAt in the future to show last episode as most recently
       };
 
-      if (
-        newData.items.find(
-          (item) =>
-            item.item.meta.id === newItem.item.meta.id &&
-            item.item.series?.episodeId === newItem.item.series?.episodeId,
-        )
-      )
-        continue;
+      if (newData.items.find((item) => item.item.meta.id === newItem.item.meta.id && item.item.series?.episodeId === newItem.item.series?.episodeId)) continue;
 
-      oldData.items = oldData.items.filter(
-        (item) => JSON.stringify(item) !== JSON.stringify(oldWatched),
-      );
+      oldData.items = oldData.items.filter((item) => JSON.stringify(item) !== JSON.stringify(oldWatched));
       newData.items.push(newItem);
     }
   }

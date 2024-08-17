@@ -1,17 +1,9 @@
-import {
-  FullScraperEvents,
-  RunOutput,
-  ScrapeMedia,
-} from "@davidmorgan/providers";
+import { FullScraperEvents, RunOutput, ScrapeMedia } from "@davidmorgan/providers";
 import { RefObject, useCallback, useEffect, useRef, useState } from "react";
 
 import { isExtensionActiveCached } from "@/backend/extension/messaging";
 import { prepareStream } from "@/backend/extension/streams";
-import {
-  connectServerSideEvents,
-  getCachedMetadata,
-  makeProviderUrl,
-} from "@/backend/helpers/providerApi";
+import { connectServerSideEvents, getCachedMetadata, makeProviderUrl } from "@/backend/helpers/providerApi";
 import { getLoadbalancedProviderApiUrl } from "@/backend/providers/fetchers";
 import { getProviders } from "@/backend/providers/providers";
 
@@ -30,9 +22,7 @@ export interface ScrapingSegment {
   percentage: number;
 }
 
-type ScraperEvent<Event extends keyof FullScraperEvents> = Parameters<
-  NonNullable<FullScraperEvents[Event]>
->[0];
+type ScraperEvent<Event extends keyof FullScraperEvents> = Parameters<NonNullable<FullScraperEvents[Event]>>[0];
 
 function useBaseScrape() {
   const [sources, setSources] = useState<Record<string, ScrapingSegment>>({});
@@ -66,8 +56,7 @@ function useBaseScrape() {
     const lastIdTmp = lastId.current;
     setSources((s) => {
       if (s[id]) s[id].status = "pending";
-      if (lastIdTmp && s[lastIdTmp] && s[lastIdTmp].status === "pending")
-        s[lastIdTmp].status = "success";
+      if (lastIdTmp && s[lastIdTmp] && s[lastIdTmp].status === "pending") s[lastIdTmp].status = "success";
       return { ...s };
     });
     setCurrentSource(id);
@@ -86,34 +75,29 @@ function useBaseScrape() {
     });
   }, []);
 
-  const discoverEmbedsEvent = useCallback(
-    (evt: ScraperEvent<"discoverEmbeds">) => {
-      setSources((s) => {
-        evt.embeds.forEach((v) => {
-          const source = getCachedMetadata().find(
-            (src) => src.id === v.embedScraperId,
-          );
-          if (!source) throw new Error("invalid source id");
-          const out: ScrapingSegment = {
-            embedId: v.embedScraperId,
-            name: source.name,
-            id: v.id,
-            status: "waiting",
-            percentage: 0,
-          };
-          s[v.id] = out;
-        });
-        return { ...s };
-      });
-      setSourceOrder((s) => {
-        const source = s.find((v) => v.id === evt.sourceId);
+  const discoverEmbedsEvent = useCallback((evt: ScraperEvent<"discoverEmbeds">) => {
+    setSources((s) => {
+      evt.embeds.forEach((v) => {
+        const source = getCachedMetadata().find((src) => src.id === v.embedScraperId);
         if (!source) throw new Error("invalid source id");
-        source.children = evt.embeds.map((v) => v.id);
-        return [...s];
+        const out: ScrapingSegment = {
+          embedId: v.embedScraperId,
+          name: source.name,
+          id: v.id,
+          status: "waiting",
+          percentage: 0,
+        };
+        s[v.id] = out;
       });
-    },
-    [],
-  );
+      return { ...s };
+    });
+    setSourceOrder((s) => {
+      const source = s.find((v) => v.id === evt.sourceId);
+      if (!source) throw new Error("invalid source id");
+      source.children = evt.embeds.map((v) => v.id);
+      return [...s];
+    });
+  }, []);
 
   const startScrape = useCallback(() => {
     lastId.current = null;
@@ -144,17 +128,7 @@ function useBaseScrape() {
 }
 
 export function useScrape() {
-  const {
-    sources,
-    sourceOrder,
-    currentSource,
-    updateEvent,
-    discoverEmbedsEvent,
-    initEvent,
-    getResult,
-    startEvent,
-    startScrape,
-  } = useBaseScrape();
+  const { sources, sourceOrder, currentSource, updateEvent, discoverEmbedsEvent, initEvent, getResult, startEvent, startScrape } = useBaseScrape();
 
   const startScraping = useCallback(
     async (media: ScrapeMedia) => {
@@ -162,17 +136,13 @@ export function useScrape() {
       if (providerApiUrl && !isExtensionActiveCached()) {
         startScrape();
         const baseUrlMaker = makeProviderUrl(providerApiUrl);
-        const conn = await connectServerSideEvents<RunOutput | "">(
-          baseUrlMaker.scrapeAll(media),
-          ["completed", "noOutput"],
-        );
+        const conn = await connectServerSideEvents<RunOutput | "">(baseUrlMaker.scrapeAll(media), ["completed", "noOutput"]);
         conn.on("init", initEvent);
         conn.on("start", startEvent);
         conn.on("update", updateEvent);
         conn.on("discoverEmbeds", discoverEmbedsEvent);
         const sseOutput = await conn.promise();
-        if (sseOutput && isExtensionActiveCached())
-          await prepareStream(sseOutput.stream);
+        if (sseOutput && isExtensionActiveCached()) await prepareStream(sseOutput.stream);
 
         return getResult(sseOutput === "" ? null : sseOutput);
       }
@@ -188,18 +158,10 @@ export function useScrape() {
           discoverEmbeds: discoverEmbedsEvent,
         },
       });
-      if (output && isExtensionActiveCached())
-        await prepareStream(output.stream);
+      if (output && isExtensionActiveCached()) await prepareStream(output.stream);
       return getResult(output);
     },
-    [
-      initEvent,
-      startEvent,
-      updateEvent,
-      discoverEmbedsEvent,
-      getResult,
-      startScrape,
-    ],
+    [initEvent, startEvent, updateEvent, discoverEmbedsEvent, getResult, startScrape],
   );
 
   return {
@@ -222,13 +184,9 @@ export function useListCenter(
     if (!containerRef.current) return;
     if (!listRef.current) return;
 
-    const elements = [
-      ...listRef.current.querySelectorAll("div[data-source-id]"),
-    ] as HTMLDivElement[];
+    const elements = [...listRef.current.querySelectorAll("div[data-source-id]")] as HTMLDivElement[];
 
-    const currentIndex = elements.findIndex(
-      (e) => e.getAttribute("data-source-id") === currentSource,
-    );
+    const currentIndex = elements.findIndex((e) => e.getAttribute("data-source-id") === currentSource);
 
     const currentElement = elements[currentIndex];
 

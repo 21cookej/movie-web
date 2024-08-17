@@ -6,11 +6,7 @@ import { useAsyncFn } from "react-use";
 import { updateSettings } from "@/backend/accounts/settings";
 import { Button } from "@/components/buttons/Button";
 import { Icon, Icons } from "@/components/Icon";
-import {
-  LargeCard,
-  LargeCardButtons,
-  LargeCardText,
-} from "@/components/layout/LargeCard";
+import { LargeCard, LargeCardButtons, LargeCardText } from "@/components/layout/LargeCard";
 import { AuthInputBox } from "@/components/text-inputs/AuthInputBox";
 import { useAuth } from "@/hooks/auth/useAuth";
 import { useBackendUrl } from "@/hooks/auth/useBackendUrl";
@@ -35,9 +31,7 @@ export function VerifyPassphrase(props: VerifyPassphraseProps) {
   const bookmarkItems = useBookmarkStore((store) => store.bookmarks);
 
   const applicationLanguage = useLanguageStore((store) => store.language);
-  const defaultSubtitleLanguage = useSubtitleStore(
-    (store) => store.lastSelectedLanguage,
-  );
+  const defaultSubtitleLanguage = useSubtitleStore((store) => store.lastSelectedLanguage);
   const applicationTheme = useThemeStore((store) => store.theme);
 
   const backendUrl = useBackendUrl();
@@ -47,22 +41,16 @@ export function VerifyPassphrase(props: VerifyPassphraseProps) {
 
   const [result, execute] = useAsyncFn(
     async (inputMnemonic: string) => {
-      if (!backendUrl)
-        throw new Error(t("auth.verify.noBackendUrl") ?? undefined);
-      if (!props.mnemonic || !props.userData)
-        throw new Error(t("auth.verify.invalidData") ?? undefined);
+      if (!backendUrl) throw new Error(t("auth.verify.noBackendUrl") ?? undefined);
+      if (!props.mnemonic || !props.userData) throw new Error(t("auth.verify.invalidData") ?? undefined);
 
       let recaptchaToken: string | undefined;
       if (props.hasCaptcha) {
-        recaptchaToken = executeRecaptcha
-          ? await executeRecaptcha()
-          : undefined;
-        if (!recaptchaToken)
-          throw new Error(t("auth.verify.recaptchaFailed") ?? undefined);
+        recaptchaToken = executeRecaptcha ? await executeRecaptcha() : undefined;
+        if (!recaptchaToken) throw new Error(t("auth.verify.recaptchaFailed") ?? undefined);
       }
 
-      if (inputMnemonic !== props.mnemonic)
-        throw new Error(t("auth.verify.noMatch") ?? undefined);
+      if (inputMnemonic !== props.mnemonic) throw new Error(t("auth.verify.noMatch") ?? undefined);
 
       const account = await register({
         mnemonic: inputMnemonic,
@@ -70,8 +58,7 @@ export function VerifyPassphrase(props: VerifyPassphraseProps) {
         recaptchaToken,
       });
 
-      if (!account)
-        throw new Error(t("auth.verify.registrationFailed") ?? undefined);
+      if (!account) throw new Error(t("auth.verify.registrationFailed") ?? undefined);
 
       await importData(account, progressItems, bookmarkItems);
 
@@ -92,10 +79,7 @@ export function VerifyPassphrase(props: VerifyPassphraseProps) {
   return (
     <LargeCard>
       <form>
-        <LargeCardText
-          icon={<Icon icon={Icons.CIRCLE_CHECK} />}
-          title={t("auth.verify.title")}
-        >
+        <LargeCardText icon={<Icon icon={Icons.CIRCLE_CHECK} />} title={t("auth.verify.title")}>
           {t("auth.verify.description")}
         </LargeCardText>
         <AuthInputBox
@@ -106,17 +90,9 @@ export function VerifyPassphrase(props: VerifyPassphraseProps) {
           onChange={setMnemonic}
           passwordToggleable
         />
-        {result.error ? (
-          <p className="mt-3 text-authentication-errorText">
-            {result.error.message}
-          </p>
-        ) : null}
+        {result.error ? <p className="mt-3 text-authentication-errorText">{result.error.message}</p> : null}
         <LargeCardButtons>
-          <Button
-            theme="purple"
-            loading={result.loading}
-            onClick={() => execute(mnemonic)}
-          >
+          <Button theme="purple" loading={result.loading} onClick={() => execute(mnemonic)}>
             {t("auth.verify.register")}
           </Button>
         </LargeCardButtons>

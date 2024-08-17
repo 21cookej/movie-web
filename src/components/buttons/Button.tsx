@@ -7,9 +7,7 @@ import { Spinner } from "@/components/layout/Spinner";
 
 interface Props {
   icon?: Icons;
-  onClick?: (
-    event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>,
-  ) => void;
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>) => void;
   children?: ReactNode;
   theme?: "white" | "purple" | "secondary" | "danger";
   padding?: string;
@@ -24,12 +22,7 @@ export function Button(props: Props) {
   const navigate = useNavigate();
   const { onClick, href, loading } = props;
   const cb = useCallback(
-    (
-      event: React.MouseEvent<
-        HTMLAnchorElement | HTMLButtonElement,
-        MouseEvent
-      >,
-    ) => {
+    (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>) => {
       if (loading) return;
       if (href && !onClick) {
         event.preventDefault();
@@ -44,13 +37,9 @@ export function Button(props: Props) {
   );
 
   let colorClasses = "bg-white hover:bg-gray-200 text-black";
-  if (props.theme === "purple")
-    colorClasses = "bg-buttons-purple hover:bg-buttons-purpleHover text-white";
-  if (props.theme === "secondary")
-    colorClasses =
-      "bg-buttons-cancel hover:bg-buttons-cancelHover transition-colors duration-100 text-white";
-  if (props.theme === "danger")
-    colorClasses = "bg-buttons-danger hover:bg-buttons-dangerHover text-white";
+  if (props.theme === "purple") colorClasses = "bg-buttons-purple hover:bg-buttons-purpleHover text-white";
+  if (props.theme === "secondary") colorClasses = "bg-buttons-cancel hover:bg-buttons-cancelHover transition-colors duration-100 text-white";
+  if (props.theme === "danger") colorClasses = "bg-buttons-danger hover:bg-buttons-dangerHover text-white";
 
   let classes = classNames(
     "tabbable cursor-pointer inline-flex items-center justify-center rounded-lg font-medium transition-[transform,background-color] duration-100 active:scale-105 md:px-8",
@@ -63,10 +52,7 @@ export function Button(props: Props) {
   if (props.disabled)
     classes = classes
       .split(" ")
-      .filter(
-        (className) =>
-          !className.startsWith("hover:") && !className.startsWith("active:"),
-      )
+      .filter((className) => !className.startsWith("hover:") && !className.startsWith("active:"))
       .join(" ");
 
   const content = (
@@ -85,19 +71,9 @@ export function Button(props: Props) {
     </>
   );
 
-  if (
-    props.href &&
-    (props.href.startsWith("https://") || props.href?.startsWith("data:"))
-  )
+  if (props.href && (props.href.startsWith("https://") || props.href?.startsWith("data:")))
     return (
-      <a
-        className={classes}
-        href={props.href}
-        target="_blank"
-        rel="noreferrer"
-        download={props.download}
-        onClick={cb}
-      >
+      <a className={classes} href={props.href} target="_blank" rel="noreferrer" download={props.download} onClick={cb}>
         {content}
       </a>
     );
@@ -127,11 +103,8 @@ interface ButtonPlainProps {
 
 export function ButtonPlain(props: ButtonPlainProps) {
   let colorClasses = "bg-white hover:bg-gray-200 text-black";
-  if (props.theme === "purple")
-    colorClasses = "bg-buttons-purple hover:bg-buttons-purpleHover text-white";
-  if (props.theme === "secondary")
-    colorClasses =
-      "bg-buttons-cancel hover:bg-buttons-cancelHover transition-colors duration-100 text-white";
+  if (props.theme === "purple") colorClasses = "bg-buttons-purple hover:bg-buttons-purpleHover text-white";
+  if (props.theme === "secondary") colorClasses = "bg-buttons-cancel hover:bg-buttons-cancelHover transition-colors duration-100 text-white";
 
   const classes = classNames(
     "cursor-pointer inline-flex items-center justify-center rounded-lg font-medium transition-[transform,background-color] duration-100 active:scale-105 md:px-8",

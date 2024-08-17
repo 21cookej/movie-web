@@ -23,9 +23,7 @@ export function PlayerPart(props: PlayerPartProps) {
   return (
     <Player.Container onLoad={props.onLoad} showingControls={showTargets}>
       {props.children}
-      <Player.BlackOverlay
-        show={showTargets && status === playerStatus.PLAYING}
-      />
+      <Player.BlackOverlay show={showTargets && status === playerStatus.PLAYING} />
       <Player.EpisodesRouter onChange={props.onMetaChange} />
       <Player.SettingsRouter />
       <Player.SubtitleView controlsShown={showTargets} />
@@ -42,15 +40,9 @@ export function PlayerPart(props: PlayerPartProps) {
         </>
       ) : null}
 
-      <Player.CenterMobileControls
-        className="text-white"
-        show={showTouchTargets && status === playerStatus.PLAYING}
-      >
+      <Player.CenterMobileControls className="text-white" show={showTouchTargets && status === playerStatus.PLAYING}>
         <Player.SkipBackward iconSizeClass="text-3xl" />
-        <Player.Pause
-          iconSizeClass="text-5xl"
-          className={isLoading ? "opacity-0" : "opacity-100"}
-        />
+        <Player.Pause iconSizeClass="text-5xl" className={isLoading ? "opacity-0" : "opacity-100"} />
         <Player.SkipForward iconSizeClass="text-3xl" />
       </Player.CenterMobileControls>
 
@@ -109,10 +101,7 @@ export function PlayerPart(props: PlayerPartProps) {
                 <Player.Chromecast />
               </>
             ) : null}
-            {status === playerStatus.PLAYBACK_ERROR ||
-            status === playerStatus.PLAYING ? (
-              <Player.Settings />
-            ) : null}
+            {status === playerStatus.PLAYBACK_ERROR || status === playerStatus.PLAYING ? <Player.Settings /> : null}
             <Player.Fullscreen />
           </div>
         </div>
@@ -131,10 +120,7 @@ export function PlayerPart(props: PlayerPartProps) {
 
       <Player.VolumeChangedPopout />
 
-      <Player.NextEpisodeButton
-        controlsShowing={showTargets}
-        onChange={props.onMetaChange}
-      />
+      <Player.NextEpisodeButton controlsShowing={showTargets} onChange={props.onMetaChange} />
     </Player.Container>
   );
 }

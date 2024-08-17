@@ -3,11 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { Icon, Icons } from "@/components/Icon";
 
-export function BrandPill(props: {
-  clickable?: boolean;
-  hideTextOnMobile?: boolean;
-  backgroundClass?: string;
-}) {
+export function BrandPill(props: { clickable?: boolean; hideTextOnMobile?: boolean; backgroundClass?: string }) {
   const { t } = useTranslation();
 
   return (
@@ -18,17 +14,9 @@ export function BrandPill(props: {
         props.clickable
           ? "transition-[transform,background-color] hover:scale-105 hover:bg-pill-backgroundHover backdrop-blur-lg hover:text-type-logo active:scale-95"
           : "",
-      )}
-    >
+      )}>
       <Icon className="text-xl" icon={Icons.MOVIE_WEB} />
-      <span
-        className={[
-          "font-semibold text-white",
-          props.hideTextOnMobile ? "hidden sm:block" : "",
-        ].join(" ")}
-      >
-        {t("global.name")}
-      </span>
+      <span className={["font-semibold text-white", props.hideTextOnMobile ? "hidden sm:block" : ""].join(" ")}>{t("global.name")}</span>
     </div>
   );
 }

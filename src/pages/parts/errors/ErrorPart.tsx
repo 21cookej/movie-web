@@ -14,9 +14,7 @@ export function ErrorPart(props: { error: any; errorInfo: any }) {
   const [showErrorCard, setShowErrorCard] = useState(false);
 
   const maxLineCount = 5;
-  const errorLines = (props.errorInfo.componentStack || "")
-    .split("\n")
-    .slice(0, maxLineCount);
+  const errorLines = (props.errorInfo.componentStack || "").split("\n").slice(0, maxLineCount);
 
   const error = `${props.error.toString()}\n${errorLines.join("\n")}`;
 
@@ -29,25 +27,13 @@ export function ErrorPart(props: { error: any; errorInfo: any }) {
             <Title>{t("errors.title")}</Title>
 
             <Paragraph>{props.error.toString()}</Paragraph>
-            <ErrorCardInPlainModal
-              show={showErrorCard}
-              onClose={() => setShowErrorCard(false)}
-              error={error}
-            />
+            <ErrorCardInPlainModal show={showErrorCard} onClose={() => setShowErrorCard(false)} error={error} />
 
             <div className="flex gap-3">
-              <ButtonPlain
-                theme="secondary"
-                className="mt-6 p-2.5 md:px-12"
-                onClick={() => window.location.reload()}
-              >
+              <ButtonPlain theme="secondary" className="mt-6 p-2.5 md:px-12" onClick={() => window.location.reload()}>
                 {t("errors.reloadPage")}
               </ButtonPlain>
-              <ButtonPlain
-                theme="purple"
-                className="mt-6 p-2.5 md:px-12"
-                onClick={() => setShowErrorCard(true)}
-              >
+              <ButtonPlain theme="purple" className="mt-6 p-2.5 md:px-12" onClick={() => setShowErrorCard(true)}>
                 {t("errors.showError")}
               </ButtonPlain>
             </div>

@@ -15,9 +15,7 @@ export interface StatusCircleLoading extends StatusCircleProps {
   percentage: number;
 }
 
-function statusIsLoading(
-  props: StatusCircleProps | StatusCircleLoading,
-): props is StatusCircleLoading {
+function statusIsLoading(props: StatusCircleProps | StatusCircleLoading): props is StatusCircleLoading {
   return props.type === "loading";
 }
 
@@ -33,28 +31,17 @@ export function StatusCircle(props: StatusCircleProps | StatusCircleLoading) {
     <div
       className={classNames(
         {
-          "p-0.5 border-current border-[3px] rounded-full h-6 w-6 relative transition-colors":
-            true,
+          "p-0.5 border-current border-[3px] rounded-full h-6 w-6 relative transition-colors": true,
           "text-video-scraping-loading": props.type === "loading",
-          "text-video-scraping-noresult text-opacity-50":
-            props.type === "waiting",
-          "text-video-scraping-error bg-video-scraping-error":
-            props.type === "error",
+          "text-video-scraping-noresult text-opacity-50": props.type === "waiting",
+          "text-video-scraping-error bg-video-scraping-error": props.type === "error",
           "text-green-500 bg-green-500": props.type === "success",
-          "text-video-scraping-noresult bg-video-scraping-noresult":
-            props.type === "noresult",
+          "text-video-scraping-noresult bg-video-scraping-noresult": props.type === "noresult",
         },
         props.className,
-      )}
-    >
+      )}>
       <Transition animation="fade" show={statusIsLoading(props)}>
-        <svg
-          width="100%"
-          height="100%"
-          viewBox="0 0 64 64"
-          xmlns="http://www.w3.org/2000/svg"
-          className="rounded-full -rotate-90"
-        >
+        <svg width="100%" height="100%" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" className="rounded-full -rotate-90">
           <a.circle
             strokeWidth="32"
             strokeDasharray={to(spring.percentage, (val) => `${val} 100`)}
@@ -68,16 +55,10 @@ export function StatusCircle(props: StatusCircleProps | StatusCircleLoading) {
         </svg>
       </Transition>
       <Transition animation="fade" show={props.type === "error"}>
-        <Icon
-          className="absolute inset-0 flex items-center justify-center text-background-main"
-          icon={Icons.X}
-        />
+        <Icon className="absolute inset-0 flex items-center justify-center text-background-main" icon={Icons.X} />
       </Transition>
       <Transition animation="fade" show={props.type === "success"}>
-        <Icon
-          className="absolute inset-0 flex items-center text-sm justify-center text-background-main"
-          icon={Icons.CHECKMARK}
-        />
+        <Icon className="absolute inset-0 flex items-center text-sm justify-center text-background-main" icon={Icons.CHECKMARK} />
       </Transition>
       <Transition animation="fade" show={props.type === "noresult"}>
         <div className="absolute inset-0 flex items-center">

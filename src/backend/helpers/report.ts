@@ -56,10 +56,7 @@ export async function reportProviders(items: ProviderMetric[]): Promise<void> {
   });
 }
 
-const segmentStatusMap: Record<
-  ScrapingSegment["status"],
-  ProviderMetric["status"] | null
-> = {
+const segmentStatusMap: Record<ScrapingSegment["status"], ProviderMetric["status"] | null> = {
   success: "success",
   notfound: "notfound",
   failure: "failed",
@@ -93,11 +90,7 @@ export function scrapeSourceOutputToProviderMetric(
   };
 }
 
-export function scrapeSegmentToProviderMetric(
-  media: ScrapeMedia,
-  providerId: string,
-  segment: ScrapingSegment,
-): ProviderMetric | null {
+export function scrapeSegmentToProviderMetric(media: ScrapeMedia, providerId: string, segment: ScrapingSegment): ProviderMetric | null {
   const status = segmentStatusMap[segment.status];
   if (!status) return null;
   let episodeId: string | undefined;
@@ -123,11 +116,7 @@ export function scrapeSegmentToProviderMetric(
   };
 }
 
-export function scrapePartsToProviderMetric(
-  media: ScrapeMedia,
-  order: ScrapingItems[],
-  sources: Record<string, ScrapingSegment>,
-): ProviderMetric[] {
+export function scrapePartsToProviderMetric(media: ScrapeMedia, order: ScrapingItems[], sources: Record<string, ScrapingSegment>): ProviderMetric[] {
   const output: ProviderMetric[] = [];
 
   order.forEach((orderItem) => {

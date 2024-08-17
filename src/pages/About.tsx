@@ -27,15 +27,9 @@ export function AboutPage() {
         <Heading2>{t("about.faqTitle")}</Heading2>
         <Ol
           items={[
-            <Question title={t("about.q1.title")}>
-              {t("about.q1.body")}
-            </Question>,
-            <Question title={t("about.q2.title")}>
-              {t("about.q2.body")}
-            </Question>,
-            <Question title={t("about.q3.title")}>
-              {t("about.q3.body")}
-            </Question>,
+            <Question title={t("about.q1.title")}>{t("about.q1.body")}</Question>,
+            <Question title={t("about.q2.title")}>{t("about.q2.body")}</Question>,
+            <Question title={t("about.q3.title")}>{t("about.q3.body")}</Question>,
           ]}
         />
       </ThinContainer>

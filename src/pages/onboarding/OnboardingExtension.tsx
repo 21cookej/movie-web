@@ -10,17 +10,11 @@ import { Stepper } from "@/components/layout/Stepper";
 import { CenterContainer } from "@/components/layout/ThinContainer";
 import { Heading2, Paragraph } from "@/components/utils/Text";
 import { MinimalPageLayout } from "@/pages/layouts/MinimalPageLayout";
-import {
-  useNavigateOnboarding,
-  useRedirectBack,
-} from "@/pages/onboarding/onboardingHooks";
+import { useNavigateOnboarding, useRedirectBack } from "@/pages/onboarding/onboardingHooks";
 import { Card, Link } from "@/pages/onboarding/utils";
 import { PageTitle } from "@/pages/parts/util/PageTitle";
 import { conf } from "@/setup/config";
-import {
-  ExtensionDetectionResult,
-  detectExtensionInstall,
-} from "@/utils/detectFeatures";
+import { ExtensionDetectionResult, detectExtensionInstall } from "@/utils/detectFeatures";
 import { getExtensionState } from "@/utils/extension";
 import type { ExtensionStatus } from "@/utils/extension";
 
@@ -41,11 +35,7 @@ function RefreshBar() {
   );
 }
 
-export function ExtensionStatus(props: {
-  status: ExtensionStatus;
-  loading: boolean;
-  showHelp?: boolean;
-}) {
+export function ExtensionStatus(props: { status: ExtensionStatus; loading: boolean; showHelp?: boolean }) {
   const { t } = useTranslation();
   const [lastKnownStatus, setLastKnownStatus] = useState(props.status);
   useEffect(() => {
@@ -73,16 +63,13 @@ export function ExtensionStatus(props: {
           }}
           theme="purple"
           padding="md:px-12 p-2.5"
-          className="mt-6"
-        >
+          className="mt-6">
           {t("onboarding.extension.status.disallowedAction")}
         </Button>
       </>
     );
-  else if (props.status === "failed")
-    content = <p>{t("onboarding.extension.status.failed")}</p>;
-  else if (props.status === "outdated")
-    content = <p>{t("onboarding.extension.status.outdated")}</p>;
+  else if (props.status === "failed") content = <p>{t("onboarding.extension.status.failed")}</p>;
+  else if (props.status === "outdated") content = <p>{t("onboarding.extension.status.outdated")}</p>;
   else if (props.status === "success")
     content = (
       <p className="flex items-center">
@@ -93,9 +80,7 @@ export function ExtensionStatus(props: {
   return (
     <>
       <Card>
-        <div className="flex py-6 flex-col space-y-2 items-center justify-center">
-          {content}
-        </div>
+        <div className="flex py-6 flex-col space-y-2 items-center justify-center">{content}</div>
       </Card>
       {lastKnownStatus === "unknown" ? <RefreshBar /> : null}
       {props.showHelp && props.status !== "success" ? (
@@ -127,12 +112,8 @@ function ChromeExtensionPage(props: ExtensionPageProps) {
   const installLink = conf().ONBOARDING_CHROME_EXTENSION_INSTALL_LINK;
   return (
     <>
-      <Heading2 className="!mt-0 !text-3xl max-w-[435px]">
-        {t("onboarding.extension.title")}
-      </Heading2>
-      <Paragraph className="max-w-[320px] mb-4">
-        {t("onboarding.extension.explainer")}
-      </Paragraph>
+      <Heading2 className="!mt-0 !text-3xl max-w-[435px]">{t("onboarding.extension.title")}</Heading2>
+      <Paragraph className="max-w-[320px] mb-4">{t("onboarding.extension.explainer")}</Paragraph>
       {installLink ? (
         <Link href={installLink} target="_blank" className="mb-12">
           {t("onboarding.extension.linkChrome")}
@@ -149,12 +130,8 @@ function FirefoxExtensionPage(props: ExtensionPageProps) {
   const installLink = conf().ONBOARDING_FIREFOX_EXTENSION_INSTALL_LINK;
   return (
     <>
-      <Heading2 className="!mt-0 !text-3xl max-w-[435px]">
-        {t("onboarding.extension.title")}
-      </Heading2>
-      <Paragraph className="max-w-[320px] mb-4">
-        {t("onboarding.extension.explainer")}
-      </Paragraph>
+      <Heading2 className="!mt-0 !text-3xl max-w-[435px]">{t("onboarding.extension.title")}</Heading2>
+      <Paragraph className="max-w-[320px] mb-4">{t("onboarding.extension.explainer")}</Paragraph>
       {installLink ? (
         <Link href={installLink} target="_blank" className="mb-12">
           {t("onboarding.extension.linkFirefox")}
@@ -170,14 +147,9 @@ function IosExtensionPage(_props: ExtensionPageProps) {
   const { t } = useTranslation();
   return (
     <>
-      <Heading2 className="!mt-0 !text-3xl max-w-[435px]">
-        {t("onboarding.extension.title")}
-      </Heading2>
+      <Heading2 className="!mt-0 !text-3xl max-w-[435px]">{t("onboarding.extension.title")}</Heading2>
       <Paragraph className="max-w-[320px] mb-4">
-        <Trans
-          i18nKey="onboarding.extension.explainerIos"
-          components={{ bold: <span className="text-white font-bold" /> }}
-        />
+        <Trans i18nKey="onboarding.extension.explainerIos" components={{ bold: <span className="text-white font-bold" /> }} />
       </Paragraph>
     </>
   );
@@ -189,12 +161,8 @@ function UnknownExtensionPage(props: ExtensionPageProps) {
   const installFirefoxLink = conf().ONBOARDING_FIREFOX_EXTENSION_INSTALL_LINK;
   return (
     <>
-      <Heading2 className="!mt-0 !text-3xl max-w-[435px]">
-        {t("onboarding.extension.title")}
-      </Heading2>
-      <Paragraph className="max-w-[320px] mb-4">
-        {t("onboarding.extension.explainer")}
-      </Paragraph>
+      <Heading2 className="!mt-0 !text-3xl max-w-[435px]">{t("onboarding.extension.title")}</Heading2>
+      <Paragraph className="max-w-[320px] mb-4">{t("onboarding.extension.explainer")}</Paragraph>
       <div className="mb-4">
         {installChromeLink ? (
           <Link href={installChromeLink} target="_blank">
@@ -231,10 +199,7 @@ export function OnboardingExtensionPage() {
   );
   useInterval(exec, 1000);
 
-  const componentMap: Record<
-    ExtensionDetectionResult,
-    typeof UnknownExtensionPage
-  > = {
+  const componentMap: Record<ExtensionDetectionResult, typeof UnknownExtensionPage> = {
     chrome: ChromeExtensionPage,
     firefox: FirefoxExtensionPage,
     ios: IosExtensionPage,

@@ -1,19 +1,10 @@
 import fscreen from "fscreen";
 
 import { MWMediaType } from "@/backend/metadata/types/mw";
-import {
-  DisplayCaption,
-  DisplayInterface,
-  DisplayInterfaceEvents,
-  DisplayMeta,
-} from "@/components/player/display/displayInterface";
+import { DisplayCaption, DisplayInterface, DisplayInterfaceEvents, DisplayMeta } from "@/components/player/display/displayInterface";
 import { LoadableSource } from "@/stores/player/utils/qualities";
 import { processCdnLink } from "@/utils/cdn";
-import {
-  canChangeVolume,
-  canFullscreen,
-  canFullscreenAnyElement,
-} from "@/utils/detectFeatures";
+import { canChangeVolume, canFullscreen, canFullscreenAnyElement } from "@/utils/detectFeatures";
 import { makeEmitter } from "@/utils/events";
 
 export interface ChromeCastDisplayInterfaceOptions {
@@ -28,9 +19,7 @@ export interface ChromeCastDisplayInterfaceOptions {
  **  2. HLS - we've having some issues with content types. sometimes it loads, sometimes it doesn't
  */
 
-export function makeChromecastDisplayInterface(
-  ops: ChromeCastDisplayInterfaceOptions,
-): DisplayInterface {
+export function makeChromecastDisplayInterface(ops: ChromeCastDisplayInterfaceOptions): DisplayInterface {
   const { emit, on, off } = makeEmitter<DisplayInterfaceEvents>();
   let isPaused = false;
   let playbackRate = 1;
@@ -88,15 +77,9 @@ export function makeChromecastDisplayInterface(
           break;
       }
     };
-    ops.controller?.addEventListener(
-      cast.framework.RemotePlayerEventType.ANY_CHANGE,
-      listen,
-    );
+    ops.controller?.addEventListener(cast.framework.RemotePlayerEventType.ANY_CHANGE, listen);
     return () => {
-      ops.controller?.removeEventListener(
-        cast.framework.RemotePlayerEventType.ANY_CHANGE,
-        listen,
-      );
+      ops.controller?.removeEventListener(cast.framework.RemotePlayerEventType.ANY_CHANGE, listen);
     };
   }
 

@@ -43,18 +43,10 @@ function LoadingScreen(props: { type: "user" | "lazy" }) {
     lazy: "screens.loadingApp",
   };
   const { t } = useTranslation();
-  return (
-    <LargeTextPart iconSlot={<Loading />}>
-      {t(mapping[props.type] ?? "unknown.translation")}
-    </LargeTextPart>
-  );
+  return <LargeTextPart iconSlot={<Loading />}>{t(mapping[props.type] ?? "unknown.translation")}</LargeTextPart>;
 }
 
-function ErrorScreen(props: {
-  children: ReactNode;
-  showResetButton?: boolean;
-  showLogoutButton?: boolean;
-}) {
+function ErrorScreen(props: { children: ReactNode; showResetButton?: boolean; showLogoutButton?: boolean }) {
   const { t } = useTranslation();
   const { logout } = useAuth();
   const setBackendUrl = useAuthStore((s) => s.setBackendUrl);
@@ -71,11 +63,7 @@ function ErrorScreen(props: {
   }, [logout]);
 
   return (
-    <LargeTextPart
-      iconSlot={
-        <Icon className="text-type-danger text-2xl" icon={Icons.WARNING} />
-      }
-    >
+    <LargeTextPart iconSlot={<Icon className="text-type-danger text-2xl" icon={Icons.WARNING} />}>
       {props.children}
       {props.showResetButton ? (
         <div className="mt-6">
@@ -106,15 +94,8 @@ function AuthWrapper() {
   if (status.loading) return <LoadingScreen type="user" />;
   if (status.error)
     return (
-      <ErrorScreen
-        showResetButton={isCustomUrl}
-        showLogoutButton={!isCustomUrl}
-      >
-        {t(
-          isCustomUrl
-            ? "screens.loadingUserError.textWithReset"
-            : "screens.loadingUserError.text",
-        )}
+      <ErrorScreen showResetButton={isCustomUrl} showLogoutButton={!isCustomUrl}>
+        {t(isCustomUrl ? "screens.loadingUserError.textWithReset" : "screens.loadingUserError.text")}
       </ErrorScreen>
     );
   return <App />;
@@ -128,8 +109,7 @@ function MigrationRunner() {
   const { t } = useTranslation();
 
   if (status.loading) return <MigrationPart />;
-  if (status.error)
-    return <ErrorScreen>{t("screens.migration.failed")}</ErrorScreen>;
+  if (status.error) return <ErrorScreen>{t("screens.migration.failed")}</ErrorScreen>;
   return <AuthWrapper />;
 }
 

@@ -7,10 +7,7 @@ import { CenterContainer } from "@/components/layout/ThinContainer";
 import { Modal, ModalCard, useModal } from "@/components/overlays/Modal";
 import { Heading1, Heading2, Paragraph } from "@/components/utils/Text";
 import { MinimalPageLayout } from "@/pages/layouts/MinimalPageLayout";
-import {
-  useNavigateOnboarding,
-  useRedirectBack,
-} from "@/pages/onboarding/onboardingHooks";
+import { useNavigateOnboarding, useRedirectBack } from "@/pages/onboarding/onboardingHooks";
 import { Card, CardContent, Link } from "@/pages/onboarding/utils";
 import { PageTitle } from "@/pages/parts/util/PageTitle";
 import { getProxyUrls } from "@/utils/proxyUrls";
@@ -35,12 +32,8 @@ export function OnboardingPage() {
       <PageTitle subpage k="global.pages.onboarding" />
       <Modal id={skipModal.id}>
         <ModalCard>
-          <Heading1 className="!mt-0 !mb-4 !text-2xl">
-            {t("onboarding.defaultConfirm.title")}
-          </Heading1>
-          <Paragraph className="!mt-1 !mb-12">
-            {t("onboarding.defaultConfirm.description")}
-          </Paragraph>
+          <Heading1 className="!mt-0 !mb-4 !text-2xl">{t("onboarding.defaultConfirm.title")}</Heading1>
+          <Paragraph className="!mt-1 !mb-12">{t("onboarding.defaultConfirm.description")}</Paragraph>
           <div className="flex flex-col-reverse gap-3 md:flex-row md:justify-between">
             <Button theme="secondary" onClick={skipModal.hide}>
               {t("onboarding.defaultConfirm.cancel")}
@@ -53,12 +46,8 @@ export function OnboardingPage() {
       </Modal>
       <CenterContainer>
         <Stepper steps={2} current={1} className="mb-12" />
-        <Heading2 className="!mt-0 !text-3xl max-w-[435px]">
-          {t("onboarding.start.title")}
-        </Heading2>
-        <Paragraph className="max-w-[320px]">
-          {t("onboarding.start.explainer")}
-        </Paragraph>
+        <Heading2 className="!mt-0 !text-3xl max-w-[435px]">{t("onboarding.start.title")}</Heading2>
+        <Paragraph className="max-w-[320px]">{t("onboarding.start.explainer")}</Paragraph>
 
         <div className="w-full flex flex-col md:flex-row gap-3">
           <Card onClick={() => navigate("/onboarding/extension")}>
@@ -66,8 +55,7 @@ export function OnboardingPage() {
               colorClass="!text-onboarding-best"
               title={t("onboarding.start.options.extension.title")}
               subtitle={t("onboarding.start.options.extension.quality")}
-              description={t("onboarding.start.options.extension.description")}
-            >
+              description={t("onboarding.start.options.extension.description")}>
               <Link>{t("onboarding.start.options.extension.action")}</Link>
             </CardContent>
           </Card>
@@ -81,8 +69,7 @@ export function OnboardingPage() {
               colorClass="!text-onboarding-good"
               title={t("onboarding.start.options.proxy.title")}
               subtitle={t("onboarding.start.options.proxy.quality")}
-              description={t("onboarding.start.options.proxy.description")}
-            >
+              description={t("onboarding.start.options.proxy.description")}>
               <Link>{t("onboarding.start.options.proxy.action")}</Link>
             </CardContent>
           </Card>
@@ -92,19 +79,11 @@ export function OnboardingPage() {
             <p className="text-center hidden md:block mt-12">
               <Trans i18nKey="onboarding.start.options.default.text">
                 <br />
-                <a
-                  onClick={skipModal.show}
-                  type="button"
-                  className="text-onboarding-link hover:opacity-75 cursor-pointer"
-                />
+                <a onClick={skipModal.show} type="button" className="text-onboarding-link hover:opacity-75 cursor-pointer" />
               </Trans>
             </p>
             <div className=" max-w-[300px] mx-auto md:hidden mt-12 ">
-              <Button
-                className="!text-type-text !bg-opacity-50"
-                theme="secondary"
-                onClick={skipModal.show}
-              >
+              <Button className="!text-type-text !bg-opacity-50" theme="secondary" onClick={skipModal.show}>
                 <span>
                   <Trans i18nKey="onboarding.start.options.default.text">
                     <span />

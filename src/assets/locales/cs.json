@@ -120,33 +120,22 @@
       "noResults": "Nemohli jsme nic najít!",
       "placeholder": {
         "default": "Co si přejete sledovat?",
-        "extra": [
-          "Co chcete objevit?",
-          "Co je na vašem seznamu sledovaných filmů?",
-          "Jaký je váš oblíbený film?",
-          "Jaký je tvůj oblíbený seriál?"
-        ]
+        "extra": ["Co chcete objevit?", "Co je na vašem seznamu sledovaných filmů?", "Jaký je váš oblíbený film?", "Jaký je tvůj oblíbený seriál?"]
       },
       "sectionTitle": "Výsledky vyhledávání"
     },
     "titles": {
       "day": {
         "default": "Na co byste se chtěli dnes odpoledne dívat?",
-        "extra": [
-          "Chceš zažít dobrodružství? Jurský Park je pro tebe."
-        ]
+        "extra": ["Chceš zažít dobrodružství? Jurský Park je pro tebe."]
       },
       "morning": {
         "default": "Na co byste se chtěli dnes ráno dívat?",
-        "extra": [
-          "Slyšel jsem, že Před úsvitem je super"
-        ]
+        "extra": ["Slyšel jsem, že Před úsvitem je super"]
       },
       "night": {
         "default": "Na co byste se chtěli dnes večer dívat?",
-        "extra": [
-          "Unaven? Slyšel jsem, že Vymítač ďábla je super."
-        ]
+        "extra": ["Unaven? Slyšel jsem, že Vymítač ďábla je super."]
       }
     }
   },

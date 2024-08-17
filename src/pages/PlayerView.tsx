@@ -1,11 +1,6 @@
 import { RunOutput } from "@davidmorgan/providers";
 import { useCallback, useEffect, useState } from "react";
-import {
-  Navigate,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAsync } from "react-use";
 
 import { usePlayer } from "@/components/player/hooks/usePlayer";
@@ -36,14 +31,7 @@ export function RealPlayerView() {
     sourceOrder: ScrapingItems[];
   } | null>(null);
   const [startAtParam] = useQueryParam("t");
-  const {
-    status,
-    playMedia,
-    reset,
-    setScrapeNotFound,
-    shouldStartFromBeginning,
-    setShouldStartFromBeginning,
-  } = usePlayer();
+  const { status, playMedia, reset, setScrapeNotFound, shouldStartFromBeginning, setShouldStartFromBeginning } = usePlayer();
   const { setPlayerMeta, scrapeMedia } = usePlayerMeta();
   const backUrl = useLastNonPlayerLink();
 
@@ -58,10 +46,7 @@ export function RealPlayerView() {
 
   const metaChange = useCallback(
     (meta: PlayerMeta) => {
-      if (meta?.type === "show")
-        navigate(
-          `/media/${params.media}/${meta.season?.tmdbId}/${meta.episode?.tmdbId}`,
-        );
+      if (meta?.type === "show") navigate(`/media/${params.media}/${meta.season?.tmdbId}/${meta.episode?.tmdbId}`);
       else navigate(`/media/${params.media}`);
     },
     [navigate, params],
@@ -74,27 +59,15 @@ export function RealPlayerView() {
       let startAt: number | undefined;
       if (startAtParam) startAt = parseTimestamp(startAtParam) ?? undefined;
 
-      playMedia(
-        convertRunoutputToSource(out),
-        convertProviderCaption(out.stream.captions),
-        out.sourceId,
-        shouldStartFromBeginning ? 0 : startAt,
-      );
+      playMedia(convertRunoutputToSource(out), convertProviderCaption(out.stream.captions), out.sourceId, shouldStartFromBeginning ? 0 : startAt);
       setShouldStartFromBeginning(false);
     },
-    [
-      playMedia,
-      startAtParam,
-      shouldStartFromBeginning,
-      setShouldStartFromBeginning,
-    ],
+    [playMedia, startAtParam, shouldStartFromBeginning, setShouldStartFromBeginning],
   );
 
   return (
     <PlayerPart backUrl={backUrl} onMetaChange={metaChange}>
-      {status === playerStatus.IDLE ? (
-        <MetaPart onGetMeta={setPlayerMeta} />
-      ) : null}
+      {status === playerStatus.IDLE ? <MetaPart onGetMeta={setPlayerMeta} /> : null}
       {status === playerStatus.SCRAPING && scrapeMedia ? (
         <ScrapingPart
           media={scrapeMedia}
@@ -108,9 +81,7 @@ export function RealPlayerView() {
           onGetStream={playAfterScrape}
         />
       ) : null}
-      {status === playerStatus.SCRAPE_NOT_FOUND && errorData ? (
-        <ScrapeErrorPart data={errorData} />
-      ) : null}
+      {status === playerStatus.SCRAPE_NOT_FOUND && errorData ? <ScrapeErrorPart data={errorData} /> : null}
       {status === playerStatus.PLAYBACK_ERROR ? <PlaybackErrorPart /> : null}
     </PlayerPart>
   );

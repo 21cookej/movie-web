@@ -47,13 +47,7 @@ export type JWSeasonMetaResult = {
   episodes: JWEpisodeShort[];
 };
 
-export type JWExternalIdType =
-  | "eidr"
-  | "imdb_latest"
-  | "imdb"
-  | "tmdb_latest"
-  | "tmdb"
-  | "tms";
+export type JWExternalIdType = "eidr" | "imdb_latest" | "imdb" | "tmdb_latest" | "tmdb" | "tms";
 
 export interface JWExternalId {
   provider: JWExternalIdType;

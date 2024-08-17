@@ -68,15 +68,8 @@ export function HeroPart({ setIsSticky, searchParams }: HeroPartProps) {
             stickyStyle={{
               paddingTop: `${stickyOffset + bannerSize}px`,
             }}
-            onFixedToggle={stickStateChanged}
-          >
-            <SearchBarInput
-              ref={inputRef}
-              onChange={setSearch}
-              value={search}
-              onUnFocus={setSearchUnFocus}
-              placeholder={placeholder ?? ""}
-            />
+            onFixedToggle={stickStateChanged}>
+            <SearchBarInput ref={inputRef} onChange={setSearch} value={search} onUnFocus={setSearchUnFocus} placeholder={placeholder ?? ""} />
           </Sticky>
         </div>
       </div>

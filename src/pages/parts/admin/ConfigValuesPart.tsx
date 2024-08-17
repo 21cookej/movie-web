@@ -24,9 +24,7 @@ export function ConfigValuesPart() {
   return (
     <>
       <Heading2 className="mb-8 mt-12">Configured values</Heading2>
-      <ConfigValue name="Routing mode">
-        {normalRouter ? "Normal routing" : "Hash based routing"}
-      </ConfigValue>
+      <ConfigValue name="Routing mode">{normalRouter ? "Normal routing" : "Hash based routing"}</ConfigValue>
       <ConfigValue name="Application version">v{appVersion}</ConfigValue>
       <ConfigValue name="Backend URL">{backendUrl}</ConfigValue>
     </>

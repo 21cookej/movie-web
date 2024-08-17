@@ -32,31 +32,19 @@ const availableThemes = [
   },
 ];
 
-function ThemePreview(props: {
-  selector?: string;
-  active?: boolean;
-  inUse?: boolean;
-  name: string;
-  onClick?: () => void;
-}) {
+function ThemePreview(props: { selector?: string; active?: boolean; inUse?: boolean; name: string; onClick?: () => void }) {
   const { t } = useTranslation();
 
   return (
-    <div
-      className={classNames(props.selector, "cursor-pointer group tabbable")}
-      onClick={props.onClick}
-    >
+    <div className={classNames(props.selector, "cursor-pointer group tabbable")} onClick={props.onClick}>
       {/* Little card thing */}
       <div
         tabIndex={0}
         onKeyUp={(e) => e.key === "Enter" && e.currentTarget.click()}
         className={classNames(
           "tabbable scroll-mt-32 w-full h-32 relative rounded-lg border bg-gradient-to-br from-themePreview-primary/20 to-themePreview-secondary/10 bg-clip-content transition-colors duration-150",
-          props.active
-            ? "border-themePreview-primary"
-            : "border-transparent group-hover:border-white/20",
-        )}
-      >
+          props.active ? "border-themePreview-primary" : "border-transparent group-hover:border-white/20",
+        )}>
         {/* Dots */}
         <div className="absolute top-2 left-2">
           <div className="h-5 w-5 bg-themePreview-primary rounded-full" />
@@ -65,10 +53,7 @@ function ThemePreview(props: {
         {/* Active check */}
         <Icon
           icon={Icons.CHECKMARK}
-          className={classNames(
-            "absolute top-3 right-3 text-xs text-white transition-opacity duration-150",
-            props.active ? "opacity-100" : "opacity-0",
-          )}
+          className={classNames("absolute top-3 right-3 text-xs text-white transition-opacity duration-150", props.active ? "opacity-100" : "opacity-0")}
         />
         {/* Mini movie-web. So Kawaiiiii! */}
         <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-3/5 h-4/5 rounded-t-lg -mb-px bg-background-main overflow-hidden">
@@ -116,8 +101,7 @@ function ThemePreview(props: {
           className={classNames(
             "inline-block px-3 py-1 leading-tight text-sm transition-opacity duration-150 rounded-full bg-pill-activeBackground text-white/85",
             props.inUse ? "opacity-100" : "opacity-0 pointer-events-none",
-          )}
-        >
+          )}>
           {t("settings.appearance.activeTheme")}
         </span>
       </div>
@@ -125,11 +109,7 @@ function ThemePreview(props: {
   );
 }
 
-export function ThemePart(props: {
-  active: string;
-  inUse: string;
-  setTheme: (theme: string) => void;
-}) {
+export function ThemePart(props: { active: string; inUse: string; setTheme: (theme: string) => void }) {
   const { t } = useTranslation();
 
   return (

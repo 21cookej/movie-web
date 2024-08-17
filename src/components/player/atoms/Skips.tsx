@@ -12,13 +12,7 @@ export function SkipForward(props: { iconSizeClass?: string }) {
     display?.setTime(time + 10);
   }, [display, time]);
 
-  return (
-    <VideoPlayerButton
-      iconSizeClass={props.iconSizeClass}
-      onClick={commit}
-      icon={Icons.SKIP_FORWARD}
-    />
-  );
+  return <VideoPlayerButton iconSizeClass={props.iconSizeClass} onClick={commit} icon={Icons.SKIP_FORWARD} />;
 }
 
 export function SkipBackward(props: { iconSizeClass?: string }) {
@@ -29,11 +23,5 @@ export function SkipBackward(props: { iconSizeClass?: string }) {
     display?.setTime(time - 10);
   }, [display, time]);
 
-  return (
-    <VideoPlayerButton
-      iconSizeClass={props.iconSizeClass}
-      onClick={commit}
-      icon={Icons.SKIP_BACKWARD}
-    />
-  );
+  return <VideoPlayerButton iconSizeClass={props.iconSizeClass} onClick={commit} icon={Icons.SKIP_BACKWARD} />;
 }

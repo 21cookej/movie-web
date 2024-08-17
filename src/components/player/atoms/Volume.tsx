@@ -1,11 +1,7 @@
 import { useCallback, useRef } from "react";
 
 import { Icon, Icons } from "@/components/Icon";
-import {
-  makePercentage,
-  makePercentageString,
-  useProgressBar,
-} from "@/hooks/useProgressBar";
+import { makePercentage, makePercentageString, useProgressBar } from "@/hooks/useProgressBar";
 import { usePlayerStore } from "@/stores/player/store";
 import { canChangeVolume } from "@/utils/detectFeatures";
 
@@ -29,11 +25,7 @@ export function Volume(props: Props) {
     [setVolume],
   );
 
-  const { dragging, dragPercentage, dragMouseDown } = useProgressBar(
-    ref,
-    commitVolume,
-    true,
-  );
+  const { dragging, dragPercentage, dragMouseDown } = useProgressBar(ref, commitVolume, true);
 
   const handleClick = useCallback(() => {
     toggleMute();
@@ -63,12 +55,7 @@ export function Volume(props: Props) {
   );
 
   return (
-    <div
-      className={props.className}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onWheel={handleWheel}
-    >
+    <div className={props.className} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onWheel={handleWheel}>
       <div className="pointer-events-auto flex cursor-pointer items-center py-0 touch-none">
         <div className="px-4 text-2xl text-white" onClick={handleClick}>
           <Icon icon={percentage > 0 ? Icons.VOLUME : Icons.VOLUME_X} />
@@ -76,21 +63,14 @@ export function Volume(props: Props) {
         <div
           className={`linear -ml-2 w-0 overflow-hidden transition-[width,opacity] duration-300 ${
             hovering || dragging ? "!w-24 opacity-100" : "w-4 opacity-0"
-          }`}
-        >
-          <div
-            ref={ref}
-            className="flex h-10 w-20 items-center px-2"
-            onMouseDown={dragMouseDown}
-            onTouchStart={dragMouseDown}
-          >
+          }`}>
+          <div ref={ref} className="flex h-10 w-20 items-center px-2" onMouseDown={dragMouseDown} onTouchStart={dragMouseDown}>
             <div className="relative h-1 flex-1 rounded-full bg-gray-500 bg-opacity-50">
               <div
                 className="absolute inset-y-0 left-0 flex items-center justify-end rounded-full bg-video-audio-set"
                 style={{
                   width: percentageString,
-                }}
-              >
+                }}>
                 <div className="absolute h-3 w-3 translate-x-1/2 rounded-full bg-white" />
               </div>
             </div>

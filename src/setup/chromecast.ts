@@ -1,5 +1,4 @@
-const CHROMECAST_SENDER_SDK =
-  "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1";
+const CHROMECAST_SENDER_SDK = "https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1";
 
 const callbacks: ((available: boolean) => void)[] = [];
 let _available: boolean | null = null;

@@ -16,8 +16,7 @@ export function Layout(props: { children: ReactNode }) {
         style={{
           paddingTop: location === null ? `${bannerSize}px` : "0px",
         }}
-        className="flex min-h-screen flex-col"
-      >
+        className="flex min-h-screen flex-col">
         {props.children}
       </div>
     </div>

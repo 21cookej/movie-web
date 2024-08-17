@@ -43,20 +43,12 @@ export function WatchingPart() {
 
   return (
     <div>
-      <SectionHeading
-        title={t("home.continueWatching.sectionTitle")}
-        icon={Icons.CLOCK}
-      >
+      <SectionHeading title={t("home.continueWatching.sectionTitle")} icon={Icons.CLOCK}>
         <EditButton editing={editing} onEdit={setEditing} />
       </SectionHeading>
       <MediaGrid ref={gridRef}>
         {sortedProgressItems.map((v) => (
-          <WatchedMediaCard
-            key={v.id}
-            media={v}
-            closable={editing}
-            onClose={() => removeItem(v.id)}
-          />
+          <WatchedMediaCard key={v.id} media={v} closable={editing} onClose={() => removeItem(v.id)} />
         ))}
       </MediaGrid>
     </div>

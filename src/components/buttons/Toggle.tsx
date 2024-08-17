@@ -8,8 +8,7 @@ export function Toggle(props: { onClick?: () => void; enabled?: boolean }) {
       className={classNames(
         "w-11 h-6 p-1 rounded-full grid transition-colors duration-100 group/toggle tabbable",
         props.enabled ? "bg-buttons-toggle" : "bg-buttons-toggleDisabled",
-      )}
-    >
+      )}>
       <div className="relative w-full h-full">
         <div
           className={classNames(

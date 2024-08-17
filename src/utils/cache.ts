@@ -48,9 +48,7 @@ export class SimpleCache<Key, Value> {
    */
   public get(key: Key): Value | undefined {
     if (!this._compare) throw new Error("Compare function not set");
-    const foundValue = this._storage.find(
-      (item) => this._compare && this._compare(item.key, key),
-    );
+    const foundValue = this._storage.find((item) => this._compare && this._compare(item.key, key));
     if (!foundValue) return undefined;
     return foundValue.value;
   }
@@ -60,9 +58,7 @@ export class SimpleCache<Key, Value> {
    */
   public set(key: Key, value: Value, expirySeconds: number): void {
     if (!this._compare) throw new Error("Compare function not set");
-    const foundValue = this._storage.find(
-      (item) => this._compare && this._compare(item.key, key),
-    );
+    const foundValue = this._storage.find((item) => this._compare && this._compare(item.key, key));
     const expiry = new Date(new Date().getTime() + expirySeconds * 1000);
 
     // overwrite old value

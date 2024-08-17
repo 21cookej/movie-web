@@ -1,8 +1,6 @@
 import { ExtensionMakeRequestBodyType } from "./plasmo";
 
-export function getBodyTypeFromBody(
-  body: unknown,
-): ExtensionMakeRequestBodyType {
+export function getBodyTypeFromBody(body: unknown): ExtensionMakeRequestBodyType {
   if (typeof body === "string") return "string";
   if (body instanceof FormData) return "FormData";
   if (body instanceof URLSearchParams) return "URLSearchParams";

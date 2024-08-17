@@ -3,10 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { getCachedMetadata } from "@/backend/helpers/providerApi";
 import { Loading } from "@/components/layout/Loading";
-import {
-  useEmbedScraping,
-  useSourceScraping,
-} from "@/components/player/hooks/useSourceSelection";
+import { useEmbedScraping, useSourceScraping } from "@/components/player/hooks/useSourceSelection";
 import { Menu } from "@/components/player/internals/ContextMenu";
 import { SelectableLink } from "@/components/player/internals/ContextMenu/Links";
 import { useOverlayRouter } from "@/hooks/useOverlayRouter";
@@ -22,12 +19,7 @@ export interface EmbedSelectionViewProps {
   sourceId: string | null;
 }
 
-export function EmbedOption(props: {
-  embedId: string;
-  url: string;
-  sourceId: string;
-  routerId: string;
-}) {
+export function EmbedOption(props: { embedId: string; url: string; sourceId: string; routerId: string }) {
   const { t } = useTranslation();
   const unknownEmbedName = t("player.menus.sources.unknownOption");
 
@@ -37,12 +29,7 @@ export function EmbedOption(props: {
     return sourceMeta?.name ?? unknownEmbedName;
   }, [props.embedId, unknownEmbedName]);
 
-  const { run, errored, loading } = useEmbedScraping(
-    props.routerId,
-    props.sourceId,
-    props.url,
-    props.embedId,
-  );
+  const { run, errored, loading } = useEmbedScraping(props.routerId, props.sourceId, props.url, props.embedId);
 
   return (
     <SelectableLink loading={loading} error={errored} onClick={run}>
@@ -56,8 +43,7 @@ export function EmbedOption(props: {
 export function EmbedSelectionView({ sourceId, id }: EmbedSelectionViewProps) {
   const { t } = useTranslation();
   const router = useOverlayRouter(id);
-  const { run, watching, notfound, loading, items, errored } =
-    useSourceScraping(sourceId, id);
+  const { run, watching, notfound, loading, items, errored } = useSourceScraping(sourceId, id);
 
   const sourceName = useMemo(() => {
     if (!sourceId) return "...";
@@ -81,56 +67,25 @@ export function EmbedSelectionView({ sourceId, id }: EmbedSelectionViewProps) {
       </Menu.TextDisplay>
     );
   else if (notfound)
-    content = (
-      <Menu.TextDisplay
-        title={t("player.menus.sources.noStream.title") ?? undefined}
-      >
-        {t("player.menus.sources.noStream.text")}
-      </Menu.TextDisplay>
-    );
+    content = <Menu.TextDisplay title={t("player.menus.sources.noStream.title") ?? undefined}>{t("player.menus.sources.noStream.text")}</Menu.TextDisplay>;
   else if (items?.length === 0)
-    content = (
-      <Menu.TextDisplay
-        title={t("player.menus.sources.noEmbeds.title") ?? undefined}
-      >
-        {t("player.menus.sources.noEmbeds.text")}
-      </Menu.TextDisplay>
-    );
+    content = <Menu.TextDisplay title={t("player.menus.sources.noEmbeds.title") ?? undefined}>{t("player.menus.sources.noEmbeds.text")}</Menu.TextDisplay>;
   else if (errored)
-    content = (
-      <Menu.TextDisplay
-        title={t("player.menus.sources.failed.title") ?? undefined}
-      >
-        {t("player.menus.sources.failed.text")}
-      </Menu.TextDisplay>
-    );
+    content = <Menu.TextDisplay title={t("player.menus.sources.failed.title") ?? undefined}>{t("player.menus.sources.failed.text")}</Menu.TextDisplay>;
   else if (watching)
     content = null; // when it starts watching, empty the display
   else if (items && sourceId)
-    content = items.map((v) => (
-      <EmbedOption
-        key={`${v.embedId}-${v.url}`}
-        embedId={v.embedId}
-        url={v.url}
-        routerId={id}
-        sourceId={sourceId}
-      />
-    ));
+    content = items.map((v) => <EmbedOption key={`${v.embedId}-${v.url}`} embedId={v.embedId} url={v.url} routerId={id} sourceId={sourceId} />);
 
   return (
     <>
-      <Menu.BackLink onClick={() => router.navigate("/source")}>
-        {sourceName}
-      </Menu.BackLink>
+      <Menu.BackLink onClick={() => router.navigate("/source")}>{sourceName}</Menu.BackLink>
       <Menu.Section>{content}</Menu.Section>
     </>
   );
 }
 
-export function SourceSelectionView({
-  id,
-  onChoose,
-}: SourceSelectionViewProps) {
+export function SourceSelectionView({ id, onChoose }: SourceSelectionViewProps) {
   const { t } = useTranslation();
   const router = useOverlayRouter(id);
   const metaType = usePlayerStore((s) => s.meta?.type);
@@ -144,9 +99,7 @@ export function SourceSelectionView({
 
   return (
     <>
-      <Menu.BackLink onClick={() => router.navigate("/")}>
-        {t("player.menus.sources.title")}
-      </Menu.BackLink>
+      <Menu.BackLink onClick={() => router.navigate("/")}>{t("player.menus.sources.title")}</Menu.BackLink>
       <Menu.Section className="pb-4">
         {sources.map((v) => (
           <SelectableLink
@@ -155,8 +108,7 @@ export function SourceSelectionView({
               onChoose?.(v.id);
               router.navigate("/source/embeds");
             }}
-            selected={v.id === currentSourceId}
-          >
+            selected={v.id === currentSourceId}>
             {v.name}
           </SelectableLink>
         ))}

@@ -13,9 +13,7 @@ export function Loading(props: LoadingProps) {
           <div className="mx-1 h-2 w-2 animate-loading-pin rounded-full bg-[#211D30] [animation-delay:300ms]" />
           <div className="mx-1 h-2 w-2 animate-loading-pin rounded-full bg-[#211D30] [animation-delay:450ms]" />
         </div>
-        {props.text && props.text.length ? (
-          <p className="mt-3 max-w-xs text-sm opacity-75">{props.text}</p>
-        ) : null}
+        {props.text && props.text.length ? <p className="mt-3 max-w-xs text-sm opacity-75">{props.text}</p> : null}
       </div>
     </div>
   );

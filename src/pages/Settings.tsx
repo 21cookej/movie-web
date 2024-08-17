@@ -3,11 +3,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useAsyncFn } from "react-use";
 
-import {
-  base64ToBuffer,
-  decryptData,
-  encryptData,
-} from "@/backend/accounts/crypto";
+import { base64ToBuffer, decryptData, encryptData } from "@/backend/accounts/crypto";
 import { getSessions, updateSession } from "@/backend/accounts/sessions";
 import { updateSettings } from "@/backend/accounts/settings";
 import { editUser } from "@/backend/accounts/user";
@@ -43,12 +39,7 @@ function SettingsLayout(props: { children: React.ReactNode }) {
 
   return (
     <WideContainer ultraWide classNames="overflow-visible">
-      <div
-        className={classNames(
-          "grid gap-12",
-          isMobile ? "grid-cols-1" : "lg:grid-cols-[280px,1fr]",
-        )}
-      >
+      <div className={classNames("grid gap-12", isMobile ? "grid-cols-1" : "lg:grid-cols-[280px,1fr]")}>
         <SidebarPart />
         <div>{props.children}</div>
       </div>
@@ -89,12 +80,7 @@ export function AccountSettings(props: {
         userIcon={props.userIcon}
         setUserIcon={props.setUserIcon}
       />
-      <DeviceListPart
-        error={!!sessionsResult.error}
-        loading={sessionsResult.loading}
-        sessions={sessionsResult.value ?? []}
-        onChange={execSessions}
-      />
+      <DeviceListPart error={!!sessionsResult.error} loading={sessionsResult.loading} sessions={sessionsResult.value ?? []} onChange={execSessions} />
       <AccountActionsPart />
     </>
   );
@@ -171,11 +157,7 @@ export function SettingsPage() {
 
   const saveChanges = useCallback(async () => {
     if (account && backendUrl) {
-      if (
-        state.appLanguage.changed ||
-        state.theme.changed ||
-        state.proxyUrls.changed
-      ) {
+      if (state.appLanguage.changed || state.theme.changed || state.proxyUrls.changed) {
         await updateSettings(backendUrl, account, {
           applicationLanguage: state.appLanguage.state,
           applicationTheme: state.theme.state,
@@ -183,10 +165,7 @@ export function SettingsPage() {
         });
       }
       if (state.deviceName.changed) {
-        const newDeviceName = await encryptData(
-          state.deviceName.state,
-          base64ToBuffer(account.seed),
-        );
+        const newDeviceName = await encryptData(state.deviceName.state, base64ToBuffer(account.seed));
         await updateSession(backendUrl, account, {
           deviceName: newDeviceName,
         });
@@ -254,13 +233,9 @@ export function SettingsPage() {
                 state.profile.set((s) => (s ? { ...s, colorA: v } : undefined));
               }}
               colorB={state.profile.state.colorB}
-              setColorB={(v) =>
-                state.profile.set((s) => (s ? { ...s, colorB: v } : undefined))
-              }
+              setColorB={(v) => state.profile.set((s) => (s ? { ...s, colorB: v } : undefined))}
               userIcon={state.profile.state.icon as any}
-              setUserIcon={(v) =>
-                state.profile.set((s) => (s ? { ...s, icon: v } : undefined))
-              }
+              setUserIcon={(v) => state.profile.set((s) => (s ? { ...s, icon: v } : undefined))}
             />
           ) : (
             <RegisterCalloutPart />
@@ -277,17 +252,10 @@ export function SettingsPage() {
           />
         </div>
         <div id="settings-appearance" className="mt-48">
-          <ThemePart
-            active={previewTheme ?? "default"}
-            inUse={activeTheme ?? "default"}
-            setTheme={setThemeWithPreview}
-          />
+          <ThemePart active={previewTheme ?? "default"} inUse={activeTheme ?? "default"} setTheme={setThemeWithPreview} />
         </div>
         <div id="settings-captions" className="mt-48">
-          <CaptionsPart
-            styling={state.subtitleStyling.state}
-            setStyling={state.subtitleStyling.set}
-          />
+          <CaptionsPart styling={state.subtitleStyling.state} setStyling={state.subtitleStyling.set} />
         </div>
         <div id="settings-connection" className="mt-48">
           <ConnectionsPart
@@ -301,22 +269,13 @@ export function SettingsPage() {
       <Transition
         animation="fade"
         show={state.changed}
-        className="bg-settings-saveBar-background border-t border-settings-card-border/50 py-4 transition-opacity w-full fixed bottom-0 flex justify-between flex-col md:flex-row px-8 items-start md:items-center gap-3"
-      >
+        className="bg-settings-saveBar-background border-t border-settings-card-border/50 py-4 transition-opacity w-full fixed bottom-0 flex justify-between flex-col md:flex-row px-8 items-start md:items-center gap-3">
         <p className="text-type-danger">{t("settings.unsaved")}</p>
         <div className="space-x-3 w-full md:w-auto flex">
-          <Button
-            className="w-full md:w-auto"
-            theme="secondary"
-            onClick={state.reset}
-          >
+          <Button className="w-full md:w-auto" theme="secondary" onClick={state.reset}>
             {t("settings.reset")}
           </Button>
-          <Button
-            className="w-full md:w-auto"
-            theme="purple"
-            onClick={saveChanges}
-          >
+          <Button className="w-full md:w-auto" theme="purple" onClick={saveChanges}>
             {t("settings.save")}
           </Button>
         </div>

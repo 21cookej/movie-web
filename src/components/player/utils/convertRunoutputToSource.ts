@@ -1,10 +1,6 @@
 import { Stream } from "@davidmorgan/providers";
 
-import {
-  SourceFileStream,
-  SourceQuality,
-  SourceSliceSource,
-} from "@/stores/player/utils/qualities";
+import { SourceFileStream, SourceQuality, SourceSliceSource } from "@/stores/player/utils/qualities";
 
 const allowedQualitiesMap: Record<SourceQuality, SourceQuality> = {
   "4k": "4k",
@@ -21,9 +17,7 @@ function isAllowedQuality(inp: string): inp is SourceQuality {
   return allowedQualities.includes(inp);
 }
 
-export function convertRunoutputToSource(out: {
-  stream: Stream;
-}): SourceSliceSource {
+export function convertRunoutputToSource(out: { stream: Stream }): SourceSliceSource {
   if (out.stream.type === "hls") {
     return {
       type: "hls",

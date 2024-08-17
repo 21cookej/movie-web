@@ -17,10 +17,7 @@ import { useOverlayRouter } from "@/hooks/useOverlayRouter";
 import { CaptionListItem } from "@/stores/player/slices/source";
 import { usePlayerStore } from "@/stores/player/store";
 import { useSubtitleStore } from "@/stores/subtitles";
-import {
-  getPrettyLanguageNameFromLocale,
-  sortLangCodes,
-} from "@/utils/language";
+import { getPrettyLanguageNameFromLocale, sortLangCodes } from "@/utils/language";
 
 export function CaptionOption(props: {
   countryCode?: string;
@@ -31,16 +28,8 @@ export function CaptionOption(props: {
   error?: React.ReactNode;
 }) {
   return (
-    <SelectableLink
-      selected={props.selected}
-      loading={props.loading}
-      error={props.error}
-      onClick={props.onClick}
-    >
-      <span
-        data-active-link={props.selected ? true : undefined}
-        className="flex items-center"
-      >
+    <SelectableLink selected={props.selected} loading={props.loading} error={props.error} onClick={props.onClick}>
+      <span data-active-link={props.selected ? true : undefined} className="flex items-center">
         <span data-code={props.countryCode} className="mr-3 inline-flex">
           <FlagIcon langCode={props.countryCode} />
         </span>
@@ -58,10 +47,7 @@ function CustomCaptionOption() {
   const fileInput = useRef<HTMLInputElement>(null);
 
   return (
-    <CaptionOption
-      selected={lang === "custom"}
-      onClick={() => fileInput.current?.click()}
-    >
+    <CaptionOption selected={lang === "custom"} onClick={() => fileInput.current?.click()}>
       {t("player.menus.subtitles.customChoice")}
       <input
         className="hidden"
@@ -72,8 +58,7 @@ function CustomCaptionOption() {
           if (!e.target.files) return;
           const reader = new FileReader();
           reader.addEventListener("load", (event) => {
-            if (!event.target || typeof event.target.result !== "string")
-              return;
+            if (!event.target || typeof event.target.result !== "string") return;
             const converted = convert(event.target.result, "srt");
             setCaption({
               language: "custom",
@@ -95,8 +80,7 @@ function useSubtitleList(subs: CaptionListItem[], searchQuery: string) {
   return useMemo(() => {
     const input = subs.map((t) => ({
       ...t,
-      languageName:
-        getPrettyLanguageNameFromLocale(t.language) ?? unknownChoice,
+      languageName: getPrettyLanguageNameFromLocale(t.language) ?? unknownChoice,
     }));
     const sorted = sortLangCodes(input.map((t) => t.language));
     let results = input.sort((a, b) => {
@@ -120,9 +104,7 @@ export function CaptionsView({ id }: { id: string }) {
   const { t } = useTranslation();
   const router = useOverlayRouter(id);
   const selectedCaptionId = usePlayerStore((s) => s.caption.selected?.id);
-  const [currentlyDownloading, setCurrentlyDownloading] = useState<
-    string | null
-  >(null);
+  const [currentlyDownloading, setCurrentlyDownloading] = useState<string | null>(null);
   const { selectCaptionById, disable } = useCaptions();
   const captionList = usePlayerStore((s) => s.captionList);
   const getHlsCaptionList = usePlayerStore((s) => s.display?.getCaptionList);
@@ -155,11 +137,7 @@ export function CaptionsView({ id }: { id: string }) {
     reader.readAsText(firstFile);
   }
 
-  const captions = useMemo(
-    () =>
-      captionList.length !== 0 ? captionList : (getHlsCaptionList?.() ?? []),
-    [captionList, getHlsCaptionList],
-  );
+  const captions = useMemo(() => (captionList.length !== 0 ? captionList : (getHlsCaptionList?.() ?? [])), [captionList, getHlsCaptionList]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const subtitleList = useSubtitleList(captions, searchQuery);
@@ -180,13 +158,8 @@ export function CaptionsView({ id }: { id: string }) {
         countryCode={v.language}
         selected={v.id === selectedCaptionId}
         loading={v.id === currentlyDownloading && downloadReq.loading}
-        error={
-          v.id === currentlyDownloading && downloadReq.error
-            ? downloadReq.error.toString()
-            : undefined
-        }
-        onClick={() => startDownload(v.id)}
-      >
+        error={v.id === currentlyDownloading && downloadReq.error ? downloadReq.error.toString() : undefined}
+        onClick={() => startDownload(v.id)}>
         {v.languageName}
       </CaptionOption>
     );
@@ -199,28 +172,20 @@ export function CaptionsView({ id }: { id: string }) {
           className={classNames(
             "absolute inset-0 flex items-center justify-center text-white z-10 pointer-events-none transition-opacity duration-300",
             dragging ? "opacity-100" : "opacity-0",
-          )}
-        >
+          )}>
           <div className="flex flex-col items-center">
             <Icon className="text-5xl mb-4" icon={Icons.UPLOAD} />
-            <span className="text-xl weight font-medium">
-              {t("player.menus.subtitles.dropSubtitleFile")}
-            </span>
+            <span className="text-xl weight font-medium">{t("player.menus.subtitles.dropSubtitleFile")}</span>
           </div>
         </div>
 
         <Menu.BackLink
           onClick={() => router.navigate("/")}
           rightSide={
-            <button
-              type="button"
-              onClick={() => router.navigate("/captions/settings")}
-              className="py-1 -my-1 px-3 -mx-3 rounded tabbable"
-            >
+            <button type="button" onClick={() => router.navigate("/captions/settings")} className="py-1 -my-1 px-3 -mx-3 rounded tabbable">
               {t("player.menus.subtitles.customizeLabel")}
             </button>
-          }
-        >
+          }>
           {t("player.menus.subtitles.title")}
         </Menu.BackLink>
       </div>
@@ -229,16 +194,12 @@ export function CaptionsView({ id }: { id: string }) {
         onDraggingChange={(isDragging) => {
           setDragging(isDragging);
         }}
-        onDrop={(event) => onDrop(event)}
-      >
+        onDrop={(event) => onDrop(event)}>
         <div className="mt-3">
           <Input value={searchQuery} onInput={setSearchQuery} />
         </div>
         <Menu.ScrollToActiveSection className="!pt-1 mt-2 pb-3">
-          <CaptionOption
-            onClick={() => disable()}
-            selected={!selectedCaptionId}
-          >
+          <CaptionOption onClick={() => disable()} selected={!selectedCaptionId}>
             {t("player.menus.subtitles.offChoice")}
           </CaptionOption>
           <CustomCaptionOption />

@@ -10,9 +10,7 @@ export function VideoClickTarget(props: { showingControls: boolean }) {
   const show = useShouldShowVideoElement();
   const display = usePlayerStore((s) => s.display);
   const isPaused = usePlayerStore((s) => s.mediaPlaying.isPaused);
-  const updateInterfaceHovering = usePlayerStore(
-    (s) => s.updateInterfaceHovering,
-  );
+  const updateInterfaceHovering = usePlayerStore((s) => s.updateInterfaceHovering);
   const hovering = usePlayerStore((s) => s.interface.hovering);
   const [_, cancel, reset] = useTimeoutFn(() => {
     updateInterfaceHovering(PlayerHoverState.NOT_HOVERING);

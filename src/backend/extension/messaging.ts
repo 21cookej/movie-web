@@ -1,7 +1,4 @@
-import {
-  MessagesMetadata,
-  sendToBackgroundViaRelay,
-} from "@plasmohq/messaging";
+import { MessagesMetadata, sendToBackgroundViaRelay } from "@plasmohq/messaging";
 
 import { isAllowedExtensionVersion } from "@/backend/extension/compatibility";
 import { ExtensionMakeRequestResponse } from "@/backend/extension/plasmo";
@@ -30,10 +27,7 @@ async function sendMessage<MessageKey extends keyof MessagesMetadata>(
   await isExtensionReady;
   return new Promise<MessagesMetadata[MessageKey]["res"] | null>((resolve) => {
     if (timeout >= 0) setTimeout(() => resolve(null), timeout);
-    sendToBackgroundViaRelay<
-      MessagesMetadata[MessageKey]["req"],
-      MessagesMetadata[MessageKey]["res"]
-    >({
+    sendToBackgroundViaRelay<MessagesMetadata[MessageKey]["req"], MessagesMetadata[MessageKey]["res"]>({
       name: message,
       body: payload,
     })
@@ -48,27 +42,19 @@ async function sendMessage<MessageKey extends keyof MessagesMetadata>(
   });
 }
 
-export async function sendExtensionRequest<T>(
-  ops: MessagesMetadata["makeRequest"]["req"],
-): Promise<ExtensionMakeRequestResponse<T> | null> {
+export async function sendExtensionRequest<T>(ops: MessagesMetadata["makeRequest"]["req"]): Promise<ExtensionMakeRequestResponse<T> | null> {
   return sendMessage("makeRequest", ops);
 }
 
-export async function setDomainRule(
-  ops: MessagesMetadata["prepareStream"]["req"],
-): Promise<MessagesMetadata["prepareStream"]["res"] | null> {
+export async function setDomainRule(ops: MessagesMetadata["prepareStream"]["req"]): Promise<MessagesMetadata["prepareStream"]["res"] | null> {
   return sendMessage("prepareStream", ops);
 }
 
-export async function sendPage(
-  ops: MessagesMetadata["openPage"]["req"],
-): Promise<MessagesMetadata["openPage"]["res"] | null> {
+export async function sendPage(ops: MessagesMetadata["openPage"]["req"]): Promise<MessagesMetadata["openPage"]["res"] | null> {
   return sendMessage("openPage", ops);
 }
 
-export async function extensionInfo(): Promise<
-  MessagesMetadata["hello"]["res"] | null
-> {
+export async function extensionInfo(): Promise<MessagesMetadata["hello"]["res"] | null> {
   const message = await sendMessage("hello", undefined, 500);
   return message;
 }

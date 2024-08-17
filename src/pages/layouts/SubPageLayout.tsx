@@ -28,10 +28,8 @@ export function SubPageLayout(props: { children: React.ReactNode }) {
     <div
       className="bg-background-main"
       style={{
-        backgroundImage:
-          "linear-gradient(to bottom, var(--tw-gradient-from), var(--tw-gradient-to) 800px)",
-      }}
-    >
+        backgroundImage: "linear-gradient(to bottom, var(--tw-gradient-from), var(--tw-gradient-to) 800px)",
+      }}>
       <BlurEllipsis />
       {/* Main page */}
       <FooterView>

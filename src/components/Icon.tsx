@@ -156,10 +156,7 @@ export const Icon = memo((props: IconProps) => {
   }
 
   const flipClass =
-    props.icon === Icons.ARROW_LEFT ||
-    props.icon === Icons.ARROW_RIGHT ||
-    props.icon === Icons.CHEVRON_LEFT ||
-    props.icon === Icons.CHEVRON_RIGHT
+    props.icon === Icons.ARROW_LEFT || props.icon === Icons.ARROW_RIGHT || props.icon === Icons.CHEVRON_LEFT || props.icon === Icons.CHEVRON_RIGHT
       ? "rtl:-scale-x-100"
       : "";
 

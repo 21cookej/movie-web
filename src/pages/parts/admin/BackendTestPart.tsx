@@ -53,8 +53,7 @@ export function BackendTestPart() {
       return setStatus({
         hasTested: true,
         success: false,
-        errorText:
-          "Failed to call backend, double check the URL, your internet connection, and ensure CORS is properly configured on your backend.",
+        errorText: "Failed to call backend, double check the URL, your internet connection, and ensure CORS is properly configured on your backend.",
         value: null,
       });
     }
@@ -69,27 +68,19 @@ export function BackendTestPart() {
             {status.hasTested && status.success ? (
               <>
                 <p>
-                  <span className="inline-block w-36 text-white font-medium">
-                    Version:
-                  </span>
+                  <span className="inline-block w-36 text-white font-medium">Version:</span>
                   {status.value?.version}
                 </p>
                 <p>
-                  <span className="inline-block w-36 text-white font-medium">
-                    Backend name:
-                  </span>
+                  <span className="inline-block w-36 text-white font-medium">Backend name:</span>
                   {status.value?.name}
                 </p>
                 <p>
-                  <span className="inline-block w-36 text-white font-medium">
-                    Description:
-                  </span>
+                  <span className="inline-block w-36 text-white font-medium">Description:</span>
                   {status.value?.description ?? "Not set"}
                 </p>
                 <p>
-                  <span className="inline-block w-36 text-white font-medium">
-                    Captcha enabled:
-                  </span>
+                  <span className="inline-block w-36 text-white font-medium">Captcha enabled:</span>
                   {status.value?.hasCaptcha ? "Yes" : "No"}
                 </p>
                 <Divider />
@@ -102,30 +93,19 @@ export function BackendTestPart() {
             <p>Run the test to validate backend</p>
           ) : status.success ? (
             <p className="flex items-center text-md">
-              <Icon
-                icon={Icons.CIRCLE_CHECK}
-                className="text-video-scraping-success mr-2"
-              />
+              <Icon icon={Icons.CIRCLE_CHECK} className="text-video-scraping-success mr-2" />
               Backend is working as expected
             </p>
           ) : (
             <div>
               <p className="text-white font-bold w-full mb-3 flex items-center gap-1">
-                <Icon
-                  icon={Icons.CIRCLE_EXCLAMATION}
-                  className="text-video-scraping-error mr-2"
-                />
+                <Icon icon={Icons.CIRCLE_EXCLAMATION} className="text-video-scraping-error mr-2" />
                 Backend is not working
               </p>
               <p>{status.errorText}</p>
             </div>
           )}
-          <Button
-            theme="purple"
-            loading={testState.loading}
-            className="whitespace-nowrap"
-            onClick={runTests}
-          >
+          <Button theme="purple" loading={testState.loading} className="whitespace-nowrap" onClick={runTests}>
             Test backend
           </Button>
         </div>

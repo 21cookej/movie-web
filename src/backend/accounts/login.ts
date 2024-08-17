@@ -6,10 +6,7 @@ export interface ChallengeTokenResponse {
   challenge: string;
 }
 
-export async function getLoginChallengeToken(
-  url: string,
-  publicKey: string,
-): Promise<ChallengeTokenResponse> {
+export async function getLoginChallengeToken(url: string, publicKey: string): Promise<ChallengeTokenResponse> {
   return ofetch<ChallengeTokenResponse>("/auth/login/start", {
     method: "POST",
     body: {
@@ -33,10 +30,7 @@ export interface LoginInput {
   device: string;
 }
 
-export async function loginAccount(
-  url: string,
-  data: LoginInput,
-): Promise<LoginResponse> {
+export async function loginAccount(url: string, data: LoginInput): Promise<LoginResponse> {
   return ofetch<LoginResponse>("/auth/login/complete", {
     method: "POST",
     body: {

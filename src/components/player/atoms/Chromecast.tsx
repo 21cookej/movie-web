@@ -40,12 +40,7 @@ export function Chromecast(props: ChromecastProps) {
   return (
     <VideoPlayerButton
       ref={ref}
-      className={[
-        props.className ?? "",
-        "google-cast-button",
-        isCasting ? "casting" : "",
-        hidden ? "hidden" : "",
-      ].join(" ")}
+      className={[props.className ?? "", "google-cast-button", isCasting ? "casting" : "", hidden ? "hidden" : ""].join(" ")}
       icon={Icons.CASTING}
       onClick={(el) => {
         const castButton = el.querySelector("google-cast-launcher");

@@ -6,9 +6,7 @@ import { usePlayerMeta } from "../hooks/usePlayerMeta";
 
 export function MediaSession() {
   const { setDirectMeta } = usePlayerMeta();
-  const setShouldStartFromBeginning = usePlayerStore(
-    (s) => s.setShouldStartFromBeginning,
-  );
+  const setShouldStartFromBeginning = usePlayerStore((s) => s.setShouldStartFromBeginning);
 
   const shouldUpdatePositionState = useRef(false);
   const lastPlaybackPosition = useRef(0);
@@ -17,9 +15,7 @@ export function MediaSession() {
 
   const changeEpisode = useCallback(
     (change: number) => {
-      const nextEp = data.meta?.episodes?.find(
-        (v) => v.number === (data.meta?.episode?.number ?? 0) + change,
-      );
+      const nextEp = data.meta?.episodes?.find((v) => v.number === (data.meta?.episode?.number ?? 0) + change);
 
       if (!data.meta || !nextEp) return;
       const metaCopy = { ...data.meta };
@@ -48,12 +44,7 @@ export function MediaSession() {
         position,
       });
     },
-    [
-      data.mediaPlaying.playbackRate,
-      data.progress.buffered,
-      data.progress.duration,
-      data.progress.time,
-    ],
+    [data.mediaPlaying.playbackRate, data.progress.buffered, data.progress.duration, data.progress.time],
   );
 
   useEffect(() => {
@@ -81,11 +72,7 @@ export function MediaSession() {
     }
 
     // If the user has skipped (or MediaSession desynced) by more than 5 seconds, queue an update
-    if (
-      Math.abs(data.progress.time - lastPlaybackPosition.current) >= 5 &&
-      !data.mediaPlaying.isLoading &&
-      !shouldUpdatePositionState.current
-    ) {
+    if (Math.abs(data.progress.time - lastPlaybackPosition.current) >= 5 && !data.mediaPlaying.isLoading && !shouldUpdatePositionState.current) {
       shouldUpdatePositionState.current = true;
     }
 
@@ -99,13 +86,7 @@ export function MediaSession() {
   }, [updatePositionState, data.progress.time, data.mediaPlaying.isLoading]);
 
   useEffect(() => {
-    if (
-      !("mediaSession" in navigator) ||
-      (!data.mediaPlaying.isLoading &&
-        data.mediaPlaying.isPlaying &&
-        !data.display)
-    )
-      return;
+    if (!("mediaSession" in navigator) || (!data.mediaPlaying.isLoading && data.mediaPlaying.isPlaying && !data.display)) return;
 
     let title: string | undefined;
     let artist: string | undefined;

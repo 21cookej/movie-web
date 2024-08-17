@@ -2,13 +2,7 @@ import { useCallback } from "react";
 
 import { LoginResponse, SessionResponse } from "@/backend/accounts/auth";
 import { SettingsResponse } from "@/backend/accounts/settings";
-import {
-  BookmarkResponse,
-  ProgressResponse,
-  UserResponse,
-  bookmarkResponsesToEntries,
-  progressResponsesToEntries,
-} from "@/backend/accounts/user";
+import { BookmarkResponse, ProgressResponse, UserResponse, bookmarkResponsesToEntries, progressResponsesToEntries } from "@/backend/accounts/user";
 import { useAuthStore } from "@/stores/auth";
 import { useBookmarkStore } from "@/stores/bookmarks";
 import { useLanguageStore } from "@/stores/language";
@@ -25,20 +19,13 @@ export function useAuthData() {
   const clearProgress = useProgressStore((s) => s.clear);
   const setTheme = useThemeStore((s) => s.setTheme);
   const setAppLanguage = useLanguageStore((s) => s.setLanguage);
-  const importSubtitleLanguage = useSubtitleStore(
-    (s) => s.importSubtitleLanguage,
-  );
+  const importSubtitleLanguage = useSubtitleStore((s) => s.importSubtitleLanguage);
 
   const replaceBookmarks = useBookmarkStore((s) => s.replaceBookmarks);
   const replaceItems = useProgressStore((s) => s.replaceItems);
 
   const login = useCallback(
-    async (
-      loginResponse: LoginResponse,
-      user: UserResponse,
-      session: SessionResponse,
-      seed: string,
-    ) => {
+    async (loginResponse: LoginResponse, user: UserResponse, session: SessionResponse, seed: string) => {
       const account = {
         token: loginResponse.token,
         userId: user.id,
@@ -60,13 +47,7 @@ export function useAuthData() {
   }, [removeAccount, clearBookmarks, clearProgress]);
 
   const syncData = useCallback(
-    async (
-      _user: UserResponse,
-      _session: SessionResponse,
-      progress: ProgressResponse[],
-      bookmarks: BookmarkResponse[],
-      settings: SettingsResponse,
-    ) => {
+    async (_user: UserResponse, _session: SessionResponse, progress: ProgressResponse[], bookmarks: BookmarkResponse[], settings: SettingsResponse) => {
       replaceBookmarks(bookmarkResponsesToEntries(bookmarks));
       replaceItems(progressResponsesToEntries(progress));
 
@@ -86,14 +67,7 @@ export function useAuthData() {
         setProxySet(settings.proxyUrls);
       }
     },
-    [
-      replaceBookmarks,
-      replaceItems,
-      setAppLanguage,
-      importSubtitleLanguage,
-      setTheme,
-      setProxySet,
-    ],
+    [replaceBookmarks, replaceItems, setAppLanguage, importSubtitleLanguage, setTheme, setProxySet],
   );
 
   return {

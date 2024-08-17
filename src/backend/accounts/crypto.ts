@@ -39,10 +39,7 @@ export function genMnemonic(): string {
   return generateMnemonic(wordlist);
 }
 
-export async function signCode(
-  code: string,
-  privateKey: Uint8Array,
-): Promise<Uint8Array> {
+export async function signCode(code: string, privateKey: Uint8Array): Promise<Uint8Array> {
   return forge.pki.ed25519.sign({
     encoding: "utf8",
     message: code,
@@ -55,10 +52,7 @@ export function bytesToBase64(bytes: Uint8Array) {
 }
 
 export function bytesToBase64Url(bytes: Uint8Array): string {
-  return bytesToBase64(bytes)
-    .replace(/\//g, "_")
-    .replace(/\+/g, "-")
-    .replace(/=+$/, "");
+  return bytesToBase64(bytes).replace(/\//g, "_").replace(/\+/g, "-").replace(/=+$/, "");
 }
 
 export async function signChallenge(keys: Keys, challengeCode: string) {
@@ -79,8 +73,7 @@ export function stringBufferToBase64(buffer: forge.util.ByteStringBuffer) {
 }
 
 export async function encryptData(data: string, secret: Uint8Array) {
-  if (secret.byteLength !== 32)
-    throw new Error("Secret must be at least 256-bit");
+  if (secret.byteLength !== 32) throw new Error("Secret must be at least 256-bit");
 
   const iv = await new Promise<string>((resolve, reject) => {
     forge.random.getBytes(16, (err, bytes) => {
@@ -89,10 +82,7 @@ export async function encryptData(data: string, secret: Uint8Array) {
     });
   });
 
-  const cipher = forge.cipher.createCipher(
-    "AES-GCM",
-    forge.util.createBuffer(secret),
-  );
+  const cipher = forge.cipher.createCipher("AES-GCM", forge.util.createBuffer(secret));
   cipher.start({
     iv,
     tagLength: 128,
@@ -103,9 +93,7 @@ export async function encryptData(data: string, secret: Uint8Array) {
   const encryptedData = cipher.output;
   const tag = cipher.mode.tag;
 
-  return `${forge.util.encode64(iv)}.${stringBufferToBase64(
-    encryptedData,
-  )}.${stringBufferToBase64(tag)}` as const;
+  return `${forge.util.encode64(iv)}.${stringBufferToBase64(encryptedData)}.${stringBufferToBase64(tag)}` as const;
 }
 
 export function decryptData(data: string, secret: Uint8Array) {
@@ -113,10 +101,7 @@ export function decryptData(data: string, secret: Uint8Array) {
 
   const [iv, encryptedData, tag] = data.split(".");
 
-  const decipher = forge.cipher.createDecipher(
-    "AES-GCM",
-    forge.util.createBuffer(secret),
-  );
+  const decipher = forge.cipher.createDecipher("AES-GCM", forge.util.createBuffer(secret));
   decipher.start({
     iv: base64ToStringBuffer(iv),
     tag: base64ToStringBuffer(tag),

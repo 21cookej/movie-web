@@ -50,11 +50,7 @@ export const SettingsStore = createVersionedStore<Record<never, never>>()
         color: old.captionSettings.style.color,
         size: old.captionSettings.style.fontSize / 25,
       });
-      subtitleStore.importSubtitleLanguage(
-        old.captionSettings.language === "none"
-          ? null
-          : old.captionSettings.language,
-      );
+      subtitleStore.importSubtitleLanguage(old.captionSettings.language === "none" ? null : old.captionSettings.language);
 
       return {};
     },
