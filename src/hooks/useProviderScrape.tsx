@@ -132,7 +132,7 @@ export function useScrape() {
 
   const startScraping = useCallback(
     async (media: ScrapeMedia) => {
-      const providerApiUrl = getLoadbalancedProviderApiUrl();
+      const providerApiUrl = getLoadbalancedProviderApiUrl(); 
       if (providerApiUrl && !isExtensionActiveCached()) {
         startScrape();
         const baseUrlMaker = makeProviderUrl(providerApiUrl);

@@ -94,6 +94,7 @@ function useSubtitleList(subs: CaptionListItem[], searchQuery: string) {
       });
 
       results = fuse.search(searchQuery).map((res) => res.item);
+      
     }
 
     return results;

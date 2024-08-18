@@ -33,6 +33,7 @@ export default defineConfig(({ mode }) => {
         inject: {
           data: {
             adsScriptSrc: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${env.VITE_GOOGLE_ADS_ID}`,
+            adTagId: env.VITE_GOOGLE_TAG_ID,
           },
         },
       }),

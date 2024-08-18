@@ -23,6 +23,12 @@ export function useCaptions() {
 
   const captions = useMemo(() => (captionList.length !== 0 ? captionList : (getHlsCaptionList?.() ?? [])), [captionList, getHlsCaptionList]);
 
+  /**
+   * @Author: FreeServiceSource
+   * @description: 设置字幕
+   * @return {*}
+   * @Date: 2024-08-17
+   */
   const selectCaptionById = useCallback(
     async (captionId: string) => {
       const caption = captions.find((v) => v.id === captionId);

@@ -52,13 +52,20 @@ export function RealPlayerView() {
     [navigate, params],
   );
 
+  
+  /**
+   * @Author: FreeServiceSource
+   * @description: 视频在加载之后做信息处理
+   * @return {*}
+   * @Date: 2024-08-17
+   */
   const playAfterScrape = useCallback(
     (out: RunOutput | null) => {
       if (!out) return;
 
       let startAt: number | undefined;
       if (startAtParam) startAt = parseTimestamp(startAtParam) ?? undefined;
-
+      
       playMedia(convertRunoutputToSource(out), convertProviderCaption(out.stream.captions), out.sourceId, shouldStartFromBeginning ? 0 : startAt);
       setShouldStartFromBeginning(false);
     },
