@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
           data: {
             adsScriptSrc: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${env.VITE_GOOGLE_ADS_ID}`,
             adTagId: env.VITE_GOOGLE_TAG_ID,
-            adsterraLink: `//www.topcreativeformat.com/${env.VITE_ADSTERRA_ID}/invoke.js`,
+            adsterraLink: `//pl24099987.highratecpm.com/f6f9c67e40f0d0078818ca05aa4c5ec6/invoke.js`,
           },
         },
       }),
