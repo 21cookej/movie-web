@@ -31,6 +31,7 @@ function AdBanner({ dataAdSlot, dataAdFormat, dataFullWidthResponsive, className
         data-ad-slot={dataAdSlot}
         data-ad-format={dataAdFormat}
         data-full-width-responsive={dataFullWidthResponsive.toString()}></ins>
+      <iframe id="e4eb41aa660ade0953666d8a6fc6ec88" width={300} height={200}></iframe>
     </div>
   );
 }
